@@ -4,7 +4,7 @@
 **CRDB ID:** `AMC_RingbrothersJavelinDefiant_1972`
 **Source Repository:** `CSR2-Github-DB/CSR2-DataBase`
 **Source Branch:** `Everything`
-**Source Tier:** Stock
+**Source Class:** Stock
 **Star Fallback:** Purple Star (Gold Star not found)
 **Selected Source Image:** #2 — `AMC Ringbrothers Prestone Javelin AMX 'Defiant!' (JalopGold).jpg`
 **KOSD Processing:** Vehicle isolated; transparent-background PNG
