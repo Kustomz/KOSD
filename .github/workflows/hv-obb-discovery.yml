@@ -26,6 +26,7 @@ jobs:
         with:
           lfs: false
           fetch-depth: 1
+
       - name: Pull canonical CSR2 6.7.0 OBBs
         run: |
           git lfs version
@@ -33,6 +34,7 @@ jobs:
           git lfs pull --include="$MAIN_OBB,$PATCH_OBB"
           ls -lh "$MAIN_OBB" "$PATCH_OBB"
           sha256sum "$MAIN_OBB" "$PATCH_OBB"
+
       - name: Install UnityPy
         run: |
           python3 -m pip install --upgrade pip
@@ -41,23 +43,27 @@ jobs:
           import UnityPy
           print('UnityPy version:', UnityPy.__version__)
           PY
+
       - name: Diagnose raw OBB structure
         continue-on-error: true
         run: |
-          mkdir -p hv-output
+          mkdir -p hv-output/diagnostic
           python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/diagnose_obb_structure.py \
             --obb "$MAIN_OBB" \
             --obb "$PATCH_OBB" \
-            --out hv-output/obb_structure_diagnostic.json
-          test -f hv-output/obb_structure_diagnostic.json
+            --out hv-output/diagnostic/obb_structure_diagnostic.json
+          test -f hv-output/diagnostic/obb_structure_diagnostic.json
+
       - name: Discover HV-001 in OBBs
         continue-on-error: true
         run: |
-          mkdir -p hv-output
+          mkdir -p hv-output/discovery
           python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/scan_hero_vehicle.py \
             --obb "$MAIN_OBB" \
             --obb "$PATCH_OBB" \
-            --out hv-output
+            --out hv-output/discovery
+          test -f hv-output/discovery/hero_vehicle_discovery.json
+
       - name: Upload discovery report
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
