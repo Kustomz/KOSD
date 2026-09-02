@@ -14,13 +14,14 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   MAIN_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb
   PATCH_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb
   MAIN_SHA256: 33bf8465ea4b4d337f1514dc63c98e6f7059d893fdcd37133099ac83b4a92273
   PATCH_SHA256: 1f76f154ea4cedcab978f513942e515c60bc9f112aa4c8faccbfcf6b08582405
+  TEMP_PNG_DIR: TEMP/HV_PNG_TEST/HV-001
 
 jobs:
   discover:
@@ -86,21 +87,44 @@ jobs:
             --out hv-output/diagnostic/obb_structure_diagnostic.json
           test -f hv-output/diagnostic/obb_structure_diagnostic.json
 
-      - name: Discover HV-001 in OBBs
+      - name: Discover HV-001 and extract sample PNGs
         continue-on-error: true
         run: |
-          mkdir -p hv-output/discovery
+          set -euo pipefail
+          rm -rf "$TEMP_PNG_DIR"
+          mkdir -p "$TEMP_PNG_DIR" hv-output/discovery
           python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/scan_hero_vehicle.py \
             --obb "$MAIN_OBB" \
             --obb "$PATCH_OBB" \
-            --out hv-output/discovery
+            --out hv-output/discovery \
+            --extract-png-dir "$TEMP_PNG_DIR" \
+            --extract-png-limit 25
           test -f hv-output/discovery/hero_vehicle_discovery.json
+          echo "Temporary PNGs:" 
+          find "$TEMP_PNG_DIR" -type f -maxdepth 1 -print | sort || true
 
-      - name: Upload discovery report
+      - name: Commit temporary extracted PNGs
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "$TEMP_PNG_DIR"
+          if git diff --cached --quiet; then
+            echo "No temporary PNG changes to commit."
+          else
+            git commit -m "Add temporary HV-001 extracted PNGs"
+            git push origin HEAD:main
+          fi
+
+      - name: Upload discovery report and PNGs
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: csr2-6.7.0-hv-001-discovery
-          path: hv-output/
+          path: |
+            hv-output/
+            TEMP/HV_PNG_TEST/
           if-no-files-found: error
           retention-days: 14
