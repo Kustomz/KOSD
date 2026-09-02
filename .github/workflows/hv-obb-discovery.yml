@@ -9,12 +9,18 @@ on:
       - 'RESEARCH/CSR2/HV_EXTRACTION_6.7.0/**'
       - '.github/workflows/hv-obb-discovery.yml'
 
+concurrency:
+  group: hv-obb-discovery
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 env:
   MAIN_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb
   PATCH_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb
+  MAIN_SHA256: 33bf8465ea4b4d337f1514dc63c98e6f7059d893fdcd37133099ac83b4a92273
+  PATCH_SHA256: 1f76f154ea4cedcab978f513942e515c60bc9f112aa4c8faccbfcf6b08582405
 
 jobs:
   discover:
@@ -27,11 +33,37 @@ jobs:
           lfs: false
           fetch-depth: 1
 
-      - name: Pull canonical CSR2 6.7.0 OBBs
+      - name: Restore canonical CSR2 6.7.0 OBB cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.MAIN_OBB }}
+            ${{ env.PATCH_OBB }}
+          key: csr2-6.7.0-obbs-${{ env.MAIN_SHA256 }}-${{ env.PATCH_SHA256 }}
+
+      - name: Acquire canonical CSR2 6.7.0 OBBs if cache is missing
+        shell: bash
         run: |
-          git lfs version
-          git lfs install --local
-          git lfs pull --include="$MAIN_OBB,$PATCH_OBB"
+          set -euo pipefail
+          valid=1
+          if [[ ! -f "$MAIN_OBB" || "$(sha256sum "$MAIN_OBB" | cut -d' ' -f1)" != "$MAIN_SHA256" ]]; then
+            valid=0
+          fi
+          if [[ ! -f "$PATCH_OBB" || "$(sha256sum "$PATCH_OBB" | cut -d' ' -f1)" != "$PATCH_SHA256" ]]; then
+            valid=0
+          fi
+
+          if [[ "$valid" -eq 1 ]]; then
+            echo "Canonical OBB cache hit; skipping Git LFS download."
+          else
+            echo "Canonical OBB cache miss; pulling exact OBBs from Git LFS."
+            git lfs version
+            git lfs install --local
+            git lfs pull --include="$MAIN_OBB,$PATCH_OBB"
+          fi
+
+          test "$(sha256sum "$MAIN_OBB" | cut -d' ' -f1)" = "$MAIN_SHA256"
+          test "$(sha256sum "$PATCH_OBB" | cut -d' ' -f1)" = "$PATCH_SHA256"
           ls -lh "$MAIN_OBB" "$PATCH_OBB"
           sha256sum "$MAIN_OBB" "$PATCH_OBB"
 
