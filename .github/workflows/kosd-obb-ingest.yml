@@ -31,10 +31,17 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Verify Git LFS
+      - name: Verify Git LFS and pull canonical OBB objects
         run: |
           git lfs version
           git lfs install --local
+          git lfs pull
+
+          echo "--- Canonical OBB files ---"
+          find RESEARCH/CSR2/GAME_VERSIONS -type f -name '*.obb' -print -exec ls -lh {} \;
+
+          echo "--- LFS status ---"
+          git lfs status
 
       - name: Reconstruct, extract, verify, and apply retention
         run: bash .github/scripts/ingest_obb.sh
