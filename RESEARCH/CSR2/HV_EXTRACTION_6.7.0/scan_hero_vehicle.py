@@ -208,7 +208,7 @@ def main():
                 info["zip_error"] = repr(e); report["obbs"].append(info)
     report["seen_bundle_sha256"] = sorted(report["seen_bundle_sha256"])
     report["summary"] = {"zip_members":sum(x.get("zip_members",0) for x in report["obbs"]), "unityfs_bundles_seen":len(report["bundles_seen"]), "unityfs_bundles_loaded":len(report["bundles"]), "identity_candidates":len(report["identity_candidates"]), "nested_archives":len(report["nested_archives"]), "bundle_errors":len(report["bundle_errors"])}
-    (out / "hero_vehicle_discovery.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    (out / "hero_vehicle_discovery.json").write_text(json.dumps(report, indent=2, ensure_ascii=True), encoding="utf-8")
     print(json.dumps(report["summary"], indent=2))
     for item in report["identity_candidates"][:100]: print(item["type"], "|", " | ".join(item["names"]), "| path:", item["source_member"], "| tokens:", ",".join(item["matched_tokens"]))
 
