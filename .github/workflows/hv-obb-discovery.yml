@@ -42,14 +42,18 @@ jobs:
           print('UnityPy version:', UnityPy.__version__)
           PY
       - name: Diagnose raw OBB structure
+        continue-on-error: true
         run: |
           mkdir -p hv-output
           python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/diagnose_obb_structure.py \
             --obb "$MAIN_OBB" \
             --obb "$PATCH_OBB" \
             --out hv-output/obb_structure_diagnostic.json
+          test -f hv-output/obb_structure_diagnostic.json
       - name: Discover HV-001 in OBBs
+        continue-on-error: true
         run: |
+          mkdir -p hv-output
           python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/scan_hero_vehicle.py \
             --obb "$MAIN_OBB" \
             --obb "$PATCH_OBB" \
@@ -60,5 +64,5 @@ jobs:
         with:
           name: csr2-6.7.0-hv-001-discovery
           path: hv-output/
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 14
