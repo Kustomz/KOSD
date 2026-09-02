@@ -4,6 +4,10 @@
 
 This recovery update locks the current CSR2 SCB restoration-requirement investigation checkpoint into KOSD. Recovery remains the source for recovered project-state context; research findings are not silently promoted to authoritative KOS policy.
 
+## Recovery Source Reconciliation
+
+The current recovery package is `KUSTOMZ_PROJECT_RECOVERY_v1.7_UPDATED_KOSD.zip`. Its contents are the basis for this reconciliation; the ZIP itself is a recovery distribution package and is not required to be stored as a KOSD binary artifact.
+
 ## Added Research Checkpoint
 
 The current investigation is preserved under:
