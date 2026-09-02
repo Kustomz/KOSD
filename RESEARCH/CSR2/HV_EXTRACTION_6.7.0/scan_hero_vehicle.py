@@ -1,147 +1,231 @@
 #!/usr/bin/env python3
 """KOSD CSR2 6.7.0 Hero Vehicle discovery scanner.
 
-Research/acquisition stage only. Uses the proven SCB OBB extraction approach:
-unpack each canonical OBB as ZIP, recurse nested ZIP archives, locate embedded
-UnityFS bundles at arbitrary offsets, and inventory Unity objects matching the
-exact Nitro CRDB target or related identifiers. No production artwork is made.
+Research/acquisition stage only. The canonical 6.7.0 OBBs are ZIP containers
+whose members include UnityFS bundles. Discovery therefore works at the ZIP
+member boundary instead of carving UnityFS signatures out of the compressed
+OBB byte stream. Vehicle lookup is deliberately relative: candidate assets
+are surfaced from internal Unity object identity evidence, rather than by
+requiring an exact CRDB folder/file name.
 """
 from __future__ import annotations
-import argparse, hashlib, json, struct, tempfile, zipfile
+
+import argparse
+import hashlib
+import json
+import re
+import tempfile
+import zipfile
 from pathlib import Path
 
-MAGIC=b"UnityFS"
-CHUNK=4*1024*1024
-TARGETS=("AMC_RingbrothersJavelinDefiant_1972","RingbrothersJavelin","JavelinDefiant")
+MAGIC = b"UnityFS"
+CHUNK = 4 * 1024 * 1024
+TARGET_CRDB = "AMC_RingbrothersJavelinDefiant_1972"
+TARGET_TOKENS = ("AMC", "Ringbrothers", "Javelin", "Defiant", "1972")
 
-def sha256(p):
- h=hashlib.sha256()
- with open(p,"rb") as f:
-  for b in iter(lambda:f.read(1024*1024),b""): h.update(b)
- return h.hexdigest()
 
-def extract_zip(src,dst):
- dst.mkdir(parents=True,exist_ok=True); count=0
- with zipfile.ZipFile(src) as z:
-  for i,zi in enumerate(z.infolist()):
-   if zi.is_dir(): continue
-   out=dst/f"m_{i:06d}_{Path(zi.filename).name}"
-   with z.open(zi) as a,open(out,"wb") as b:
-    for x in iter(lambda:a.read(CHUNK),b""): b.write(x)
-   count+=1
- return count
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for b in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(b)
+    return h.hexdigest()
 
-def nested(root,maxdepth=3):
- queue=[(p,0) for p in root.rglob("*") if p.is_file()]; found=[]; seen=set()
- while queue:
-  p,d=queue.pop(0)
-  if d>maxdepth or str(p) in seen: continue
-  seen.add(str(p))
-  try:
-   with open(p,"rb") as f:
-    if f.read(4)!=b"PK\x03\x04": continue
-   out=p.parent/f"nested_{d}_{p.stem}"; out.mkdir(exist_ok=True)
-   n=extract_zip(p,out); found.append({"archive":str(p),"depth":d,"members":n})
-   queue += [(x,d+1) for x in out.rglob("*") if x.is_file()]
-  except Exception: pass
- return found
 
-def magic_offsets(p):
- hits=[];carry=b"";base=0
- with open(p,"rb") as f:
-  while True:
-   b=f.read(CHUNK)
-   if not b: break
-   d=carry+b; off=base-len(carry); start=0
-   while True:
-    q=d.find(MAGIC,start)
-    if q<0: break
-    hits.append(off+q);start=q+1
-   carry=d[-6:];base+=len(b)
- return hits
+def norm(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", s.lower())
 
-def bundle_header(p,off):
- with open(p,"rb") as f:
-  f.seek(off)
-  if f.read(7)!=MAGIC:return None
-  f.read(1)
-  for _ in range(3):
-   while True:
-    b=f.read(1)
-    if not b:return None
-    if b==b"\0":break
-  x=f.read(20)
-  if len(x)!=20:return None
-  size,comp,uncomp,flags=struct.unpack(">QIII",x)
-  if size<=0 or size>p.stat().st_size-off:return None
-  return {"file_size":size,"compressed_blocks_info_size":comp,"uncompressed_blocks_info_size":uncomp,"flags":flags}
 
-def carve(src,off,dst):
- h=bundle_header(src,off)
- if not h:return None
- dst.parent.mkdir(parents=True,exist_ok=True);left=h["file_size"]
- with open(src,"rb") as a,open(dst,"wb") as b:
-  a.seek(off)
-  while left:
-   x=a.read(min(CHUNK,left))
-   if not x:return None
-   b.write(x);left-=len(x)
- return {"source":str(src),"offset":off,"path":str(dst),**h}
+def token_hits(text: str) -> list[str]:
+    n = norm(text)
+    return [t for t in TARGET_TOKENS if norm(t) in n]
 
-def names(obj):
- out=[]
- try:
-  x=obj.peek_name()
-  if x:out.append(str(x))
- except Exception:pass
- try:
-  if obj.container:out.append(str(obj.container))
- except Exception:pass
- try:
-  x=obj.read(check_read=False)
-  for attr in ("name","m_Name"):
-   n=getattr(x,attr,None)
-   if n:out.append(str(n))
- except Exception:pass
- return list(dict.fromkeys(out))
+
+def object_names(obj) -> list[str]:
+    out: list[str] = []
+    try:
+        x = obj.peek_name()
+        if x:
+            out.append(str(x))
+    except Exception:
+        pass
+    try:
+        if obj.container:
+            out.append(str(obj.container))
+    except Exception:
+        pass
+    try:
+        x = obj.read(check_read=False)
+        for attr in ("name", "m_Name"):
+            n = getattr(x, attr, None)
+            if n:
+                out.append(str(n))
+    except Exception:
+        pass
+    return list(dict.fromkeys(out))
+
+
+def scan_unity_bundle(bundle_path: Path, source_name: str, obb: Path, report: dict, sha: str):
+    import UnityPy
+
+    try:
+        env = UnityPy.load(str(bundle_path))
+    except Exception as e:
+        report["bundle_errors"].append({
+            "obb": str(obb),
+            "source_member": source_name,
+            "bundle_sha256": sha,
+            "error": repr(e),
+        })
+        return
+
+    objects = list(env.objects)
+    bundle_record = {
+        "obb": str(obb),
+        "source_member": source_name,
+        "bundle_sha256": sha,
+        "object_count": len(objects),
+    }
+    report["bundles"].append(bundle_record)
+
+    for obj in objects:
+        names = object_names(obj)
+        if not names:
+            continue
+        joined = " | ".join(names)
+        hits = token_hits(joined)
+        if not hits:
+            continue
+        try:
+            typ = obj.type.name
+        except Exception:
+            typ = str(getattr(obj, "type", "unknown"))
+        evidence = {
+            "obb": str(obb),
+            "source_member": source_name,
+            "bundle_sha256": sha,
+            "path_id": getattr(obj, "path_id", None),
+            "type": typ,
+            "names": names,
+            "matched_tokens": hits,
+            "token_count": len(hits),
+        }
+        report["identity_candidates"].append(evidence)
+
+
+def scan_archive(path: Path, obb: Path, report: dict, work: Path, depth: int = 0, max_depth: int = 3):
+    try:
+        z = zipfile.ZipFile(path)
+    except Exception as e:
+        report["archive_errors"].append({"archive": str(path), "error": repr(e), "depth": depth})
+        return
+
+    try:
+        for index, zi in enumerate(z.infolist()):
+            if zi.is_dir():
+                continue
+            name = zi.filename
+            try:
+                with z.open(zi) as src:
+                    head = src.read(7)
+                    src.seek(0)
+                    if head == MAGIC:
+                        bundle_path = work / f"bundle_{len(report['bundles_seen']):06d}.bundle"
+                        with bundle_path.open("wb") as dst:
+                            for chunk in iter(lambda: src.read(CHUNK), b""):
+                                dst.write(chunk)
+                        sha = sha256(bundle_path)
+                        if sha in report["seen_bundle_sha256"]:
+                            continue
+                        report["seen_bundle_sha256"].add(sha)
+                        report["bundles_seen"].append({
+                            "obb": str(obb),
+                            "source_member": name,
+                            "depth": depth,
+                            "size": zi.file_size,
+                            "sha256": sha,
+                        })
+                        scan_unity_bundle(bundle_path, name, obb, report, sha)
+                        continue
+
+                    if depth < max_depth and head[:4] == b"PK\x03\x04":
+                        nested_path = work / f"nested_{depth}_{index:06d}.zip"
+                        with nested_path.open("wb") as dst:
+                            for chunk in iter(lambda: src.read(CHUNK), b""):
+                                dst.write(chunk)
+                        report["nested_archives"].append({
+                            "obb": str(obb),
+                            "parent_archive": str(path),
+                            "source_member": name,
+                            "depth": depth + 1,
+                        })
+                        scan_archive(nested_path, obb, report, work, depth + 1, max_depth)
+            except Exception as e:
+                report["member_errors"].append({
+                    "obb": str(obb),
+                    "archive": str(path),
+                    "source_member": name,
+                    "error": repr(e),
+                })
+    finally:
+        z.close()
+
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument("--obb",action="append",required=True);ap.add_argument("--out",required=True)
- a=ap.parse_args();out=Path(a.out);out.mkdir(parents=True,exist_ok=True)
- import UnityPy
- report={"tool":"KOSD CSR2 6.7.0 Hero Vehicle discovery scanner","target_crdb":TARGETS[0],"terms":TARGETS,"obbs":[],"nested_archives":[],"unityfs_hits":[],"matches":[]}
- with tempfile.TemporaryDirectory(prefix="kosd_hv_") as td:
-  temp=Path(td);carved=temp/"bundles"
-  for arg in a.obb:
-   src=Path(arg);info={"path":str(src),"size":src.stat().st_size,"sha256":sha256(src)};root=temp/src.stem
-   try: members=extract_zip(src,root)
-   except Exception as e:
-    info["zip_error"]=repr(e);report["obbs"].append(info);continue
-   info["zip_members"]=members;report["nested_archives"]+=nested(root)
-   seen=set();sig=0
-   for p in root.rglob("*"):
-    if not p.is_file():continue
-    try: offs=magic_offsets(p)
-    except OSError:continue
-    sig+=len(offs)
-    for i,off in enumerate(offs):
-     q=carved/f"{hashlib.sha1(str(p).encode()).hexdigest()}_{i:05d}.bundle";c=carve(p,off,q)
-     if not c:continue
-     h=sha256(q)
-     if h in seen:continue
-     seen.add(h);report["unityfs_hits"].append(c)
-     try:objs=list(UnityPy.load(str(q)).objects)
-     except Exception:continue
-     for obj in objs:
-      ns=names(obj);joined=" | ".join(ns)
-      if not any(t.lower() in joined.lower() for t in TARGETS):continue
-      try:typ=obj.type.name
-      except Exception:typ=str(getattr(obj,"type","unknown"))
-      report["matches"].append({"obb":str(src),"source_file":str(p),"bundle":str(q),"bundle_sha256":h,"path_id":getattr(obj,"path_id",None),"type":typ,"names":ns})
-   info["unityfs_signature_count"]=sig;info["unique_bundles_scanned"]=len(seen);report["obbs"].append(info)
- report["summary"]={"unityfs_signature_hits":len(report["unityfs_hits"]),"unityfs_bundles_scanned":len({x.get("bundle_sha256") for x in report["unityfs_hits"]}),"target_matches":len(report["matches"]),"nested_archives":len(report["nested_archives"])}
- (out/"hero_vehicle_discovery.json").write_text(json.dumps(report,indent=2,ensure_ascii=False),encoding="utf-8")
- print(json.dumps(report["summary"],indent=2))
- for m in report["matches"]: print(m["type"],"|"," | ".join(m["names"]))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--obb", action="append", required=True)
+    ap.add_argument("--out", required=True)
+    a = ap.parse_args()
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
 
-if __name__=="__main__":main()
+    report = {
+        "tool": "KOSD CSR2 6.7.0 Hero Vehicle discovery scanner",
+        "target_crdb": TARGET_CRDB,
+        "target_tokens": list(TARGET_TOKENS),
+        "search_rule": "relative discovery; asset-derived identity evidence",
+        "obbs": [],
+        "bundles_seen": [],
+        "bundles": [],
+        "identity_candidates": [],
+        "nested_archives": [],
+        "archive_errors": [],
+        "member_errors": [],
+        "bundle_errors": [],
+        "seen_bundle_sha256": set(),
+    }
+
+    with tempfile.TemporaryDirectory(prefix="kosd_hv_") as td:
+        work = Path(td)
+        for arg in a.obb:
+            src = Path(arg)
+            info = {"path": str(src), "size": src.stat().st_size, "sha256": sha256(src)}
+            try:
+                with zipfile.ZipFile(src) as z:
+                    info["zip_members"] = len(z.infolist())
+                report["obbs"].append(info)
+                scan_archive(src, src, report, work)
+            except Exception as e:
+                info["zip_error"] = repr(e)
+                report["obbs"].append(info)
+
+    report["seen_bundle_sha256"] = sorted(report["seen_bundle_sha256"])
+    report["summary"] = {
+        "zip_members": sum(x.get("zip_members", 0) for x in report["obbs"]),
+        "unityfs_bundles_seen": len(report["bundles_seen"]),
+        "unityfs_bundles_loaded": len(report["bundles"]),
+        "identity_candidates": len(report["identity_candidates"]),
+        "nested_archives": len(report["nested_archives"]),
+        "bundle_errors": len(report["bundle_errors"]),
+    }
+
+    (out / "hero_vehicle_discovery.json").write_text(
+        json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    print(json.dumps(report["summary"], indent=2))
+    for item in report["identity_candidates"][:100]:
+        print(item["type"], "|", " | ".join(item["names"]), "| tokens:", ",".join(item["matched_tokens"]))
+
+
+if __name__ == "__main__":
+    main()
