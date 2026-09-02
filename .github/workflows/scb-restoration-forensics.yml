@@ -1,0 +1,64 @@
+name: SCB Restoration Forensics
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'RESEARCH/CSR2/SCB_RESTORATION_FORENSICS/**'
+      - '.github/workflows/scb-restoration-forensics.yml'
+
+permissions:
+  contents: read
+
+env:
+  MAIN_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb
+  PATCH_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb
+
+jobs:
+  forensic-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Pull canonical CSR2 6.7.0 OBBs
+        run: |
+          git lfs version
+          git lfs install --local
+          git lfs pull --include="$MAIN_OBB,$PATCH_OBB"
+          ls -lh "$MAIN_OBB" "$PATCH_OBB"
+          sha256sum "$MAIN_OBB" "$PATCH_OBB"
+
+      - name: Install UnityPy
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install UnityPy
+          python3 - <<'PY'
+          import UnityPy
+          print('UnityPy version:', UnityPy.__version__)
+          PY
+
+      - name: Scan Unity AssetBundles for RestorationManifest data
+        run: |
+          mkdir -p forensic-output
+          python3 RESEARCH/CSR2/SCB_RESTORATION_FORENSICS/scan_restoration_manifests.py \
+            --obb "$MAIN_OBB" \
+            --obb "$PATCH_OBB" \
+            --out forensic-output
+
+      - name: Upload forensic report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-6.7.0-scb-restoration-forensics
+          path: forensic-output/
+          if-no-files-found: warn
+          retention-days: 14
