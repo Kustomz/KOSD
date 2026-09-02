@@ -2,9 +2,8 @@
 """KOSD CSR2 6.7.0 Hero Vehicle discovery scanner.
 
 Discovery is deliberately broad: exact asset names, relative identity terms,
-and folder/path names are all evidence. Unity object metadata and references
-are inspected where available so a vehicle may be either a direct asset or an
-assembly of shared assets.
+folder/path names, Unity object metadata, typetrees, and object references are
+evidence. A vehicle may be either a direct asset or an assembly of shared assets.
 """
 from __future__ import annotations
 
@@ -20,6 +19,8 @@ MAGIC = b"UnityFS"
 CHUNK = 4 * 1024 * 1024
 TARGET_CRDB = "AMC_RingbrothersJavelinDefiant_1972"
 TARGET_TERMS = ("AMC", "Ringbrothers", "Javelin", "Defiant", "1972")
+DEEP_TYPES = {"MonoBehaviour", "AssetBundle", "GameObject", "Transform", "MeshRenderer", "MeshFilter", "Mesh", "Material", "Animator", "AnimatorController"}
+DEEP_PATH_TERMS = ("mesh", "body", "shared", "common", "driver", "model", "car", "metadata")
 
 def sha256(p: Path) -> str:
     h = hashlib.sha256()
@@ -34,6 +35,9 @@ def norm(s: str) -> str:
 def token_hits(text: str) -> list[str]:
     n = norm(text)
     return [t for t in TARGET_TERMS if norm(t) in n]
+
+def exact_target(text: str) -> bool:
+    return norm(TARGET_CRDB) in norm(text)
 
 def object_names(obj) -> list[str]:
     out = []
@@ -54,7 +58,7 @@ def object_names(obj) -> list[str]:
         pass
     return list(dict.fromkeys(out))
 
-def inspect_references(obj, typ) -> list[str]:
+def inspect_references(obj) -> list[str]:
     refs = []
     try:
         data = obj.read(check_read=False)
@@ -66,6 +70,55 @@ def inspect_references(obj, typ) -> list[str]:
     except Exception:
         pass
     return refs[:100]
+
+def safe_value(value, depth=0):
+    if depth > 3:
+        return str(value)[:300]
+    if value is None or isinstance(value, (bool, int, float, str)):
+        return value if not isinstance(value, str) else value[:2000]
+    if isinstance(value, dict):
+        return {str(k): safe_value(v, depth + 1) for k, v in list(value.items())[:80]}
+    if isinstance(value, (list, tuple)):
+        return [safe_value(v, depth + 1) for v in list(value)[:40]]
+    out = {}
+    for attr in ("file_id", "path_id", "m_FileID", "m_PathID"):
+        try:
+            v = getattr(value, attr)
+            if v is not None:
+                out[attr] = v
+        except Exception:
+            pass
+    if out:
+        out["repr"] = str(value)[:1000]
+        return out
+    return str(value)[:1000]
+
+def typetree_snapshot(obj):
+    try:
+        tree = obj.read_typetree()
+        if isinstance(tree, dict):
+            return safe_value(tree)
+        return safe_value(tree)
+    except Exception as e:
+        return {"_typetree_error": repr(e)}
+
+def deep_identity(obj, source_name: str):
+    try:
+        typ = obj.type.name
+    except Exception:
+        typ = str(getattr(obj, "type", "unknown"))
+    path_l = source_name.lower()
+    if typ not in DEEP_TYPES and not any(t in path_l for t in DEEP_PATH_TERMS):
+        return None, None
+    try:
+        data = obj.read(check_read=False)
+        text = str(data)
+    except Exception:
+        return None, None
+    if not exact_target(text):
+        return None, None
+    hits = token_hits(text)
+    return hits, text[:12000]
 
 def scan_unity_bundle(bundle_path: Path, source_name: str, obb: Path, report: dict, sha: str):
     import UnityPy
@@ -81,20 +134,29 @@ def scan_unity_bundle(bundle_path: Path, source_name: str, obb: Path, report: di
         path_evidence = [source_name]
         joined = " | ".join(names + path_evidence)
         hits = token_hits(joined)
+        deep_hits, deep_text = deep_identity(obj, source_name)
+        if deep_hits:
+            hits = list(dict.fromkeys(hits + deep_hits))
         if not hits:
             continue
         try:
             typ = obj.type.name
         except Exception:
             typ = str(getattr(obj, "type", "unknown"))
-        report["identity_candidates"].append({
+        item = {
             "obb": str(obb), "source_member": source_name,
             "bundle_sha256": sha, "path_id": getattr(obj, "path_id", None),
             "type": typ, "names": names,
             "path_evidence": path_evidence,
             "matched_tokens": hits, "token_count": len(hits),
-            "references": inspect_references(obj, typ),
-        })
+            "references": inspect_references(obj),
+        }
+        if exact_target(" | ".join(names)) or exact_target(deep_text or "") or (typ == "MonoBehaviour" and "CarMetadata" in source_name):
+            item["typetree"] = typetree_snapshot(obj)
+        if deep_hits:
+            item["data_identity_match"] = True
+            item["data_excerpt"] = deep_text
+        report["identity_candidates"].append(item)
 
 def scan_archive(path: Path, obb: Path, report: dict, work: Path, depth: int = 0, max_depth: int = 3):
     try:
@@ -134,7 +196,7 @@ def scan_archive(path: Path, obb: Path, report: dict, work: Path, depth: int = 0
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--obb", action="append", required=True); ap.add_argument("--out", required=True); a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    report = {"tool":"KOSD CSR2 6.7.0 Hero Vehicle discovery scanner", "target_crdb":TARGET_CRDB, "target_terms":list(TARGET_TERMS), "search_rule":"exact + relative + folder/path search; asset-derived identity", "obbs":[], "bundles_seen":[], "bundles":[], "identity_candidates":[], "nested_archives":[], "archive_errors":[], "member_errors":[], "bundle_errors":[], "seen_bundle_sha256":set()}
+    report = {"tool":"KOSD CSR2 6.7.0 Hero Vehicle discovery scanner", "target_crdb":TARGET_CRDB, "target_terms":list(TARGET_TERMS), "search_rule":"exact + relative + folder/path + typetree/data search; asset-derived identity", "obbs":[], "bundles_seen":[], "bundles":[], "identity_candidates":[], "nested_archives":[], "archive_errors":[], "member_errors":[], "bundle_errors":[], "seen_bundle_sha256":set()}
     with tempfile.TemporaryDirectory(prefix="kosd_hv_") as td:
         work = Path(td)
         for arg in a.obb:
