@@ -97,7 +97,7 @@ def inspect_zip(path: Path) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("obb", action="append", required=True)
+    ap.add_argument("--obb", action="append", required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -117,9 +117,9 @@ def main() -> int:
         except Exception as exc:
             item["diagnostic_error"] = repr(exc)
         report.append(item)
-        out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+        out.write_text(json.dumps(report, indent=2, ensure_ascii=True), encoding="utf-8")
 
-    out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    out.write_text(json.dumps(report, indent=2, ensure_ascii=True), encoding="utf-8")
     print(json.dumps(report, indent=2)[:50000])
     return 0
 
