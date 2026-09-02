@@ -69,17 +69,19 @@ done < <(find "$ROOT" -type d -name '*_OBB' -print0 | sort -z)
 # The version before the previous version is removed after successful ingestion.
 while IFS= read -r -d '' obb_parent; do
   mapfile -t versions < <(
-    find "$obb_parent" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
+    find "$(dirname "$obb_parent")" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
       | sort -V
   )
   (( ${#versions[@]} > KEEP_VERSIONS )) || continue
 
   delete_count=$(( ${#versions[@]} - KEEP_VERSIONS ))
   for ((i=0; i<delete_count; i++)); do
-    old="${obb_parent}/${versions[i]}"
-    log "Retention: removing OBB data from old version ${old}"
-    find "$old" -maxdepth 1 -type f \( -iname '*.obb' -o -name '*.zip.[0-9][0-9][0-9]' \) -delete
+    old="$(dirname "$obb_parent")/${versions[i]}"
+    old_obb_dir="$old/$(basename "$obb_parent")"
+    [[ -d "$old_obb_dir" ]] || continue
+    log "Retention: removing OBB data from old version ${old_obb_dir}"
+    find "$old_obb_dir" -maxdepth 1 -type f \( -iname '*.obb' -o -name '*.zip.[0-9][0-9][0-9]' \) -delete
   done
-done < <(find "$ROOT" -mindepth 3 -maxdepth 3 -type d -name '*_OBB' -print0 | sort -z)
+done < <(find "$ROOT" -mindepth 2 -maxdepth 2 -type d -name '*_OBB' -print0 | sort -z)
 
 log "Ingestion complete: ${processed} OBB set(s) processed."
