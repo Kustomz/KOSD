@@ -1,6 +1,7 @@
 # KOS-MANIFEST
 
-**KOS Version:** 2.0.0 (Draft) **Status:** Draft
+**KOS Version:** 2.0.0 (Draft)  
+**Status:** Draft
 
 ## Purpose
 
@@ -12,6 +13,7 @@ Master table of contents for the Kustomz Operating System (KOS).
 - KOS-INDEX-001
 - STD-001
 - CHANGELOG
+- Recovery Reconciliation v1.7
 
 ## Governance
 
@@ -45,3 +47,10 @@ Master table of contents for the Kustomz Operating System (KOS).
 - Text Assets (TXT)
 - Master Portrait (MP)
 - Theme (TH)
+
+## Research / Recovery Checkpoints
+
+- CSR2 6.7.0 SCB Restoration Requirements
+- CSR2 6.7.0 Main OBB — canonical Git LFS artifact
+- CSR2 6.7.0 Patch OBB — canonical Git LFS artifact
+- KOSD ↔ Recovery Reconciliation v1.7
