@@ -41,9 +41,15 @@ jobs:
           import UnityPy
           print('UnityPy version:', UnityPy.__version__)
           PY
-      - name: Discover HV-001 in OBBs
+      - name: Diagnose raw OBB structure
         run: |
           mkdir -p hv-output
+          python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/diagnose_obb_structure.py \
+            --obb "$MAIN_OBB" \
+            --obb "$PATCH_OBB" \
+            --out hv-output/obb_structure_diagnostic.json
+      - name: Discover HV-001 in OBBs
+        run: |
           python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/scan_hero_vehicle.py \
             --obb "$MAIN_OBB" \
             --obb "$PATCH_OBB" \
