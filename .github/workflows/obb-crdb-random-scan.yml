@@ -1,0 +1,221 @@
+name: CSR2 6.7.0 OBB CRDB Random Scan
+
+on:
+  workflow_dispatch:
+    inputs:
+      crdb_values:
+        description: 'Optional comma-separated CRDB values. Leave blank to choose 8 random CRDBs from the 6.7.0 OBB asset database.'
+        required: false
+        default: ''
+        type: string
+
+concurrency:
+  group: csr2-6.7.0-obb-crdb-random-scan
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  MAIN_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb
+  PATCH_OBB: RESEARCH/CSR2/GAME_VERSIONS/6.7.0/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb
+  MAIN_SHA256: 33bf8465ea4b4d337f1514dc63c98e6f7059d893fdcd37133099ac83b4a92273
+  PATCH_SHA256: 1f76f154ea4cedcab978f513942e515c60bc9f112aa4c8faccbfcf6b08582405
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+
+      - name: Restore canonical CSR2 6.7.0 OBB cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.MAIN_OBB }}
+            ${{ env.PATCH_OBB }}
+          key: csr2-6.7.0-obbs-${{ env.MAIN_SHA256 }}-${{ env.PATCH_SHA256 }}
+
+      - name: Acquire canonical CSR2 6.7.0 OBBs if cache is missing
+        shell: bash
+        run: |
+          set -euo pipefail
+          valid=1
+          if [[ ! -f "$MAIN_OBB" || "$(sha256sum "$MAIN_OBB" | cut -d' ' -f1)" != "$MAIN_SHA256" ]]; then valid=0; fi
+          if [[ ! -f "$PATCH_OBB" || "$(sha256sum "$PATCH_OBB" | cut -d' ' -f1)" != "$PATCH_SHA256" ]]; then valid=0; fi
+          if [[ "$valid" -eq 1 ]]; then
+            echo 'Canonical OBB cache hit.'
+          else
+            echo 'Canonical OBB cache miss; pulling exact OBBs from Git LFS.'
+            git lfs version
+            git lfs install --local
+            git lfs pull --include="$MAIN_OBB,$PATCH_OBB"
+          fi
+          test "$(sha256sum "$MAIN_OBB" | cut -d' ' -f1)" = "$MAIN_SHA256"
+          test "$(sha256sum "$PATCH_OBB" | cut -d' ' -f1)" = "$PATCH_SHA256"
+          ls -lh "$MAIN_OBB" "$PATCH_OBB"
+
+      - name: Select targets and scan both OBBs
+        env:
+          CRDB_INPUT: ${{ inputs.crdb_values }}
+        run: |
+          mkdir -p crdb-scan-output
+          python3 - <<'PY'
+          import json, os, random, re, zipfile
+          from pathlib import Path
+
+          main = Path(os.environ['MAIN_OBB'])
+          patch = Path(os.environ['PATCH_OBB'])
+          requested = [x.strip() for x in os.environ.get('CRDB_INPUT', '').split(',') if x.strip()]
+
+          DB_MEMBER = 'assets/AppDataRoot/asset_database_6_7_0_Release'
+
+          def find_crdb_values(obj, path='root'):
+              found = []
+              if isinstance(obj, dict):
+                  for k, v in obj.items():
+                      kp = f'{path}.{k}'
+                      if 'crdb' in k.lower():
+                          if isinstance(v, (str, int)) and str(v).strip():
+                              found.append((str(v), kp, obj))
+                      found.extend(find_crdb_values(v, kp))
+              elif isinstance(obj, list):
+                  for i, v in enumerate(obj):
+                      found.extend(find_crdb_values(v, f'{path}[{i}]'))
+              return found
+
+          def find_records(obj, target, path='root', out=None):
+              if out is None:
+                  out = []
+              if isinstance(obj, dict):
+                  for k, v in obj.items():
+                      if str(v) == target and 'crdb' in k.lower():
+                          out.append({'path': f'{path}.{k}', 'record': obj})
+                      find_records(v, target, f'{path}.{k}', out)
+              elif isinstance(obj, list):
+                  for i, v in enumerate(obj):
+                      find_records(v, target, f'{path}[{i}]', out)
+              return out
+
+          with zipfile.ZipFile(main, 'r') as z:
+              db_raw = z.read(DB_MEMBER)
+          db = json.loads(db_raw.decode('utf-8'))
+          crdb_entries = find_crdb_values(db)
+          unique = {}
+          for value, path, record in crdb_entries:
+              if re.fullmatch(r'-?\d+', value):
+                  unique.setdefault(value, {'value': value, 'field_paths': [], 'record': record})
+                  unique[value]['field_paths'].append(path)
+
+          if requested:
+              targets = requested[:8]
+              mode = 'explicit'
+          else:
+              keys = list(unique)
+              if len(keys) < 8:
+                  raise SystemExit(f'Only {len(keys)} CRDB candidates found in asset database; need 8.')
+              rng = random.Random(6705213)
+              targets = rng.sample(keys, 8)
+              mode = 'random'
+
+          targets = list(dict.fromkeys(targets))
+          if not targets:
+              raise SystemExit('No CRDB targets supplied or discovered.')
+
+          print('TARGET MODE:', mode)
+          print('TARGETS:', ', '.join(targets))
+
+          result = {
+              'version': 'CSR2 6.7.0',
+              'mode': mode,
+              'target_count': len(targets),
+              'targets': targets,
+              'asset_database_member': DB_MEMBER,
+              'asset_database_matches': {},
+              'raw_obb_hits': {},
+              'obb_metadata': []
+          }
+
+          for target in targets:
+              matches = find_records(db, target)
+              # Keep the first few unique structured records so the artifact remains useful.
+              clean = []
+              seen = set()
+              for m in matches:
+                  rec_text = json.dumps(m['record'], sort_keys=True, ensure_ascii=False)
+                  if rec_text not in seen:
+                      seen.add(rec_text)
+                      clean.append({'path': m['path'], 'record': m['record']})
+                  if len(clean) >= 10:
+                      break
+              result['asset_database_matches'][target] = clean
+              result['raw_obb_hits'][target] = []
+
+          for obb in (main, patch):
+              with zipfile.ZipFile(obb, 'r') as z:
+                  result['obb_metadata'].append({
+                      'path': str(obb),
+                      'size': obb.stat().st_size,
+                      'sha256': os.popen(f"sha256sum '{obb}'").read().split()[0],
+                      'zip_entries': len(z.infolist())
+                  })
+                  for info in z.infolist():
+                      try:
+                          data = z.read(info)
+                      except Exception as exc:
+                          print('READ ERROR', info.filename, repr(exc))
+                          continue
+                      for target in targets:
+                          needles = [target.encode('ascii'), target.encode('utf-16le')]
+                          positions = []
+                          for needle in needles:
+                              start = 0
+                              while True:
+                                  pos = data.find(needle, start)
+                                  if pos < 0:
+                                      break
+                                  positions.append(pos)
+                                  start = pos + max(1, len(needle))
+                                  if len(positions) >= 20:
+                                      break
+                          if positions:
+                              result['raw_obb_hits'][target].append({
+                                  'obb': str(obb),
+                                  'member': info.filename,
+                                  'hits': len(positions),
+                                  'sample_offsets': positions[:20]
+                              })
+
+          out = Path('crdb-scan-output/obb_crdb_scan.json')
+          out.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding='utf-8')
+
+          summary = Path('crdb-scan-output/obb_crdb_scan_summary.txt')
+          lines = [
+              'CSR2 6.7.0 OBB CRDB RANDOM SCAN',
+              f'Mode: {mode}',
+              f'Targets: {", ".join(targets)}',
+              '',
+              'RESULTS:'
+          ]
+          for target in targets:
+              dbn = len(result['asset_database_matches'][target])
+              hits = result['raw_obb_hits'][target]
+              lines.append(f'CRDB {target}: asset_database_records={dbn}, raw_obb_members={len(hits)}')
+              for h in hits[:20]:
+                  lines.append(f'  - {Path(h["obb"]).name} :: {h["member"]} :: {h["hits"]} hit(s)')
+          summary.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          print(summary.read_text())
+          PY
+
+      - name: Upload OBB CRDB scan
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-6.7.0-obb-crdb-random-scan
+          path: crdb-scan-output/
+          if-no-files-found: error
+          retention-days: 14
