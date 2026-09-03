@@ -1,0 +1,171 @@
+name: CSR2 6.7.0 New Cars List Scan
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_version:
+        description: 'Game version containing NewCarsInThisAppVersionList.bin'
+        required: false
+        default: '6.7.0'
+      compare_version:
+        description: 'Optional previous version to compare against'
+        required: false
+        default: '6.6.1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: csr2-new-cars-list-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    env:
+      TARGET_VERSION: ${{ inputs.target_version || '6.7.0' }}
+      COMPARE_VERSION: ${{ inputs.compare_version || '6.6.1' }}
+      MAIN_OBB: RESEARCH/CSR2/GAME_VERSIONS/${{ inputs.target_version || '6.7.0' }}/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb
+      PATCH_OBB: RESEARCH/CSR2/GAME_VERSIONS/${{ inputs.target_version || '6.7.0' }}/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Verify Git LFS and pull canonical OBB objects
+        run: |
+          git lfs version
+          git lfs install --local
+          git lfs pull
+
+          echo '--- OBB files ---'
+          find "RESEARCH/CSR2/GAME_VERSIONS/${TARGET_VERSION}" -type f -name '*.obb' -print -exec ls -lh {} \; || true
+
+      - name: Install extraction dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install UnityPy
+
+      - name: Locate NewCarsInThisAppVersionList.bin
+        run: |
+          mkdir -p scan/output scan/work
+          python - <<'PY'
+          import os, zipfile, json, hashlib
+          from pathlib import Path
+          import UnityPy
+
+          version = os.environ['TARGET_VERSION']
+          root = Path(f'RESEARCH/CSR2/GAME_VERSIONS/{version}')
+          out = Path('scan/output/new_cars_locations.json')
+          candidates = []
+
+          for obb in sorted(root.rglob('*.obb')):
+              print(f'=== Scanning {obb} ===')
+              try:
+                  with zipfile.ZipFile(obb) as z:
+                      names = z.namelist()
+                      for n in names:
+                          base = n.replace('\\','/').split('/')[-1]
+                          if base.lower() == 'newcarsinthisappversionlist.bin':
+                              info = z.getinfo(n)
+                              candidates.append({
+                                  'obb': str(obb),
+                                  'member': n,
+                                  'size': info.file_size,
+                                  'compressed_size': info.compress_size,
+                                  'sha256': hashlib.sha256(z.read(n)).hexdigest(),
+                              })
+                      if candidates:
+                          print('Found direct ZIP member(s).')
+                          continue
+              except (zipfile.BadZipFile, OSError) as e:
+                  print(f'ZIP direct scan unavailable: {e}')
+
+              try:
+                  env = UnityPy.load(str(obb))
+                  for obj in env.objects:
+                      data = getattr(obj, 'read', lambda: None)()
+                      name = getattr(data, 'm_Name', '') if data is not None else ''
+                      path = getattr(data, 'm_Path', '') if data is not None else ''
+                      text = f'{name} {path}'
+                      if 'NewCarsInThisAppVersionList.bin'.lower() in text.lower():
+                          candidates.append({
+                              'obb': str(obb),
+                              'unity_path': path,
+                              'object_name': name,
+                              'type': str(getattr(obj, 'type', 'unknown')),
+                          })
+              except Exception as e:
+                  print(f'UnityPy scan failed: {e}')
+
+          result = {
+              'target_version': version,
+              'filename': 'NewCarsInThisAppVersionList.bin',
+              'locations': candidates,
+              'count': len(candidates),
+          }
+          out.write_text(json.dumps(result, indent=2), encoding='utf-8')
+          print(json.dumps(result, indent=2))
+          if not candidates:
+              raise SystemExit('NewCarsInThisAppVersionList.bin was not located in the scanned OBBs.')
+          PY
+
+      - name: Extract and analyze NewCarsInThisAppVersionList.bin
+        run: |
+          python - <<'PY'
+          import json, zipfile, os, re, hashlib, struct
+          from pathlib import Path
+
+          loc = json.loads(Path('scan/output/new_cars_locations.json').read_text())
+          extracted = Path('scan/output/NewCarsInThisAppVersionList.bin')
+          analysis = Path('scan/output/new_cars_analysis.json')
+          raw = None
+
+          for item in loc['locations']:
+              obb = item.get('obb')
+              member = item.get('member')
+              if obb and member:
+                  with zipfile.ZipFile(obb) as z:
+                      raw = z.read(member)
+                  break
+
+          if raw is None:
+              raise SystemExit('A located Unity/serialized reference exists, but direct binary extraction was not available.')
+
+          extracted.write_bytes(raw)
+          text = raw.decode('utf-8', errors='ignore')
+          strings = re.findall(r'[A-Za-z0-9_#.-]{4,}', text)
+
+          result = {
+              'filename': 'NewCarsInThisAppVersionList.bin',
+              'size': len(raw),
+              'sha256': hashlib.sha256(raw).hexdigest(),
+              'ascii_strings': strings,
+              'likely_car_identifiers': sorted(set(s for s in strings if '_' in s or re.search(r'\\d', s))),
+          }
+          analysis.write_text(json.dumps(result, indent=2), encoding='utf-8')
+          print(json.dumps({k: v if k != 'ascii_strings' else f'{len(v)} strings' for k,v in result.items()}, indent=2))
+          PY
+
+      - name: Optional compare-version discovery
+        run: |
+          if [ -d "RESEARCH/CSR2/GAME_VERSIONS/${COMPARE_VERSION}" ]; then
+            echo "Previous version ${COMPARE_VERSION} is present; recording its OBB inventory for later comparison."
+            find "RESEARCH/CSR2/GAME_VERSIONS/${COMPARE_VERSION}" -type f -name '*.obb' -print > scan/output/compare_obb_inventory.txt
+          else
+            echo "Previous version ${COMPARE_VERSION} is not present in KOSD; no comparison performed." > scan/output/compare_obb_inventory.txt
+          fi
+
+      - name: Upload New Cars List research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-${{ env.TARGET_VERSION }}-new-cars-list-scan
+          path: scan/output/
+          if-no-files-found: error
+          retention-days: 14
