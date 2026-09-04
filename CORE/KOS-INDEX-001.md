@@ -40,6 +40,7 @@ Master index for KOS.
 
 - BP-001
 - BP-002
+- RP-001 — CSR2 Legends Restoration Pricing Resolver
 
 ## Libraries
 
