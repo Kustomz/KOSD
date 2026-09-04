@@ -33,6 +33,7 @@ Master table of contents for the Kustomz Operating System (KOS).
 
 - BP-001
 - BP-002
+- RP-001 — CSR2 Legends Restoration Pricing Resolver
 
 ## Libraries
 
@@ -53,4 +54,5 @@ Master table of contents for the Kustomz Operating System (KOS).
 - CSR2 6.7.0 SCB Restoration Requirements
 - CSR2 6.7.0 Main OBB — canonical Git LFS artifact
 - CSR2 6.7.0 Patch OBB — canonical Git LFS artifact
+- CSR2 6.7.0 Restoration Pricing Source — confirmed
 - KOSD ↔ Recovery Reconciliation v1.7
