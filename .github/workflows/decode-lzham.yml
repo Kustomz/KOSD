@@ -1,0 +1,56 @@
+name: Decode LZHAM Metadata
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_file:
+        description: 'Repository path to .metadata file'
+        required: true
+        default: 'ACQUISITION/RestorationCarPricing.metadata'
+      output_file:
+        description: 'Decoded output filename'
+        required: true
+        default: 'decoded.json'
+
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout KOSD
+        uses: actions/checkout@v4
+
+      - name: Extract LZHAM source
+        run: unzip -q ACQUISITION/lzham_alpha-master.zip -d /tmp/lzham
+
+      - name: Build LZHAM
+        working-directory: /tmp/lzham/lzham_alpha-master
+        run: |
+          make -j2
+
+      - name: Build decoder
+        run: |
+          g++ -std=c++17 -O2 \
+            -I/tmp/lzham/lzham_alpha-master/include \
+            -I/tmp/lzham/lzham_alpha-master/src \
+            ACQUISITION/decode_lzham.cpp \
+            /tmp/lzham/lzham_alpha-master/lib/lzhamdll.a \
+            -o /tmp/decode_lzham || \
+          g++ -std=c++17 -O2 \
+            -I/tmp/lzham/lzham_alpha-master/include \
+            -I/tmp/lzham/lzham_alpha-master/src \
+            ACQUISITION/decode_lzham.cpp \
+            $(find /tmp/lzham/lzham_alpha-master -name '*.o' -print) \
+            -o /tmp/decode_lzham
+
+      - name: Decode metadata
+        run: |
+          mkdir -p decoded
+          /tmp/decode_lzham "${{ inputs.input_file }}" "decoded/${{ inputs.output_file }}"
+          file "decoded/${{ inputs.output_file }}"
+
+      - name: Upload decoded artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lzham-decoded
+          path: decoded/${{ inputs.output_file }}
+          if-no-files-found: error
