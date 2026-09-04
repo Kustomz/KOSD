@@ -1,0 +1,1 @@
+{"source":"CSR2 6.6.0","sourceFiles":["CarPricing.metadata","CarMilestoneData.metadata"],"costMapping":{"1":"Green","2":"Blue","3":"Red","4":"Gold"},"schemeInheritance":"Derived schemes inherit base milestones; same-level derived milestones replace base milestone.","cars":[]}
