@@ -52,12 +52,14 @@ jobs:
           if [[ -n "${CHUNK_GLOB}" ]]; then
             mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -path "ACQUISITION/${CHUNK_GLOB}" -printf '%f\n' | sort -V)
           else
-            # Prefer a filename carrying the version token, e.g. base[670].zip.001.
-            # If no version-token set exists, fall back to an unqualified base.zip.* set.
+            # Canonical acquisition naming is base[VVV].zip.001, where VVV is
+            # the first three digits of the dotted game version (6.7.0 -> 670).
             token="${TARGET_VERSION//./}"
             token="${token:0:3}"
-            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f \( -name "*${token}*.zip.[0-9][0-9][0-9]" -o -name "*[$token]*.zip.[0-9][0-9][0-9]" \) -printf '%f\n' | sort -V)
+            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name "base[${token}].zip.[0-9][0-9][0-9]" -printf '%f\n' | sort -V)
 
+            # Backward compatibility for the original 6.6 acquisition set,
+            # which predates the canonical version-tagged filename convention.
             if (( ${#chunks[@]} == 0 )) && [[ "${TARGET_VERSION}" == "6.6.0" ]]; then
               mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name 'base.zip.[0-9][0-9][0-9]' -printf '%f\n' | sort -V)
             fi
@@ -104,16 +106,17 @@ jobs:
           sha256sum work/base.apk | tee output/base.apk.sha256
           cp work/base.apk "output/csr2-${TARGET_VERSION}.apk"
 
-          cat > output/acquisition-manifest.json <<EOF
-          {
-            "target_version": "${TARGET_VERSION}",
-            "expected_package": "${EXPECTED_PACKAGE}",
-            "chunks": [
-          $(sed 's/.*/    "&"/' work/chunks.txt | paste -sd, -)
-            ],
-            "reconstructed_filename": "csr2-${TARGET_VERSION}.apk"
-          }
-          EOF
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          chunks = Path('work/chunks.txt').read_text().splitlines()
+          Path('output/acquisition-manifest.json').write_text(json.dumps({
+              'target_version': os.environ['TARGET_VERSION'],
+              'expected_package': os.environ['EXPECTED_PACKAGE'],
+              'chunks': chunks,
+              'reconstructed_filename': f"csr2-{os.environ['TARGET_VERSION']}.apk"
+          }, indent=2) + '\n', encoding='utf-8')
+          PY
 
       - name: Upload APK acquisition artifact
         uses: actions/upload-artifact@v4
