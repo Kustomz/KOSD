@@ -1,9 +1,9 @@
 name: Probe 6.7.0 LFS Objects
 
 on:
-  push:
+  pull_request:
     branches:
-      - test/lfs-probe-6.7.0
+      - main
 
 jobs:
   probe:
@@ -26,5 +26,5 @@ jobs:
           import json
           d=json.load(open('lfs-probe.json'))
           for o in d.get('objects', []):
-              print(f"oid={o.get('oid')} size={o.get('size')} status={o.get('authenticated', 'n/a')} error={o.get('error', {})} action={bool(o.get('actions', {}).get('download'))}")
+              print(f"oid={o.get('oid')} size={o.get('size')} error={o.get('error', {})} action={bool(o.get('actions', {}).get('download'))}")
           PY
