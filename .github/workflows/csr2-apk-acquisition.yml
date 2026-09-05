@@ -1,0 +1,124 @@
+name: CSR2 APK Acquisition
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_version:
+        description: 'CSR2 version being acquired (for example 6.6.0 or 6.7.0)'
+        required: true
+        default: '6.7.0'
+      chunk_glob:
+        description: 'Optional chunk glob relative to ACQUISITION; leave blank for automatic discovery'
+        required: false
+        default: ''
+      expected_package:
+        description: 'Expected Android package name'
+        required: false
+        default: 'com.naturalmotion.customstreetracer2'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: csr2-apk-acquisition-${{ inputs.target_version }}
+  cancel-in-progress: false
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    env:
+      TARGET_VERSION: ${{ inputs.target_version }}
+      CHUNK_GLOB: ${{ inputs.chunk_glob }}
+      EXPECTED_PACKAGE: ${{ inputs.expected_package }}
+
+    steps:
+      - name: Check out KOSD
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          lfs: false
+
+      - name: Discover APK acquisition chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work output
+
+          echo "=== Acquisition inventory ==="
+          find ACQUISITION -maxdepth 1 -type f -name '*.zip.[0-9][0-9][0-9]' -printf '%f\n' | sort -V || true
+
+          if [[ -n "${CHUNK_GLOB}" ]]; then
+            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -path "ACQUISITION/${CHUNK_GLOB}" -printf '%f\n' | sort -V)
+          else
+            # Prefer a filename carrying the version token, e.g. base[670].zip.001.
+            # If no version-token set exists, fall back to an unqualified base.zip.* set.
+            token="${TARGET_VERSION//./}"
+            token="${token:0:3}"
+            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f \( -name "*${token}*.zip.[0-9][0-9][0-9]" -o -name "*[$token]*.zip.[0-9][0-9][0-9]" \) -printf '%f\n' | sort -V)
+
+            if (( ${#chunks[@]} == 0 )) && [[ "${TARGET_VERSION}" == "6.6.0" ]]; then
+              mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name 'base.zip.[0-9][0-9][0-9]' -printf '%f\n' | sort -V)
+            fi
+          fi
+
+          (( ${#chunks[@]} > 0 )) || { echo 'ERROR: No APK acquisition chunks found.' >&2; exit 1; }
+
+          echo "=== Selected ${TARGET_VERSION} chunks ==="
+          printf '%s\n' "${chunks[@]}"
+
+          expected=1
+          for chunk in "${chunks[@]}"; do
+            suffix="${chunk##*.}"
+            number=$((10#$suffix))
+            (( number == expected )) || { echo "ERROR: Missing chunk ${expected}; found ${number} (${chunk})" >&2; exit 1; }
+            expected=$((expected + 1))
+          done
+
+          printf '%s\n' "${chunks[@]}" > work/chunks.txt
+
+      - name: Reconstruct APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > work/base.apk
+          while IFS= read -r chunk; do
+            cat "ACQUISITION/${chunk}" >> work/base.apk
+          done < work/chunks.txt
+
+          size=$(stat -c '%s' work/base.apk)
+          echo "Reconstructed size: ${size} bytes"
+          (( size > 1000000 )) || { echo 'ERROR: Reconstructed APK is unexpectedly small.' >&2; exit 1; }
+
+          file work/base.apk
+          unzip -tq work/base.apk
+
+      - name: Validate Android APK identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -l work/base.apk | grep -q 'AndroidManifest.xml' || { echo 'ERROR: AndroidManifest.xml not found.' >&2; exit 1; }
+          unzip -l work/base.apk | grep -q 'classes.dex' || { echo 'ERROR: classes.dex not found.' >&2; exit 1; }
+
+          sha256sum work/base.apk | tee output/base.apk.sha256
+          cp work/base.apk "output/csr2-${TARGET_VERSION}.apk"
+
+          cat > output/acquisition-manifest.json <<EOF
+          {
+            "target_version": "${TARGET_VERSION}",
+            "expected_package": "${EXPECTED_PACKAGE}",
+            "chunks": [
+          $(sed 's/.*/    "&"/' work/chunks.txt | paste -sd, -)
+            ],
+            "reconstructed_filename": "csr2-${TARGET_VERSION}.apk"
+          }
+          EOF
+
+      - name: Upload APK acquisition artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-${{ env.TARGET_VERSION }}-apk
+          path: output/
+          if-no-files-found: error
+          retention-days: 30
