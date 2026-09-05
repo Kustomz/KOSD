@@ -1,0 +1,30 @@
+name: Probe 6.7.0 LFS Objects
+
+on:
+  push:
+    branches:
+      - test/lfs-probe-6.7.0
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe Git LFS batch endpoint without downloading objects
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl -fsS \
+            -X POST \
+            -H "Accept: application/vnd.git-lfs+json" \
+            -H "Content-Type: application/vnd.git-lfs+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            https://github.com/Kustomz/KOSD.git/info/lfs/objects/batch \
+            --data '{"operation":"download","transfers":["basic"],"objects":[{"oid":"33bf8465ea4b4d337f1514dc63c98e6f7059d893fdcd37133099ac83b4a92273","size":824760273},{"oid":"1f76f154ea4cedcab978f513942e515c60bc9f112aa4c8faccbfcf6b08582405","size":382011946}]}' \
+            | tee lfs-probe.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('lfs-probe.json'))
+          for o in d.get('objects', []):
+              print(f"oid={o.get('oid')} size={o.get('size')} status={o.get('authenticated', 'n/a')} error={o.get('error', {})} action={bool(o.get('actions', {}).get('download'))}")
+          PY
