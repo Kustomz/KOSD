@@ -1,6 +1,11 @@
 name: CSR2 APK Acquisition
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ACQUISITION/base*.zip.*'
   workflow_dispatch:
     inputs:
       target_version:
@@ -17,177 +22,158 @@ on:
         default: 'com.naturalmotion.customstreetracer2'
 
 permissions:
-  contents: read
+  contents: write
+
+env:
+  EXPECTED_PACKAGE: ${{ inputs.expected_package || 'com.naturalmotion.customstreetracer2' }}
 
 concurrency:
-  group: csr2-apk-acquisition-${{ inputs.target_version }}
+  group: csr2-apk-acquisition-${{ inputs.target_version || github.sha }}
   cancel-in-progress: false
 
 jobs:
   acquire:
     runs-on: ubuntu-latest
     timeout-minutes: 360
-
-    env:
-      TARGET_VERSION: ${{ inputs.target_version }}
-      CHUNK_GLOB: ${{ inputs.chunk_glob }}
-      EXPECTED_PACKAGE: ${{ inputs.expected_package }}
-
     steps:
       - name: Check out KOSD
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           lfs: false
 
+      - name: Determine acquisition version
+        id: version
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_VERSION: ${{ inputs.target_version || '' }}
+          INPUT_GLOB: ${{ inputs.chunk_glob || '' }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            version="$INPUT_VERSION"
+            glob="$INPUT_GLOB"
+          else
+            mapfile -t changed < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" -- 'ACQUISITION/base*.zip.*')
+            ((${#changed[@]} > 0)) || exit 0
+            declare -A versions=()
+            for path in "${changed[@]}"; do
+              name="$(basename "$path")"
+              if [[ "$name" =~ ^base\[([0-9]+)\]\.zip\.[0-9]{3}$ ]]; then
+                versions["${BASH_REMATCH[1]}"]=1
+              elif [[ "$name" =~ ^base\.zip\.[0-9]{3}$ ]]; then
+                versions[legacy]=1
+              fi
+            done
+            if ((${#versions[@]} != 1)); then
+              echo "Push must contain exactly one APK acquisition version: ${!versions[*]}" >&2
+              exit 1
+            fi
+            key="${!versions[@]}"
+            if [[ "$key" == legacy ]]; then
+              version='6.6.0'
+              glob='base.zip.[0-9][0-9][0-9]'
+            else
+              version="$key"
+              glob="base[${key}].zip.[0-9][0-9][0-9]"
+            fi
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "glob=$glob" >> "$GITHUB_OUTPUT"
+
       - name: Discover and validate APK acquisition chunks
+        if: ${{ steps.version.outputs.version != '' }}
+        env:
+          TARGET_VERSION: ${{ steps.version.outputs.version }}
+          CHUNK_GLOB: ${{ steps.version.outputs.glob }}
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p work output
-
-          echo '=== Acquisition inventory ==='
-          find ACQUISITION -maxdepth 1 -type f -name '*.zip.[0-9][0-9][0-9]' -printf '%f %s bytes\n' | sort -V || true
-
-          if [[ -n "${CHUNK_GLOB}" ]]; then
-            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -path "ACQUISITION/${CHUNK_GLOB}" -printf '%f\n' | sort -V)
-          else
-            token="${TARGET_VERSION//./}"
-            token="${token:0:3}"
-            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name "base[[]${token}[]].zip.[0-9][0-9][0-9]" -printf '%f\n' | sort -V)
-
-            if (( ${#chunks[@]} == 0 )) && [[ "${TARGET_VERSION}" == "6.6.0" ]]; then
-              mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name 'base.zip.[0-9][0-9][0-9]' -printf '%f\n' | sort -V)
-            fi
-          fi
-
-          (( ${#chunks[@]} > 0 )) || { echo 'ERROR: No APK acquisition chunks found.' >&2; exit 1; }
-
-          echo "=== Selected ${TARGET_VERSION} chunks ==="
-          printf '%s\n' "${chunks[@]}"
-
+          mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name "$CHUNK_GLOB" -printf '%f\n' | sort -V)
+          ((${#chunks[@]} > 0)) || { echo "ERROR: No APK acquisition chunks found for $TARGET_VERSION" >&2; exit 1; }
           expected=1
           for chunk in "${chunks[@]}"; do
-            suffix="${chunk##*.}"
-            number=$((10#$suffix))
-            (( number == expected )) || { echo "ERROR: Missing chunk ${expected}; found ${number} (${chunk})" >&2; exit 1; }
-            size=$(stat -c '%s' "ACQUISITION/${chunk}")
+            number=$((10#${chunk##*.}))
+            ((number == expected)) || { echo "ERROR: Missing chunk $(printf '%03d' "$expected")" >&2; exit 1; }
+            size=$(stat -c '%s' "ACQUISITION/$chunk")
             echo "chunk ${number}: ${chunk} = ${size} bytes"
-            (( size > 0 )) || { echo "ERROR: Empty chunk: ${chunk}" >&2; exit 1; }
+            ((size > 0)) || { echo "ERROR: Empty chunk: $chunk" >&2; exit 1; }
             expected=$((expected + 1))
           done
-
-          first_size=$(stat -c '%s' "ACQUISITION/${chunks[0]}")
-          last_size=$(stat -c '%s' "ACQUISITION/${chunks[-1]}")
-          if (( ${#chunks[@]} > 1 )) && (( last_size == first_size )); then
-            next=$((expected))
-            echo "ERROR: Acquisition sequence appears incomplete: final chunk ${chunks[-1]} is exactly ${first_size} bytes, so chunk ${next} is likely missing." >&2
-            exit 1
-          fi
-
           printf '%s\n' "${chunks[@]}" > work/chunks.txt
 
-      - name: Reconstruct split archive
+      - name: Reconstruct and validate APK
+        if: ${{ steps.version.outputs.version != '' }}
+        env:
+          TARGET_VERSION: ${{ steps.version.outputs.version }}
         shell: bash
         run: |
           set -euo pipefail
           : > work/acquisition.zip
-          while IFS= read -r chunk; do
-            cat "ACQUISITION/${chunk}" >> work/acquisition.zip
-          done < work/chunks.txt
-
-          size=$(stat -c '%s' work/acquisition.zip)
-          echo "Reconstructed archive size: ${size} bytes"
-          (( size > 1000000 )) || { echo 'ERROR: Reconstructed archive is unexpectedly small.' >&2; exit 1; }
-
-          echo '=== Archive identity ==='
-          file work/acquisition.zip
-
-      - name: Inspect and extract APK from acquisition archive
-        shell: bash
-        run: |
-          set -euo pipefail
+          while IFS= read -r chunk; do cat "ACQUISITION/${chunk}" >> work/acquisition.zip; done < work/chunks.txt
+          unzip -tq work/acquisition.zip
           python - <<'PY'
           from pathlib import Path
-          import shutil
-          import zipfile
-
-          archive = Path('work/acquisition.zip')
-          apk_out = Path('work/base.apk')
-
-          print('=== Python ZIP inspection ===')
-          try:
-              with zipfile.ZipFile(archive, 'r') as z:
-                  names = z.namelist()
-                  print(f'Archive entries: {len(names)}')
-                  for name in names:
-                      info = z.getinfo(name)
-                      print(f'  {name} ({info.file_size} bytes)')
-
-                  bad = z.testzip()
-                  if bad is not None:
-                      raise RuntimeError(f'ZIP CRC/integrity failure in entry: {bad}')
-
-                  apk_entries = [name for name in names if name.lower().endswith('.apk')]
-
-                  if len(apk_entries) == 1:
-                      entry = apk_entries[0]
-                      print(f'Found nested APK: {entry}')
-                      with z.open(entry, 'r') as src, apk_out.open('wb') as dst:
-                          shutil.copyfileobj(src, dst)
-                  elif len(apk_entries) == 0:
-                      print('No nested APK found; treating reconstructed bytes as a raw split APK.')
-                      shutil.copyfile(archive, apk_out)
-                  else:
-                      raise RuntimeError('Multiple APK files found: ' + ', '.join(apk_entries))
-          except zipfile.BadZipFile as exc:
-              raise SystemExit(f'ERROR: Reconstructed acquisition is not a valid ZIP archive: {exc}')
-
-          size = apk_out.stat().st_size
-          print(f'APK size: {size} bytes')
-          if size <= 1_000_000:
-              raise SystemExit('ERROR: Extracted APK is unexpectedly small.')
-
-          print('=== APK ZIP validation ===')
-          try:
-              with zipfile.ZipFile(apk_out, 'r') as z:
-                  bad = z.testzip()
-                  if bad is not None:
-                      raise SystemExit(f'ERROR: APK ZIP integrity failure in entry: {bad}')
-                  names = set(z.namelist())
-                  print(f'APK entries: {len(names)}')
-                  required = {'AndroidManifest.xml', 'classes.dex'}
-                  missing = sorted(required - names)
-                  if missing:
-                      raise SystemExit('ERROR: APK missing required top-level entries: ' + ', '.join(missing))
-          except zipfile.BadZipFile as exc:
-              raise SystemExit(f'ERROR: Extracted file is not a valid APK/ZIP: {exc}')
-          PY
-
-      - name: Validate Android APK identity
-        shell: bash
-        run: |
-          set -euo pipefail
-          sha256sum work/base.apk | tee output/base.apk.sha256
+          import shutil, zipfile
+          archive=Path('work/acquisition.zip'); apk=Path('work/base.apk')
+          with zipfile.ZipFile(archive) as z:
+              names=z.namelist(); bad=z.testzip()
+              if bad: raise SystemExit(f'ZIP integrity failure: {bad}')
+              entries=[n for n in names if n.lower().endswith('.apk')]
+              if len(entries)==1:
+                  with z.open(entries[0]) as src, apk.open('wb') as dst: shutil.copyfileobj(src,dst)
+              elif not entries:
+                  shutil.copyfile(archive,apk)
+              else: raise SystemExit('Multiple APK files found')
+          with zipfile.ZipFile(apk) as z:
+              bad=z.testzip()
+              if bad: raise SystemExit(f'APK integrity failure: {bad}')
+              names=set(z.namelist())
+              missing={'AndroidManifest.xml','classes.dex'}-names
+              if missing: raise SystemExit('APK missing: '+', '.join(sorted(missing)))
+          print(f'Validated APK: {apk.stat().st_size} bytes')
+          sha256sum work/base.apk | tee "output/csr2-${TARGET_VERSION}.sha256"
           cp work/base.apk "output/csr2-${TARGET_VERSION}.apk"
 
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          chunks = Path('work/chunks.txt').read_text().splitlines()
-          Path('output/acquisition-manifest.json').write_text(json.dumps({
-              'target_version': os.environ['TARGET_VERSION'],
-              'expected_package': os.environ['EXPECTED_PACKAGE'],
-              'chunks': chunks,
-              'source_type': 'split_zip_container',
-              'reconstructed_filename': f"csr2-{os.environ['TARGET_VERSION']}.apk"
-          }, indent=2) + '\n', encoding='utf-8')
-          PY
+      - name: Apply current-plus-previous retention
+        if: ${{ steps.version.outputs.version != '' }}
+        env:
+          TARGET_VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ACQUISITION/RELEASED_APK
+          cp "output/csr2-${TARGET_VERSION}.apk" "ACQUISITION/RELEASED_APK/"
+          cp "output/csr2-${TARGET_VERSION}.sha256" "ACQUISITION/RELEASED_APK/"
+          mapfile -t versions < <(find ACQUISITION/RELEASED_APK -maxdepth 1 -type f -name 'csr2-*.apk' -printf '%f\n' | sed -E 's/^csr2-(.*)\.apk$/\1/' | sort -V)
+          if ((${#versions[@]} > 2)); then
+            for ((i=0; i<${#versions[@]}-2; i++)); do
+              old="${versions[i]}"
+              echo "Retention: removing APK version $old"
+              rm -f "ACQUISITION/RELEASED_APK/csr2-${old}.apk" "ACQUISITION/RELEASED_APK/csr2-${old}.sha256"
+            done
+          fi
+          find ACQUISITION/RELEASED_APK -maxdepth 1 -type f -printf '%f\n' | sort -V
+
+      - name: Commit retained APK state
+        if: ${{ success() && steps.version.outputs.version != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'KOSD APK Acquisition'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A ACQUISITION/RELEASED_APK
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Acquire CSR2 APK ${{ steps.version.outputs.version }}"
+          git push origin HEAD:main
 
       - name: Upload APK acquisition artifact
+        if: ${{ steps.version.outputs.version != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: csr2-${{ env.TARGET_VERSION }}-apk
+          name: csr2-${{ steps.version.outputs.version }}-apk
           path: output/
           if-no-files-found: error
           retention-days: 30
