@@ -25,6 +25,15 @@
 - The Ferrari-specific `RestorationManifest` is explicitly classified as an asset/state mapping source, not the restoration-economic source.
 - RP-001 requires regression validation and future-format detection so new Legends cars can be resolved from new game data without adding per-car pricing code.
 
+### CSR2 Direct Acquisition Model
+- Locked direct acquisition model established in `ACQUISITION/CSR2_DIRECT_ACQUISITION_MODEL.md`.
+- Each CSR2 version uses `ACQUISITION/<version>/base.apk` plus `ACQUISITION/<version>/com.naturalmotion.customstreetracer2/` for OBB files.
+- `base.apk` is explicitly a sibling of the Android package directory, not a file inside it.
+- APK acquisition uses the complete APK through Termux/regular Git while the APK remains below the regular Git individual-file limit; manual splitting is not part of the locked model.
+- OBB acquisition uses complete files through Git LFS; manual `.001/.002/.003` splitting is not part of the locked model.
+- Direct OBB ingestion promotes files to canonical `RESEARCH/CSR2/GAME_VERSIONS/<version>/MAIN_OBB/` and `PATCH_OBB/` locations and retains Current + Previous versions.
+- The permanent APK and OBB workflows remain version-aware and do not require workflow edits for each new CSR2 release.
+
 ### Build Boundary
 This entry records the current draft build state. It is not a released KOSD version.
 
