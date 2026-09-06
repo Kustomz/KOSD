@@ -102,43 +102,72 @@ jobs:
 
           echo '=== Archive identity ==='
           file work/acquisition.zip
-          echo '=== ZIP integrity test ==='
-          unzip -tq work/acquisition.zip
 
-      - name: Extract APK from acquisition archive
+      - name: Inspect and extract APK from acquisition archive
         shell: bash
         run: |
           set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          import zipfile
 
-          mapfile -t apk_entries < <(unzip -Z1 work/acquisition.zip | grep -Ei '\.apk$' || true)
+          archive = Path('work/acquisition.zip')
+          apk_out = Path('work/base.apk')
 
-          if (( ${#apk_entries[@]} == 1 )); then
-            echo "Found nested APK: ${apk_entries[0]}"
-            unzip -p work/acquisition.zip "${apk_entries[0]}" > work/base.apk
-          elif (( ${#apk_entries[@]} == 0 )); then
-            echo 'No nested APK found; treating reconstructed bytes as a raw split APK.'
-            cp work/acquisition.zip work/base.apk
-          else
-            echo 'ERROR: Multiple APK files found in acquisition archive:' >&2
-            printf '%s\n' "${apk_entries[@]}" >&2
-            exit 1
-          fi
+          print('=== Python ZIP inspection ===')
+          try:
+              with zipfile.ZipFile(archive, 'r') as z:
+                  names = z.namelist()
+                  print(f'Archive entries: {len(names)}')
+                  for name in names:
+                      info = z.getinfo(name)
+                      print(f'  {name} ({info.file_size} bytes)')
 
-          size=$(stat -c '%s' work/base.apk)
-          echo "APK size: ${size} bytes"
-          (( size > 1000000 )) || { echo 'ERROR: Extracted APK is unexpectedly small.' >&2; exit 1; }
+                  bad = z.testzip()
+                  if bad is not None:
+                      raise RuntimeError(f'ZIP CRC/integrity failure in entry: {bad}')
 
-          file work/base.apk
-          xxd -l 16 work/base.apk
-          unzip -tq work/base.apk
+                  apk_entries = [name for name in names if name.lower().endswith('.apk')]
+
+                  if len(apk_entries) == 1:
+                      entry = apk_entries[0]
+                      print(f'Found nested APK: {entry}')
+                      with z.open(entry, 'r') as src, apk_out.open('wb') as dst:
+                          shutil.copyfileobj(src, dst)
+                  elif len(apk_entries) == 0:
+                      print('No nested APK found; treating reconstructed bytes as a raw split APK.')
+                      shutil.copyfile(archive, apk_out)
+                  else:
+                      raise RuntimeError('Multiple APK files found: ' + ', '.join(apk_entries))
+          except zipfile.BadZipFile as exc:
+              raise SystemExit(f'ERROR: Reconstructed acquisition is not a valid ZIP archive: {exc}')
+
+          size = apk_out.stat().st_size
+          print(f'APK size: {size} bytes')
+          if size <= 1_000_000:
+              raise SystemExit('ERROR: Extracted APK is unexpectedly small.')
+
+          print('=== APK ZIP validation ===')
+          try:
+              with zipfile.ZipFile(apk_out, 'r') as z:
+                  bad = z.testzip()
+                  if bad is not None:
+                      raise SystemExit(f'ERROR: APK ZIP integrity failure in entry: {bad}')
+                  names = set(z.namelist())
+                  print(f'APK entries: {len(names)}')
+                  required = {'AndroidManifest.xml', 'classes.dex'}
+                  missing = sorted(required - names)
+                  if missing:
+                      raise SystemExit('ERROR: APK missing required top-level entries: ' + ', '.join(missing))
+          except zipfile.BadZipFile as exc:
+              raise SystemExit(f'ERROR: Extracted file is not a valid APK/ZIP: {exc}')
+          PY
 
       - name: Validate Android APK identity
         shell: bash
         run: |
           set -euo pipefail
-          unzip -l work/base.apk | grep -q 'AndroidManifest.xml' || { echo 'ERROR: AndroidManifest.xml not found.' >&2; exit 1; }
-          unzip -l work/base.apk | grep -q 'classes.dex' || { echo 'ERROR: classes.dex not found.' >&2; exit 1; }
-
           sha256sum work/base.apk | tee output/base.apk.sha256
           cp work/base.apk "output/csr2-${TARGET_VERSION}.apk"
 
