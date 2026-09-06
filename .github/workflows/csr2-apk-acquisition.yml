@@ -1,6 +1,8 @@
 name: CSR2 APK Acquisition
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       target_version:
@@ -20,7 +22,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: csr2-apk-acquisition-${{ inputs.target_version }}
+  group: csr2-apk-acquisition-${{ inputs.target_version || '6.7.0' }}
   cancel-in-progress: false
 
 jobs:
@@ -29,9 +31,9 @@ jobs:
     timeout-minutes: 360
 
     env:
-      TARGET_VERSION: ${{ inputs.target_version }}
+      TARGET_VERSION: ${{ inputs.target_version || '6.7.0' }}
       CHUNK_GLOB: ${{ inputs.chunk_glob }}
-      EXPECTED_PACKAGE: ${{ inputs.expected_package }}
+      EXPECTED_PACKAGE: ${{ inputs.expected_package || 'com.naturalmotion.customstreetracer2' }}
 
     steps:
       - name: Check out KOSD
