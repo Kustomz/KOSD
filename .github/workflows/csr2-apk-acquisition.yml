@@ -40,26 +40,23 @@ jobs:
           fetch-depth: 1
           lfs: false
 
-      - name: Discover APK acquisition chunks
+      - name: Discover and validate APK acquisition chunks
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p work output
 
-          echo "=== Acquisition inventory ==="
-          find ACQUISITION -maxdepth 1 -type f -name '*.zip.[0-9][0-9][0-9]' -printf '%f\n' | sort -V || true
+          echo '=== Acquisition inventory ==='
+          find ACQUISITION -maxdepth 1 -type f -name '*.zip.[0-9][0-9][0-9]' -printf '%f %s bytes\n' | sort -V || true
 
           if [[ -n "${CHUNK_GLOB}" ]]; then
             mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -path "ACQUISITION/${CHUNK_GLOB}" -printf '%f\n' | sort -V)
           else
-            # Canonical acquisition naming is base[VVV].zip.001, where VVV is
-            # the first three digits of the dotted game version (6.7.0 -> 670).
             token="${TARGET_VERSION//./}"
             token="${token:0:3}"
-            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name "base[${token}].zip.[0-9][0-9][0-9]" -printf '%f\n' | sort -V)
+            # [[] and []] are find/glob escapes for literal square brackets.
+            mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name "base[[]${token}[]].zip.[0-9][0-9][0-9]" -printf '%f\n' | sort -V)
 
-            # Backward compatibility for the original 6.6 acquisition set,
-            # which predates the canonical version-tagged filename convention.
             if (( ${#chunks[@]} == 0 )) && [[ "${TARGET_VERSION}" == "6.6.0" ]]; then
               mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name 'base.zip.[0-9][0-9][0-9]' -printf '%f\n' | sort -V)
             fi
@@ -75,8 +72,21 @@ jobs:
             suffix="${chunk##*.}"
             number=$((10#$suffix))
             (( number == expected )) || { echo "ERROR: Missing chunk ${expected}; found ${number} (${chunk})" >&2; exit 1; }
+            size=$(stat -c '%s' "ACQUISITION/${chunk}")
+            echo "chunk ${number}: ${chunk} = ${size} bytes"
+            (( size > 0 )) || { echo "ERROR: Empty chunk: ${chunk}" >&2; exit 1; }
             expected=$((expected + 1))
           done
+
+          # Acquisition chunks use a fixed split size. If the final selected
+          # chunk is also exactly the split size, the sequence is incomplete.
+          first_size=$(stat -c '%s' "ACQUISITION/${chunks[0]}")
+          last_size=$(stat -c '%s' "ACQUISITION/${chunks[-1]}")
+          if (( ${#chunks[@]} > 1 )) && (( last_size == first_size )); then
+            next=$((expected))
+            echo "ERROR: Acquisition sequence appears incomplete: final chunk ${chunks[-1]} is exactly ${first_size} bytes, so chunk ${next} is likely missing." >&2
+            exit 1
+          fi
 
           printf '%s\n' "${chunks[@]}" > work/chunks.txt
 
@@ -93,7 +103,11 @@ jobs:
           echo "Reconstructed size: ${size} bytes"
           (( size > 1000000 )) || { echo 'ERROR: Reconstructed APK is unexpectedly small.' >&2; exit 1; }
 
+          echo '=== Reconstructed file identity ==='
           file work/base.apk
+          echo '=== ZIP signature ==='
+          xxd -l 16 work/base.apk
+          echo '=== ZIP integrity test ==='
           unzip -tq work/base.apk
 
       - name: Validate Android APK identity
