@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       target_version:
-        description: 'CSR2 version being acquired (for example 6.7.0 or 6.7.1)'
+        description: 'CSR2 version being acquired (for example 6.6.0 or 6.7.0)'
         required: true
         default: '6.7.0'
       expected_package:
@@ -79,15 +79,10 @@ jobs:
           echo "APK: $apk = $size bytes"
           ((size > 0)) || { echo "ERROR: APK is empty" >&2; exit 1; }
           if ((size >= 100000000)); then
-            echo "ERROR: APK is at or above GitHub's regular Git 100 MiB limit; use the future LFS acquisition path instead." >&2
+            echo "ERROR: APK is at or above the regular Git 100 MiB limit; migrate APK acquisition to LFS before uploading it." >&2
             exit 1
           fi
           unzip -tq "$apk"
-          python - <<'PY'
-          from pathlib import Path
-          import zipfile
-          apk=Path(__import__('os').environ['TARGET_APK']) if 'TARGET_APK' in __import__('os').environ else Path('ACQUISITION')
-          PY
           python - <<PY
           from pathlib import Path
           import zipfile
