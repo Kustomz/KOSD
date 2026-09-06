@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - 'ACQUISITION/*/com.naturalmotion.customstreetracer2/*.obb'
       - 'RESEARCH/CSR2/GAME_VERSIONS/**'
       - '.github/scripts/ingest_obb.sh'
       - '.github/workflows/kosd-obb-ingest.yml'
@@ -31,19 +32,17 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Verify Git LFS and pull canonical OBB objects
+      - name: Verify Git LFS and pull acquisition objects
         run: |
+          set -euo pipefail
           git lfs version
           git lfs install --local
           git lfs pull
 
-          echo "--- Canonical OBB files ---"
-          find RESEARCH/CSR2/GAME_VERSIONS -type f -name '*.obb' -print -exec ls -lh {} \;
+          echo "--- Direct OBB acquisition files ---"
+          find ACQUISITION -type f -path '*/com.naturalmotion.customstreetracer2/*.obb' -print -exec ls -lh {} \;
 
-          echo "--- LFS status ---"
-          git lfs status
-
-      - name: Reconstruct, extract, verify, and apply retention
+      - name: Ingest, verify, promote, and apply retention
         run: bash .github/scripts/ingest_obb.sh
 
       - name: Show resulting changes
@@ -67,7 +66,6 @@ jobs:
       - name: Push Git LFS objects and repository commit
         if: ${{ success() && !cancelled() }}
         run: |
-          if git diff-tree --no-commit-id --name-only -r HEAD | grep -q '\.obb$'; then
-            git lfs push origin HEAD
-          fi
+          set -euo pipefail
+          git lfs push origin HEAD
           git push origin HEAD:main
