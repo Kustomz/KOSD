@@ -5,17 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'ACQUISITION/base*.zip.*'
+      - 'ACQUISITION/*/base.apk'
   workflow_dispatch:
     inputs:
       target_version:
-        description: 'CSR2 version being acquired (for example 6.6.0 or 6.7.0)'
+        description: 'CSR2 version being acquired (for example 6.7.0 or 6.7.1)'
         required: true
         default: '6.7.0'
-      chunk_glob:
-        description: 'Optional chunk glob relative to ACQUISITION; leave blank for automatic discovery'
-        required: false
-        default: ''
       expected_package:
         description: 'Expected Android package name'
         required: false
@@ -48,85 +44,54 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_VERSION: ${{ inputs.target_version || '' }}
-          INPUT_GLOB: ${{ inputs.chunk_glob || '' }}
         run: |
           set -euo pipefail
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             version="$INPUT_VERSION"
-            glob="$INPUT_GLOB"
           else
-            mapfile -t changed < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" -- 'ACQUISITION/base*.zip.*')
+            mapfile -t changed < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" -- 'ACQUISITION/*/base.apk')
             ((${#changed[@]} > 0)) || exit 0
             declare -A versions=()
             for path in "${changed[@]}"; do
-              name="$(basename "$path")"
-              if [[ "$name" =~ ^base\[([0-9]+)\]\.zip\.[0-9]{3}$ ]]; then
+              if [[ "$path" =~ ^ACQUISITION/([^/]+)/base\.apk$ ]]; then
                 versions["${BASH_REMATCH[1]}"]=1
-              elif [[ "$name" =~ ^base\.zip\.[0-9]{3}$ ]]; then
-                versions[legacy]=1
               fi
             done
             if ((${#versions[@]} != 1)); then
               echo "Push must contain exactly one APK acquisition version: ${!versions[*]}" >&2
               exit 1
             fi
-            key="${!versions[@]}"
-            if [[ "$key" == legacy ]]; then
-              version='6.6.0'
-              glob='base.zip.[0-9][0-9][0-9]'
-            else
-              version="$key"
-              glob="base[${key}].zip.[0-9][0-9][0-9]"
-            fi
+            version="${!versions[@]}"
           fi
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "ERROR: Invalid CSR2 version: $version" >&2; exit 1; }
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "glob=$glob" >> "$GITHUB_OUTPUT"
 
-      - name: Discover and validate APK acquisition chunks
-        if: ${{ steps.version.outputs.version != '' }}
-        env:
-          TARGET_VERSION: ${{ steps.version.outputs.version }}
-          CHUNK_GLOB: ${{ steps.version.outputs.glob }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p work output
-          mapfile -t chunks < <(find ACQUISITION -maxdepth 1 -type f -name "$CHUNK_GLOB" -printf '%f\n' | sort -V)
-          ((${#chunks[@]} > 0)) || { echo "ERROR: No APK acquisition chunks found for $TARGET_VERSION" >&2; exit 1; }
-          expected=1
-          for chunk in "${chunks[@]}"; do
-            number=$((10#${chunk##*.}))
-            ((number == expected)) || { echo "ERROR: Missing chunk $(printf '%03d' "$expected")" >&2; exit 1; }
-            size=$(stat -c '%s' "ACQUISITION/$chunk")
-            echo "chunk ${number}: ${chunk} = ${size} bytes"
-            ((size > 0)) || { echo "ERROR: Empty chunk: $chunk" >&2; exit 1; }
-            expected=$((expected + 1))
-          done
-          printf '%s\n' "${chunks[@]}" > work/chunks.txt
-
-      - name: Reconstruct and validate APK
+      - name: Validate complete APK
         if: ${{ steps.version.outputs.version != '' }}
         env:
           TARGET_VERSION: ${{ steps.version.outputs.version }}
         shell: bash
         run: |
           set -euo pipefail
-          : > work/acquisition.zip
-          while IFS= read -r chunk; do cat "ACQUISITION/${chunk}" >> work/acquisition.zip; done < work/chunks.txt
-          unzip -tq work/acquisition.zip
+          apk="ACQUISITION/${TARGET_VERSION}/base.apk"
+          [[ -f "$apk" ]] || { echo "ERROR: Missing $apk" >&2; exit 1; }
+          size=$(stat -c '%s' "$apk")
+          echo "APK: $apk = $size bytes"
+          ((size > 0)) || { echo "ERROR: APK is empty" >&2; exit 1; }
+          if ((size >= 100000000)); then
+            echo "ERROR: APK is at or above GitHub's regular Git 100 MiB limit; use the future LFS acquisition path instead." >&2
+            exit 1
+          fi
+          unzip -tq "$apk"
           python - <<'PY'
           from pathlib import Path
-          import shutil, zipfile
-          archive=Path('work/acquisition.zip'); apk=Path('work/base.apk')
-          with zipfile.ZipFile(archive) as z:
-              names=z.namelist(); bad=z.testzip()
-              if bad: raise SystemExit(f'ZIP integrity failure: {bad}')
-              entries=[n for n in names if n.lower().endswith('.apk')]
-              if len(entries)==1:
-                  with z.open(entries[0]) as src, apk.open('wb') as dst: shutil.copyfileobj(src,dst)
-              elif not entries:
-                  shutil.copyfile(archive,apk)
-              else: raise SystemExit('Multiple APK files found')
+          import zipfile
+          apk=Path(__import__('os').environ['TARGET_APK']) if 'TARGET_APK' in __import__('os').environ else Path('ACQUISITION')
+          PY
+          python - <<PY
+          from pathlib import Path
+          import zipfile
+          apk=Path('ACQUISITION/${TARGET_VERSION}/base.apk')
           with zipfile.ZipFile(apk) as z:
               bad=z.testzip()
               if bad: raise SystemExit(f'APK integrity failure: {bad}')
@@ -134,8 +99,10 @@ jobs:
               missing={'AndroidManifest.xml','classes.dex'}-names
               if missing: raise SystemExit('APK missing: '+', '.join(sorted(missing)))
           print(f'Validated APK: {apk.stat().st_size} bytes')
-          sha256sum work/base.apk | tee "output/csr2-${TARGET_VERSION}.sha256"
-          cp work/base.apk "output/csr2-${TARGET_VERSION}.apk"
+          PY
+          mkdir -p output
+          sha256sum "$apk" | tee "output/csr2-${TARGET_VERSION}.sha256"
+          cp "$apk" "output/csr2-${TARGET_VERSION}.apk"
 
       - name: Apply current-plus-previous retention
         if: ${{ steps.version.outputs.version != '' }}
