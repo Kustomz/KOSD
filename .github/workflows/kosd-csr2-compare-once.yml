@@ -1,0 +1,115 @@
+name: KOSD CSR2 Compare 6.7.0 to 6.7.1
+
+on:
+  push:
+    branches:
+      - compare-670-to-671-now
+
+permissions:
+  contents: read
+
+env:
+  CACHE_SCHEMA: v1
+  BASE_VERSION: 6.7.0
+  HEAD_VERSION: 6.7.1
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without automatic LFS hydration
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+
+      - name: Restore base artifact cache
+        id: cache_base
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/6.7.0
+          key: kosd-csr2-v1-6.7.0
+
+      - name: Restore head artifact cache
+        id: cache_head
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/6.7.1
+          key: kosd-csr2-v1-6.7.1
+
+      - name: Hydrate only uncached OBBs
+        env:
+          BASE_CACHE_HIT: ${{ steps.cache_base.outputs.cache-hit }}
+          HEAD_CACHE_HIT: ${{ steps.cache_head.outputs.cache-hit }}
+        run: |
+          set -euo pipefail
+          mkdir -p .kosd-artifact-cache/6.7.0 .kosd-artifact-cache/6.7.1
+          git lfs install --local
+
+          if [[ "$BASE_CACHE_HIT" != "true" ]]; then
+            git lfs pull --include="RESEARCH/CSR2/ASSET_DATABASE/6.7.0/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb,RESEARCH/CSR2/ASSET_DATABASE/6.7.0/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb"
+          fi
+
+          if [[ "$HEAD_CACHE_HIT" != "true" ]]; then
+            git lfs pull --include="ACQUISITION/671/com.naturalmotion.customstreetracer2/main_6715202.com.naturalmotion.customstreetracer2.obb,ACQUISITION/671/com.naturalmotion.customstreetracer2/patch_6715202.com.naturalmotion.customstreetracer2.obb"
+          fi
+
+      - name: Collect source artifacts into cache
+        run: |
+          set -euo pipefail
+          mkdir -p .kosd-artifact-cache/6.7.0 .kosd-artifact-cache/6.7.1
+          cp RESEARCH/CSR2/ASSET_DATABASE/6.7.0/MAIN_OBB/main.6705213.com.naturalmotion.customstreetracer2.obb .kosd-artifact-cache/6.7.0/
+          cp RESEARCH/CSR2/ASSET_DATABASE/6.7.0/PATCH_OBB/patch.6705213.com.naturalmotion.customstreetracer2.obb .kosd-artifact-cache/6.7.0/
+          cp ACQUISITION/671/com.naturalmotion.customstreetracer2/main_6715202.com.naturalmotion.customstreetracer2.obb .kosd-artifact-cache/6.7.1/
+          cp ACQUISITION/671/com.naturalmotion.customstreetracer2/patch_6715202.com.naturalmotion.customstreetracer2.obb .kosd-artifact-cache/6.7.1/
+
+      - name: Deep compare Main and Patch OBBs
+        run: |
+          set -euo pipefail
+          mkdir -p comparison-output
+          python3 - <<'PY'
+          import hashlib, json, zipfile
+          from pathlib import Path
+
+          pairs = [
+              ('MAIN_OBB', Path('.kosd-artifact-cache/6.7.0/main.6705213.com.naturalmotion.customstreetracer2.obb'), Path('.kosd-artifact-cache/6.7.1/main_6715202.com.naturalmotion.customstreetracer2.obb')),
+              ('PATCH_OBB', Path('.kosd-artifact-cache/6.7.0/patch.6705213.com.naturalmotion.customstreetracer2.obb'), Path('.kosd-artifact-cache/6.7.1/patch_6715202.com.naturalmotion.customstreetracer2.obb')),
+          ]
+
+          def sha256(p):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(1024*1024), b''): h.update(b)
+              return h.hexdigest()
+
+          def inv(p):
+              with zipfile.ZipFile(p) as z:
+                  return {i.filename:{'size':i.file_size,'crc':i.CRC,'compressed':i.compress_size} for i in z.infolist() if not i.is_dir()}
+
+          report={'engine':'KOSD CSR2 Version Comparison','base_version':'6.7.0','head_version':'6.7.1','deep_compare':True,'artifacts':[]}
+          for role,a,b in pairs:
+              ia,ib=inv(a),inv(b)
+              report['artifacts'].append({
+                  'role':role,
+                  'base':{'path':str(a),'filename':a.name,'size':a.stat().st_size,'sha256':sha256(a),'entries':len(ia)},
+                  'head':{'path':str(b),'filename':b.name,'size':b.stat().st_size,'sha256':sha256(b),'entries':len(ib)},
+                  'added_entries':sorted(set(ib)-set(ia)),
+                  'removed_entries':sorted(set(ia)-set(ib)),
+                  'changed_entries':sorted(k for k in set(ia)&set(ib) if ia[k]!=ib[k]),
+              })
+
+          Path('comparison-output/comparison.json').write_text(json.dumps(report,indent=2))
+          md=[f"# CSR2 6.7.0 → 6.7.1 Deep Comparison",'']
+          for x in report['artifacts']:
+              md += [f"## {x['role']}",f"- 6.7.0: `{x['base']['filename']}` — {x['base']['size']:,} bytes — `{x['base']['sha256']}` — {x['base']['entries']:,} entries",f"- 6.7.1: `{x['head']['filename']}` — {x['head']['size']:,} bytes — `{x['head']['sha256']}` — {x['head']['entries']:,} entries",f"- Added entries: **{len(x['added_entries']):,}**",f"- Removed entries: **{len(x['removed_entries']):,}**",f"- Changed entries: **{len(x['changed_entries']):,}**",'']
+          Path('comparison-output/comparison.md').write_text('\n'.join(md))
+          print(Path('comparison-output/comparison.md').read_text())
+          PY
+
+      - name: Upload comparison report
+        uses: actions/upload-artifact@v6
+        with:
+          name: csr2-6.7.0-to-6.7.1-comparison
+          path: comparison-output/
+          if-no-files-found: error
+          retention-days: 30
