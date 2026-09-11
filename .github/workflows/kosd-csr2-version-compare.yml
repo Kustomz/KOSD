@@ -1,0 +1,179 @@
+name: KOSD CSR2 Version Comparison
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_version:
+        description: 'Base CSR2 version (blank = previous available version)'
+        required: false
+        type: string
+      head_version:
+        description: 'Head CSR2 version (blank = newest available version)'
+        required: false
+        type: string
+      deep:
+        description: 'Perform deep archive/content comparison'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout KOSD without automatic LFS hydration
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+
+      - name: Install required tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip jq
+
+      - name: Hydrate available CSR2 acquisition artifacts
+        run: |
+          git lfs install --local
+          git lfs pull
+
+      - name: Compare CSR2 APK and OBB versions
+        env:
+          BASE_VERSION: ${{ inputs.base_version }}
+          HEAD_VERSION: ${{ inputs.head_version }}
+          DEEP_COMPARE: ${{ inputs.deep }}
+        run: |
+          set -euo pipefail
+          mkdir -p comparison-output
+
+          python3 - <<'PY'
+          import hashlib, json, os, re, subprocess, zipfile
+          from pathlib import Path
+
+          root = Path('ACQUISITION')
+          out = Path('comparison-output')
+          deep = os.environ.get('DEEP_COMPARE', 'true').lower() == 'true'
+
+          versions = []
+          if root.exists():
+              for p in root.iterdir():
+                  if p.is_dir() and re.fullmatch(r'\d+\.\d+\.\d+', p.name):
+                      versions.append(p.name)
+          versions.sort(key=lambda x: tuple(map(int, x.split('.'))))
+
+          def files_for(version):
+              d = root / version
+              result = []
+              for p in d.rglob('*'):
+                  if p.is_file() and p.suffix.lower() in ('.apk', '.obb'):
+                      result.append(p)
+              return sorted(result)
+
+          discovered = {v: files_for(v) for v in versions}
+          requested_base = os.environ.get('BASE_VERSION', '').strip()
+          requested_head = os.environ.get('HEAD_VERSION', '').strip()
+
+          if requested_head:
+              head = requested_head
+          elif versions:
+              head = versions[-1]
+          else:
+              raise SystemExit('No CSR2 acquisition versions found')
+
+          if requested_base:
+              base = requested_base
+          else:
+              prior = [v for v in versions if tuple(map(int, v.split('.'))) < tuple(map(int, head.split('.')))]
+              if not prior:
+                  raise SystemExit(f'No previous version available for {head}')
+              base = prior[-1]
+
+          if base not in discovered or head not in discovered:
+              raise SystemExit(f'Version artifacts unavailable: {base} -> {head}')
+
+          def sha256(path):
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for block in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(block)
+              return h.hexdigest()
+
+          def archive_inventory(path):
+              with zipfile.ZipFile(path) as z:
+                  return {i.filename: {'size': i.file_size, 'crc': i.CRC, 'compress_size': i.compress_size} for i in z.infolist() if not i.is_dir()}
+
+          def artifact_map(version):
+              result = {}
+              for p in discovered[version]:
+                  kind = 'APK' if p.suffix.lower() == '.apk' else 'OBB'
+                  name = p.name.lower()
+                  if kind == 'OBB':
+                      role = 'MAIN' if 'main' in name else ('PATCH' if 'patch' in name else 'OBB')
+                  else:
+                      role = 'APK'
+                  result[(kind, role)] = p
+              return result
+
+          a = artifact_map(base)
+          b = artifact_map(head)
+          keys = sorted(set(a) | set(b))
+          report = {
+              'engine': 'KOSD CSR2 Version Comparison',
+              'base_version': base,
+              'head_version': head,
+              'deep_compare': deep,
+              'available_versions': versions,
+              'artifacts': []
+          }
+
+          for key in keys:
+              kind, role = key
+              pa, pb = a.get(key), b.get(key)
+              item = {'type': kind, 'role': role, 'base': None, 'head': None}
+              for label, p in (('base', pa), ('head', pb)):
+                  if p is None:
+                      continue
+                  st = p.stat()
+                  item[label] = {'path': str(p), 'filename': p.name, 'size': st.st_size, 'sha256': sha256(p)}
+                  if deep:
+                      try:
+                          inv = archive_inventory(p)
+                          item[label]['entry_count'] = len(inv)
+                          item[label]['entries'] = inv
+                      except zipfile.BadZipFile:
+                          item[label]['archive_error'] = 'Not a readable ZIP/OBB/APK archive'
+              if pa and pb and deep:
+                  ia = item['base'].get('entries', {})
+                  ib = item['head'].get('entries', {})
+                  item['added_entries'] = sorted(set(ib) - set(ia))
+                  item['removed_entries'] = sorted(set(ia) - set(ib))
+                  item['changed_entries'] = sorted(k for k in set(ia) & set(ib) if ia[k] != ib[k])
+              report['artifacts'].append(item)
+
+          (out / 'comparison.json').write_text(json.dumps(report, indent=2))
+
+          md = [f'# KOSD CSR2 Comparison: {base} → {head}', '', f'Deep comparison: `{deep}`', '', '## Artifacts']
+          for item in report['artifacts']:
+              md += [f"### {item['type']} / {item['role']}"]
+              for label in ('base', 'head'):
+                  x = item.get(label)
+                  if x:
+                      md.append(f"- {label}: `{x['filename']}` — {x['size']:,} bytes — `{x['sha256']}`")
+                  else:
+                      md.append(f'- {label}: **missing**')
+              if deep and item.get('base') and item.get('head'):
+                  md += [f"- Added entries: **{len(item.get('added_entries', [])):,}**", f"- Removed entries: **{len(item.get('removed_entries', [])):,}**", f"- Changed entries: **{len(item.get('changed_entries', [])):,}**"]
+          (out / 'comparison.md').write_text('\n'.join(md) + '\n')
+          print(f'Compared CSR2 {base} -> {head}')
+          PY
+
+      - name: Upload comparison report
+        uses: actions/upload-artifact@v6
+        with:
+          name: csr2-${{ inputs.base_version || 'previous' }}-to-${{ inputs.head_version || 'latest' }}-comparison
+          path: comparison-output/
+          if-no-files-found: error
+          retention-days: 30
