@@ -1,0 +1,76 @@
+name: KOSD CSR2 Cached Binary Extraction
+
+on:
+  push:
+    branches:
+      - compare-670-to-671-now
+
+permissions:
+  contents: read
+
+env:
+  CACHE_SCHEMA: v1
+  BASE_VERSION: 6.7.0
+  HEAD_VERSION: 6.7.1
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without LFS hydration
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+      - name: Prepare cache directories
+        run: mkdir -p .kosd-artifact-cache/${BASE_VERSION} .kosd-artifact-cache/${HEAD_VERSION}
+      - name: Restore 6.7.0 cache
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/${{ env.BASE_VERSION }}
+          key: kosd-csr2-${{ env.CACHE_SCHEMA }}-${{ env.BASE_VERSION }}
+          fail-on-cache-miss: true
+      - name: Restore 6.7.1 cache
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/${{ env.HEAD_VERSION }}
+          key: kosd-csr2-${{ env.CACHE_SCHEMA }}-${{ env.HEAD_VERSION }}
+          fail-on-cache-miss: true
+      - name: Extract changed binary metadata
+        run: |
+          set -euo pipefail
+          mkdir -p extraction-output/base extraction-output/head
+          python3 - <<'PY'
+          import hashlib,json,os,zipfile
+          from pathlib import Path
+          R=Path('.kosd-artifact-cache'); O=Path('extraction-output')
+          def obb(v):
+            c=[p for p in (R/v).rglob('*.obb') if 'patch' in p.name.lower()]
+            if len(c)!=1: raise SystemExit(f'{v}: expected 1 patch OBB, found {len(c)}: {c}')
+            return c[0]
+          def inv(p):
+            with zipfile.ZipFile(p) as z:return {i.filename:(i.file_size,i.CRC,i.compress_size) for i in z.infolist() if not i.is_dir()}
+          def h(b):return hashlib.sha256(b).hexdigest()
+          b,hp=obb('6.7.0'),obb('6.7.1'); bi,hi=inv(b),inv(hp)
+          added=sorted(set(hi)-set(bi)); removed=sorted(set(bi)-set(hi)); changed=sorted(k for k in set(bi)&set(hi) if bi[k]!=hi[k])
+          meta=lambda n:n.lower().endswith('.bin') or n.lower()=='unity_obb_guid'
+          am=[x for x in added if meta(x)]; rm=[x for x in removed if meta(x)]; cm=[x for x in changed if meta(x)]
+          def ext(p,names,d):
+            out=[]
+            with zipfile.ZipFile(p) as z:
+              for n in names:
+                data=z.read(n); t=d/n; t.parent.mkdir(parents=True,exist_ok=True); t.write_bytes(data); out.append({'entry':n,'size':len(data),'sha256':h(data)})
+            return out
+          report={'base_version':'6.7.0','head_version':'6.7.1','patch_inventory_counts':{'base':len(bi),'head':len(hi),'added':len(added),'removed':len(removed),'changed':len(changed)},'metadata_entries':{'added':am,'removed':rm,'changed':cm},'extracted':{'base':ext(b,sorted(set(rm)|set(cm)),O/'base'),'head':ext(hp,sorted(set(am)|set(cm)),O/'head')}}
+          (O/'manifest.json').write_text(json.dumps(report,indent=2)+'\n')
+          (O/'INDEX.md').write_text('# CSR2 6.7.0 -> 6.7.1 cached metadata extraction\n\n## Added\n'+''.join(f'- {x}\n' for x in am)+'\n## Removed\n'+''.join(f'- {x}\n' for x in rm)+'\n## Changed\n'+''.join(f'- {x}\n' for x in cm))
+          print(json.dumps(report['patch_inventory_counts']))
+          print(f'Added metadata={len(am)} Removed metadata={len(rm)} Changed metadata={len(cm)}')
+          PY
+      - name: Upload extracted binary metadata
+        uses: actions/upload-artifact@v6
+        with:
+          name: csr2-6.7.0-to-6.7.1-cached-binary-metadata
+          path: extraction-output/
+          if-no-files-found: error
+          retention-days: 30
