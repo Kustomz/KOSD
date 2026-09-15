@@ -1,0 +1,74 @@
+name: KOSD Fusion ID Analysis
+
+on:
+  push:
+    branches:
+      - analyze-671-fusion-ota1
+
+permissions:
+  contents: read
+
+env:
+  CACHE_SCHEMA: v1
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without LFS hydration
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+      - name: Restore 6.7.1 cached artifact
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/6.7.1
+          key: kosd-csr2-${{ env.CACHE_SCHEMA }}-6.7.1
+      - name: Analyze OTA1 and 6.7.1 Fusion data
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, zipfile, hashlib
+          ota=Path('RESEARCH/CSR2/GAME_VERSIONS/6.7.0/OTA1/CarFusionData.bin')
+          if not ota.exists(): raise SystemExit('OTA1 CarFusionData.bin missing')
+          out=Path('fusion-analysis'); out.mkdir()
+          head=None
+          for obb in Path('.kosd-artifact-cache/6.7.1').rglob('*.obb'):
+              try:
+                  with zipfile.ZipFile(obb) as z:
+                      names=[n for n in z.namelist() if n.endswith('CarFusionData.bin')]
+                      if names:
+                          head=z.read(names[0]); (out/'head_source.txt').write_text(f'{obb}\n{names[0]}\n'); break
+              except zipfile.BadZipFile: pass
+          if head is None: raise SystemExit('No CarFusionData.bin found in cached 6.7.1 OBBs')
+          base=ota.read_bytes()
+          cars=['Aspark_OwlSP600_2024','Buick_GrandNationalF4_1987','Chevrolet_LostAngelsCamaro_1970','Dodge_ChargerSixpackReward_2025','Ford_DutchboysTorino_1969','Honda_CivicEGTNR_1995','Honda_VeilsideNSXReward_1995']
+          def occ(data,n):
+              b=n.encode(); p=0
+              while True:
+                  i=data.find(b,p)
+                  if i<0: return
+                  yield i; p=i+1
+          def strs(data): return [(m.start(),m.group().decode('ascii','replace')) for m in re.finditer(rb'[ -~]{4,}',data)]
+          lines=[f'OTA1 size={len(base)} sha256={hashlib.sha256(base).hexdigest()}',f'6.7.1 size={len(head)} sha256={hashlib.sha256(head).hexdigest()}','']
+          for car in cars:
+              lines.append(f'=== {car} ===')
+              for label,data in [('OTA1',base),('6.7.1',head)]:
+                  o=list(occ(data,car)); lines.append(f'{label}: occurrences={o}')
+                  for off in o:
+                      chunk=data[max(0,off-128):min(len(data),off+len(car)+256)]
+                      lines.append(f'{label} offset={off} hex={chunk.hex()}')
+                      lines.append(f'strings={strs(chunk)}')
+              lines.append('')
+          A={s for _,s in strs(base)}; B={s for _,s in strs(head)}
+          lines += ['=== Added ASCII strings ===']+sorted(B-A)+['=== Removed ASCII strings ===']+sorted(A-B)
+          (out/'report.txt').write_text('\n'.join(lines))
+          PY
+      - name: Upload Fusion analysis
+        uses: actions/upload-artifact@v6
+        with:
+          name: csr2-ota1-to-671-fusion-analysis
+          path: fusion-analysis/
+          retention-days: 30
