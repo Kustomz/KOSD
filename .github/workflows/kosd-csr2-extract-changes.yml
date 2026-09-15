@@ -1,0 +1,155 @@
+name: KOSD CSR2 Cached Binary Extraction
+
+on:
+  push:
+    branches:
+      - extract-670-671-cached
+
+permissions:
+  contents: read
+
+env:
+  CACHE_SCHEMA: v1
+  BASE_VERSION: 6.7.0
+  HEAD_VERSION: 6.7.1
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without LFS hydration
+        uses: actions/checkout@v6
+        with:
+          lfs: false
+          fetch-depth: 1
+
+      - name: Prepare cache directories
+        run: |
+          mkdir -p .kosd-artifact-cache/${BASE_VERSION}
+          mkdir -p .kosd-artifact-cache/${HEAD_VERSION}
+
+      - name: Restore 6.7.0 cache (must already exist)
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/${{ env.BASE_VERSION }}
+          key: kosd-csr2-${{ env.CACHE_SCHEMA }}-${{ env.BASE_VERSION }}
+          fail-on-cache-miss: true
+
+      - name: Restore 6.7.1 cache (must already exist)
+        uses: actions/cache@v4
+        with:
+          path: .kosd-artifact-cache/${{ env.HEAD_VERSION }}
+          key: kosd-csr2-${{ env.CACHE_SCHEMA }}-${{ env.HEAD_VERSION }}
+          fail-on-cache-miss: true
+
+      - name: Verify cached OBBs and extract changed binary metadata
+        run: |
+          set -euo pipefail
+          mkdir -p extraction-output/base extraction-output/head
+          python3 - <<'PY'
+          import hashlib, json, os, zipfile
+          from pathlib import Path
+
+          BASE = os.environ['BASE_VERSION']
+          HEAD = os.environ['HEAD_VERSION']
+          ROOT = Path('.kosd-artifact-cache')
+          OUT = Path('extraction-output')
+
+          def find_obb(version, needle):
+              candidates = [p for p in (ROOT / version).rglob('*.obb') if needle in p.name.lower()]
+              if len(candidates) != 1:
+                  raise SystemExit(f'{version}: expected exactly one {needle} OBB, found {len(candidates)}: {candidates}')
+              return candidates[0]
+
+          base_obb = find_obb(BASE, 'patch')
+          head_obb = find_obb(HEAD, 'patch')
+
+          def inventory(path):
+              with zipfile.ZipFile(path) as z:
+                  return {i.filename: (i.file_size, i.CRC, i.compress_size) for i in z.infolist() if not i.is_dir()}
+
+          def sha256_bytes(data):
+              return hashlib.sha256(data).hexdigest()
+
+          def sha256_file(path):
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for b in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(b)
+              return h.hexdigest()
+
+          def extract_entries(obb, entries, dest):
+              manifest = []
+              with zipfile.ZipFile(obb) as z:
+                  for name in sorted(entries):
+                      data = z.read(name)
+                      target = dest / name
+                      target.parent.mkdir(parents=True, exist_ok=True)
+                      target.write_bytes(data)
+                      manifest.append({
+                          'entry': name,
+                          'size': len(data),
+                          'sha256': sha256_bytes(data),
+                      })
+              return manifest
+
+          bi = inventory(base_obb)
+          hi = inventory(head_obb)
+          added = sorted(set(hi) - set(bi))
+          removed = sorted(set(bi) - set(hi))
+          changed = sorted(k for k in set(bi) & set(hi) if bi[k] != hi[k])
+
+          # Extract metadata/configuration binaries only. This deliberately excludes the
+          # large ASTC/car asset churn so the artifact stays focused on game data.
+          def metadata(name):
+              low = name.lower()
+              return low.endswith('.bin') or low == 'unity_obb_guid'
+
+          added_meta = [x for x in added if metadata(x)]
+          removed_meta = [x for x in removed if metadata(x)]
+          changed_meta = [x for x in changed if metadata(x)]
+
+          base_extract = sorted(set(removed_meta) | set(changed_meta))
+          head_extract = sorted(set(added_meta) | set(changed_meta))
+
+          base_manifest = extract_entries(base_obb, base_extract, OUT / 'base')
+          head_manifest = extract_entries(head_obb, head_extract, OUT / 'head')
+
+          report = {
+              'base_version': BASE,
+              'head_version': HEAD,
+              'base_obb': {'path': str(base_obb), 'size': base_obb.stat().st_size, 'sha256': sha256_file(base_obb)},
+              'head_obb': {'path': str(head_obb), 'size': head_obb.stat().st_size, 'sha256': sha256_file(head_obb)},
+              'patch_inventory_counts': {
+                  'base': len(bi), 'head': len(hi),
+                  'added': len(added), 'removed': len(removed), 'changed': len(changed),
+              },
+              'metadata_counts': {
+                  'added': len(added_meta), 'removed': len(removed_meta), 'changed': len(changed_meta),
+              },
+              'metadata_entries': {
+                  'added': added_meta,
+                  'removed': removed_meta,
+                  'changed': changed_meta,
+              },
+              'extracted': {
+                  'base': base_manifest,
+                  'head': head_manifest,
+              },
+          }
+          (OUT / 'manifest.json').write_text(json.dumps(report, indent=2) + '\n')
+
+          # Also emit a compact text index for quick inspection.
+          lines = [f'# CSR2 {BASE} -> {HEAD} cached metadata extraction', '', f'Base patch OBB: {base_obb}', f'Head patch OBB: {head_obb}', '', '## Added metadata', *[f'- {x}' for x in added_meta], '', '## Removed metadata', *[f'- {x}' for x in removed_meta], '', '## Changed metadata', *[f'- {x}' for x in changed_meta], '']
+          (OUT / 'INDEX.md').write_text('\n'.join(lines))
+          print(f'Extracted base={len(base_extract)} head={len(head_extract)} metadata entries')
+          print(f'Added={len(added_meta)} Removed={len(removed_meta)} Changed={len(changed_meta)}')
+          PY
+
+      - name: Upload extracted binary metadata
+        uses: actions/upload-artifact@v6
+        with:
+          name: csr2-6.7.0-to-6.7.1-cached-binary-metadata
+          path: extraction-output/
+          if-no-files-found: error
+          retention-days: 30
