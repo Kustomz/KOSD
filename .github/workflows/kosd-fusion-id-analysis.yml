@@ -3,7 +3,7 @@ name: KOSD Fusion ID Analysis
 on:
   push:
     branches:
-      - analyze-671-fusion-ota1
+      - compare-670-to-671-now
 
 permissions:
   contents: read
