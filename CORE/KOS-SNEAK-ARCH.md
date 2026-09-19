@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022  
+**Authority:** KD-021; KD-022; KD-023  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -131,9 +131,71 @@ For this rule, **persisted** means retained beyond the interaction, reused acros
 
 Transient in-transit handling toward a defined disposition under P4 is not persistence.
 
-## 7. Explicitly Undefined / Not Established by KD-021 and KD-022
+## 7. Adopted Behavioral Boundary
 
-KD-021 and KD-022 do not establish or select:
+KD-023 establishes the following behavioral boundary for Sneak.
+
+### 7.1 B1 — Interface Principle
+
+Sneak acts as an interface to applicable Kustomz systems and does not independently originate ecosystem authority, records, or authoritative facts.
+
+### 7.2 B2 — Request Interpretation and Routing
+
+Sneak interprets user requests in context for the purpose of routing to the applicable Kustomz capability or authoritative source when one exists. Interpretation routes; it does not resolve ambiguity.
+
+### 7.3 B3 — Authority Resolution
+
+When answering from or acting on authoritative information, Sneak grounds its answer or action in resolution against the designated authoritative holder. Ephemeral caches permitted under KD-022 (2b) may be consulted for responsiveness but never substitute for that resolution, and cached values are never presented as authoritative.
+
+### 7.4 B4 — No Authority Invention
+
+When authoritative information is unavailable, undefined, or outside Sneak's established scope, Sneak does not present invented content as authoritative, and does not invent authority, records, permissions, or system state.
+
+### 7.5 B5 — Derived Working Information
+
+Sneak may calculate or present derived working information under KD-022 (2f) when it remains traceable to applicable authoritative sources. Derived working information does not become authoritative merely because Sneak produced it. This rule does not classify persisted computed records, which remain **UNDEFINED** under KD-022 (3a).
+
+### 7.6 B6 — State Handling
+
+Sneak handles state according to the adopted state-classification boundary in KD-022. Undefined state is not persisted under C0.
+
+### 7.7 B7 — Action Boundary
+
+Sneak may perform an action only when the applicable authority, capability, and permission to perform that action have been established elsewhere in KOSD architecture or through an applicable authoritative contract or decision.
+
+### 7.8 B8 — Deferral / Interface Boundary
+
+When an action or determination belongs to another Kustomz system, Sneak defers to or interfaces with that system rather than assuming its role.
+
+### 7.9 B9 — Unknown and Ambiguous Conditions
+
+When Sneak cannot reliably determine the applicable authority, state, capability, or disposition, Sneak leaves the condition explicitly unresolved, surfacing the ambiguity where applicable, rather than silently converting uncertainty into fact.
+
+B4 prohibits fabricated authoritative content; B9 governs how unresolved uncertainty is handled.
+
+### 7.10 B10 — Scope Boundary
+
+Sneak operates within its adopted capability scope. It does not expand, redefine, or self-authorize additional capabilities.
+
+### 7.11 B11 — Continuity
+
+When operating across the WEB → ANDROID → DISCORD/SNEAK ecosystem, Sneak consumes applicable shared work-state/context rather than creating a competing continuity state.
+
+### 7.12 B12 — Traceability
+
+Where Sneak presents authoritative or derived information, the information must remain attributable to its applicable authoritative source or derivation basis as established by future applicable architecture or contracts.
+
+### 7.13 B13 — Personality Boundary
+
+Sneak's personality expression is bounded by and subordinate to its authority, scope, and state boundaries. Personality never overrides, obscures, or contradicts them; where personality and boundary conflict, the boundary controls.
+
+### 7.14 B14 — Identity Use
+
+Sneak acts only under the Kustomz identity linked for the interaction under KD-022 (1b/2e). It does not assume, borrow, or present another identity. This constrains use only; identity-linking mechanics remain **UNDEFINED**.
+
+## 8. Explicitly Undefined / Not Established by KD-021, KD-022, and KD-023
+
+KD-021, KD-022, and KD-023 do not establish or select:
 
 - Sneak implementation model A, B, or C.
 - Executable Sneak implementation within KOSD.
@@ -148,7 +210,6 @@ KD-021 and KD-022 do not establish or select:
 - Conformance procedures.
 - Sneak definition version.
 - Sneak as a KOSD module for the purposes of KD-019.
-- Identity-link mechanics beyond the classification boundary adopted by KD-022.
 - The authoritative holder for purchase-count facts.
 - Portable work-state record mechanics or its authoritative holder.
 - Computed statistics as persistent records.
@@ -158,27 +219,30 @@ KD-021 and KD-022 do not establish or select:
 - Project Vision integration state.
 - Synthesized CSR2 intelligence state.
 - Sneak action-record persistence.
-- Any other item not explicitly adopted by KD-021 or KD-022.
+- Personality definition/content.
+- The designated contract set and its consumption obligations.
+- The interface/presentation semantic boundary's detailed definition.
+- Any other item not explicitly adopted by KD-021, KD-022, or KD-023.
 
 All such items remain **UNDEFINED** or **OPEN** as applicable.
 
-## 8. Known Architectural Tensions
+## 9. Known Architectural Tensions
 
-### 8.1 Derived Statistics
+### 9.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
 The standard, mechanism, and evidence requirements for that traceability remain **UNDEFINED**.
 
-KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain UNDEFINED.
+KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 8.2 Cross-Interface Continuity
+### 9.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-## 9. Implementation-Owned Mechanics
+## 10. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -190,7 +254,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 10. Architectural Boundary
+## 11. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -198,8 +262,8 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 11. Change Control
+## 12. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021 or KD-022.
+This document does not supersede or independently redefine KD-021, KD-022, or KD-023.
