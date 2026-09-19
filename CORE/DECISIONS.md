@@ -494,3 +494,35 @@ Execution / Resulting State:
 - KD-003 7(c) is resolved as an authority question.
 - The actual required-module set remains to be established through KOS-RELEASE.
 - No file other than CORE/DECISIONS.md is to be modified by this decision.
+
+---
+
+## KD-020
+
+Date: 2026-09-19
+
+Item(s): KD-003 7(i) — strength of “should include” and “may be used” in KOS-RELEASE
+
+Action: ADOPT
+
+Rationale:
+Clarify the normative strength of the existing Release Integrity language without inventing additional release requirements.
+
+Basis / Evidence:
+Owner decision.
+
+Owner statements:
+1. “Should include” means the identified release content is expected to be included in a release, but the phrase does not by itself create an absolute release gate unless another requirement makes it mandatory.
+2. “May be used” means the identified mechanism is optional and available for the stated purpose; its use is not mandatory by that phrase.
+3. Neither phrase, by itself, creates a new release gate beyond the requirements otherwise established in KOS-RELEASE.
+
+Conditions / Blockers:
+- This decision does not modify the existing KOS-RELEASE text.
+- This decision does not establish additional release gates, mandatory evidence requirements, or mandatory checksum use.
+- All prior decisions remain unchanged.
+- KOS-RELEASE remains Draft and is not promoted by this decision.
+
+Execution / Resulting State:
+- KD-003 7(i) is resolved.
+- The existing “should include” and “may be used” language in KOS-RELEASE is interpreted according to the owner statements above.
+- No file other than CORE/DECISIONS.md is to be modified by this decision.
