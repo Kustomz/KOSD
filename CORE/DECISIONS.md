@@ -437,3 +437,28 @@
 4. The release version identifies the KOSD release itself; the KOS version identifies the version of the KOS/document framework; module versions identify individual modules. These are distinct version identities and do not automatically change one another.
 5. Release versions are immutable once assigned.
 6. A superseded or archived release permanently retains its originally assigned release version; that version is never reassigned.
+
+---
+
+## KD-018
+
+1. **Decision ID:** KD-018
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(h) only — the relationship between the protocol's `VALIDATED` module status and KOS-RELEASE's `VALIDATION` release state.
+4. **Action:** ADOPT — adoption of the owner's 7(h) decision (7(h) only)
+5. **Rationale:** The owner has explicitly decided the 7(h) questions: whether the two states are the same or distinct, and the relationship between a module's `VALIDATED` mark and a release's `VALIDATION` state. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(h). Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** This decision resolves only 7(h). The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
+   - KD-003 blockers 7(c) (required-module set), 7(i) ("should include" / "may be used" strength) remain open.
+   - KD-001 through KD-017 remain intact and unchanged, including:
+     - KD-011 (validation definition) — unaltered. This decision does not redefine validation, add criteria, or change the `VALIDATED` marking rule.
+     - KD-014 (combined validation/release process) — unaltered. This decision does not alter the one-process determination.
+     - KD-012 ("applicable" for dependencies/relationships), KD-013 ("applicable project decision"), KD-015 (authoritative KOS/project state), KD-017 (release-version semantics), and KD-003 7(j) (no-invention boundary).
+   - KOS-RELEASE is **not** promoted by this decision. Its Release States vocabulary (DRAFT, VALIDATION, RELEASED, SUPERSEDED, ARCHIVED) remains Draft proposal.
+   - This decision invents no transitions, gates, sequencing, release criteria, workflows, or state models beyond the owner's explicit statements below. In particular, it establishes no transition rule into or out of the `VALIDATION` state and no gate beyond owner statement 2's stated requirement.
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(h) recorded as resolved by owner decision; all other blockers remain as stated above.
+
+**Owner's decided statements (recorded verbatim as the decision content):**
+
+1. KOS-RELEASE's `VALIDATION` state and the protocol's `VALIDATED` module status are distinct.
+2. A release in `VALIDATION` requires the applicable modules to have passed validation and been marked `VALIDATED`, but the release-level `VALIDATION` state is not itself a module `VALIDATED` status.
