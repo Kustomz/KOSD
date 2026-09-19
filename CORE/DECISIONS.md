@@ -276,3 +276,34 @@
 4. Sufficient evidence must exist to demonstrate that the applicable validation was performed and passed.
 5. A module that passes validation is marked VALIDATED.
 6. Validation is a prerequisite for release, but validation itself does not constitute release.
+
+---
+
+## KD-012
+
+1. **Decision ID:** KD-012
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(e) — applicable dependencies and relationships. Owner decision on the six 7(e) questions surfaced in the owner-decision brief: what makes a dependency applicable, what makes a relationship applicable, which are mandatory for release, the meaning of "present" in KOS-RELEASE requirement 5, whether dependency direction/order is required, and whether module-to-module dependencies must be explicitly declared.
+4. **Action:** ADOPT — adoption of the owner's 7(e) decision (blocker 7(e) only)
+5. **Rationale:** The owner has explicitly decided the 7(e) questions. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only owner-decision brief for KD-003 blocker 7(e). Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
+   - KD-003 7(f) — unresolved terminology remains open, including "applicable validation/release process" and "applicable project decision." This decision defines "applicable" only for dependencies and relationships under 7(e); it does not define "applicable" for any other governance term.
+   - KD-003 7(g) — release-version semantics remain open.
+   - KD-003 7(h) — the distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology remains unreconciled.
+   - KD-003 7(i) — the strength of "should include" / "may be used" remains unclarified.
+   - KD-003 7(c) — the required-module-set question remains separate and unresolved; this decision does not enumerate the required-module set (KD-010's containment stands).
+   - KD-011 — the validation definition remains intact and unchanged; this decision does not redefine validation or create validation-gate criteria.
+   - KD-003 7(j) — the no-invention boundary remains intact.
+
+   This decision does not create: dependency schemas, a dependency graph, mandatory ordering, universal module metadata, verification criteria, release-gate criteria, required-module lists, or implementation workflows. The statement in owner decision 3 below — that only explicitly identified release-relevant/release-required dependencies or relationships can block a release — is the owner's explicit statement, not a new release gate invented through this record.
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 blocker 7(e) recorded as resolved by owner decision; blockers 7(c), 7(f), 7(g), 7(h), 7(i) remain open as stated above; KD-011 and 7(j) unchanged.
+
+**Owner's decided statements (recorded verbatim as the decision content):**
+
+1. An applicable dependency is one actually required for the module/release being considered to function, be validated, or be released as intended, rather than merely being related to it or mentioned somewhere.
+2. An applicable relationship is one relevant to the module/release being considered and must be accounted for to correctly understand, validate, maintain, or release it.
+3. Only dependencies or relationships that have been explicitly identified as release-relevant or release-required can block a release. Other applicable relationships may need to be accounted for without automatically becoming release blockers.
+4. "Present" means the applicable dependency or relationship is identified and documented sufficiently for the release to account for it. It does not, by itself, require independent verification or satisfaction of every relationship.
+5. Dependency direction or order is optional unless explicitly established as necessary or release-relevant.
+6. Module-to-module dependencies must be explicitly declared when they are applicable and release-relevant, but not every possible relationship between modules must be declared.
