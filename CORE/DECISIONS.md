@@ -218,3 +218,32 @@
    (h) O-003 remains deferred under KD-008.
    (i) KD-007 remains unchanged.
 8. **Execution / Resulting State:** Authorize one repository modification only: Replace the existing CORE-001 Principle 4 sentence: "Locked assets remain locked unless explicitly superseded." With: "Locked assets are authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol." No other repository modification is authorized. Do not modify GOV-001.md. Do not modify STD-001.md. Do not modify KOS-RELEASE.md. Do not modify either existing LOCKED artifact. Do not modify any other file. Do not commit or push as part of KD-009.
+
+---
+
+## KD-010
+
+1. **Decision ID:** KD-010
+2. **Date:** 2026-09-19
+3. **Item(s):** The required-module-set discrepancy between `CORE/KOS-MANIFEST.md` and `CORE/KOS-INDEX-001.md`, as documented in the MANIFEST/INDEX discrepancy brief, and its relationship to KOS-RELEASE requirement 1.
+4. **Action:** ADOPT
+5. **Rationale:** Contain the discrepancy without inventing a required-module set, selecting a canonical document, or silently treating either Draft enumeration as authoritative.
+6. **Basis / Evidence:**
+   - KOS-RELEASE requirement 1 states: "Required modules are present." No enumeration of the required-module set exists anywhere in the repository.
+   - KD-003 field 7(c): "The required-module set is not yet formally enumerated or reconciled; the MANIFEST/INDEX discrepancy must be resolved before promotion."
+   - KD-005 field 7(b): "No artifact, branch, state, or record is designated as 'Master' by KD-005." KD-005 did not itself designate a required-module-set authority.
+   - The MANIFEST/INDEX discrepancy brief documented six line-item differences between the two Draft enumerations: "Recovery Reconciliation v1.7" present in MANIFEST Core but absent from INDEX Core; a five-item "Research / Recovery Checkpoints" section present in MANIFEST but absent from INDEX; a declared "6. Assets" section in INDEX with no content; status/version labeling differences; and a within-MANIFEST naming overlap ("Recovery Reconciliation v1.7" vs. "KOSD ↔ Recovery Reconciliation v1.7").
+   - Both documents are Draft and unpromoted: MANIFEST carries `**Status:** Draft`; INDEX-001 carries `**Version:** 2.0.0 (Draft)` with no Status field.
+   - The existing anti-silent-promotion principle (CHANGELOG): "No recovery item marked REVIEW is silently promoted to authoritative KOSD content."
+   - GOV-001: "They must not be fabricated or silently promoted from inference."
+7. **Conditions / Blockers:**
+   (a) The repository has no formally established required-module set for KOS-RELEASE.
+   (b) Neither `CORE/KOS-MANIFEST.md` nor `CORE/KOS-INDEX-001.md` is authoritative for establishing that required-module set. This statement is a narrow corollary of KD-005's existing non-designation of a Master; KD-005 did not itself designate a required-module-set authority.
+   (c) The MANIFEST/INDEX discrepancies remain explicitly unresolved.
+   (d) KOS-RELEASE requirement 1 remains blocked and must not be satisfied by treating either Draft enumeration as authoritative.
+   (e) No module is considered required or non-required solely from its presence or absence in either Draft enumeration.
+   (f) This KD must not be interpreted as resolving O-001, designating a Master, or establishing any authority hierarchy.
+   (g) O-001 / Master remains deferred under KD-005.
+   (h) No promotion of MANIFEST, INDEX-001, or KOS-RELEASE is authorized by this KD.
+   (i) KD-005 and all prior decisions remain unchanged.
+8. **Execution / Resulting State:** Add KD-010 to `CORE/DECISIONS.md` only. No repository modification is authorized beyond this log entry: do not modify `CORE/KOS-MANIFEST.md`, `CORE/KOS-INDEX-001.md`, `CORE/KOS-RELEASE.md`, or `GOVERNANCE/GOV-001.md`; do not modify KD-005 or any prior decision. No promotion, lock, unlock, merge, rename, or authority designation is authorized. No commit or push is authorized as part of KD-010 until the resulting diff is audited against this decision.
