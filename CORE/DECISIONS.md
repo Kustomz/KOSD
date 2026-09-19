@@ -357,3 +357,30 @@
 1. Validation and release are one combined process.
 2. The combined validation/release process is applicable to all KOSD modules and releases when they are being validated or released, unless a specific requirement establishes otherwise.
 3. CORE/KOS-RELEASE.md is designated as the document defining that combined validation/release process, once KOS-RELEASE is promoted.
+
+---
+
+## KD-015
+
+1. **Decision ID:** KD-015
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(f), term 5 only — "authoritative KOS/project state." The remaining 7(f) term 6 ("Master") is untouched by this decision.
+4. **Action:** ADOPT — adoption of the owner's 7(f) term 5 decision (term 5 only)
+5. **Rationale:** The owner has explicitly decided the term 5 questions: what composes the authoritative KOS/project state, how "current" is determined, the KOS/project state relationship, and conflict precedence. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(f) term 5. Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** This decision resolves only 7(f) term 5. The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
+   - KD-003 7(f) term 6 ("Master") remains open. KD-005's deferral is preserved exactly: Master remains undefined/deferred; no artifact, branch, state, or record is designated as Master by this decision; no authority mechanism or precedence rule for Master is established.
+   - KD-003 7(f) terms 1 ("applicable project decision") and 4 ("applicable validation/release process") remain resolved as recorded in KD-013 and KD-014 — untouched by this decision.
+   - KD-003 7(f) terms 2 ("silently altered") and 3 ("silently treated as authoritative") remain as previously categorized — untouched by this decision.
+   - KD-003 blockers 7(c), 7(g), 7(h), 7(i) remain open.
+   - KD-001 through KD-014 remain intact and unchanged, including KD-007 (LOCKED), KD-011 (validation), KD-012 (dependencies/relationships), KD-013 (project-decision applicability), and KD-003 7(j) (no-invention boundary).
+
+   This decision invents no additional authority, precedence, state, or implementation rules beyond the owner's explicit statements below. The conflict-precedence stated in owner decision 4 is the owner's explicit determination, not a hierarchy invented through this record. "Applicable" in owner decisions 2 and 4 is used in the owner's own terms; this decision does not import KD-012's or KD-013's definitions of "applicable."
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 5 recorded as resolved by owner decision; 7(f) term 6 and all other blockers remain as stated above.
+
+**Owner's decided statements (recorded verbatim as the decision content):**
+
+1. The authoritative KOS/project state consists of the currently adopted decisions and the project content that those decisions establish as authoritative.
+2. The current authoritative KOS/project state is the authoritative state established by the latest applicable adopted decisions and their resulting project state.
+3. "KOS state" and "project state" refer to the same authoritative project state for purposes of KOSD.
+4. When authoritative project content conflicts, the latest applicable adopted decision and its resulting authorized project state controls.
