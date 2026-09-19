@@ -331,3 +331,29 @@
 **Owner's decided statement (recorded verbatim as the decision content):**
 
 1. A project decision is applicable when its stated scope explicitly covers the item or action for which the decision is being relied upon.
+
+---
+
+## KD-014
+
+1. **Decision ID:** KD-014
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(f), term 4 only — "applicable validation/release process." The remaining 7(f) terms are untouched by this decision.
+4. **Action:** ADOPT — adoption of the owner's 7(f) term 4 decision (term 4 only)
+5. **Rationale:** The owner has explicitly decided the remaining term 4 questions: whether validation and release are one process or two, what makes the combined process applicable, and whether KOS-RELEASE defines it. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief and evidence pass for KD-003 7(f) term 4, including KD-003's acceptance of KOS-RELEASE "as the intended KOSD release framework" and KD-003 7(a)'s recording of KOS-RELEASE promotion as the resolution path. Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** This decision resolves only 7(f) term 4. The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
+   - KD-003 7(f) terms 5 ("authoritative KOS/project state") and 6 ("Master") remain open.
+   - KD-003 7(f) terms 2 ("silently altered") and 3 ("silently treated as authoritative") remain as previously categorized — untouched by this decision.
+   - KD-003 7(h) — the distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology remains unreconciled. This decision does not establish any state identity, mapping, or transition.
+   - KD-003 blockers 7(c), 7(g), 7(i) remain open.
+   - KD-011 (validation definition), KD-012 (dependencies/relationships), KD-013 ("applicable project decision"), and KD-003 7(j) (no-invention boundary) remain intact and unchanged. In particular, this decision does not redefine validation, does not broaden KD-013's "applicable" beyond project decisions, and adds no applicability criteria beyond the owner's explicit statement 2 below.
+   - KOS-RELEASE is **not** promoted by this decision. The designation in owner statement 3 takes effect only upon a future promotion of KOS-RELEASE, which requires its own owner decision. KOS-RELEASE remains Draft and unpromoted.
+   - KD-001 through KD-013 are unaltered.
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 4 recorded as resolved by owner decision; all other 7(f) terms and blockers remain as stated above.
+
+**Owner's decided statements (recorded verbatim as the decision content):**
+
+1. Validation and release are one combined process.
+2. The combined validation/release process is applicable to all KOSD modules and releases when they are being validated or released, unless a specific requirement establishes otherwise.
+3. CORE/KOS-RELEASE.md is designated as the document defining that combined validation/release process, once KOS-RELEASE is promoted.
