@@ -410,3 +410,30 @@
 **Owner's decided statement (recorded verbatim as the decision content):**
 
 - Master remains deferred.
+
+---
+
+## KD-017
+
+1. **Decision ID:** KD-017
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(g) only — "release-version semantics."
+4. **Action:** ADOPT — adoption of the owner's 7(g) decision (7(g) only)
+5. **Rationale:** The owner has explicitly decided the release-version questions: format, assigner, timing, trigger, the release/KOS/module version relationship, immutability, and version identity retention. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(g). Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** This decision resolves only 7(g). The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
+   - KD-003 blockers 7(c) (required-module set), 7(h) (protocol `VALIDATED` vs KOS-RELEASE `VALIDATION`), and 7(i) ("should include" / "may be used" strength) remain open.
+   - KD-003 7(f) terms 1–5 remain resolved/recorded as in KD-013, KD-014, KD-015, and the prior categorizations; term 6 ("Master") remains deferred under KD-005 as continued by KD-016 — untouched by this decision.
+   - KD-001 through KD-016 remain intact and unchanged, including KD-011 (validation definition), KD-012 (dependencies/relationships), KD-013 ("applicable project decision"), KD-014 (combined validation/release process), KD-015 (authoritative KOS/project state), and KD-003 7(j) (no-invention boundary).
+   - KOS-RELEASE is **not** promoted by this decision. Its version language (including req. 9) remains Draft proposal. This decision does not itself assign a release version to the current draft or to any release; assignment occurs only through the owner's authorization of a release, per owner statement 2 below.
+   - No version-bump rules, prerelease rules, build-metadata rules, or other version semantics are established by this decision beyond the owner's explicit statements below. No additional rules are inferred from semver terminology.
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(g) recorded as resolved by owner decision; all other blockers remain as stated above.
+
+**Owner's decided statements (recorded verbatim as the decision content):**
+
+1. KOSD release versions use the major.minor.patch format.
+2. The Kustomz owner assigns the release version as part of authorizing the release.
+3. Every newly authorized KOSD release receives a new release version.
+4. The release version identifies the KOSD release itself; the KOS version identifies the version of the KOS/document framework; module versions identify individual modules. These are distinct version identities and do not automatically change one another.
+5. Release versions are immutable once assigned.
+6. A superseded or archived release permanently retains its originally assigned release version; that version is never reassigned.
