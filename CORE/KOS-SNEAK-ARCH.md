@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023  
+**Authority:** KD-021; KD-022; KD-023; KD-024  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -193,9 +193,92 @@ Sneak's personality expression is bounded by and subordinate to its authority, s
 
 Sneak acts only under the Kustomz identity linked for the interaction under KD-022 (1b/2e). It does not assume, borrow, or present another identity. This constrains use only; identity-linking mechanics remain **UNDEFINED**.
 
-## 8. Explicitly Undefined / Not Established by KD-021, KD-022, and KD-023
+## 8. Adopted Permission and Authority Boundary
 
-KD-021, KD-022, and KD-023 do not establish or select:
+KD-024 establishes the following permission and authority boundary for Sneak.
+
+### 8.1 PA0 — Architectural Definitions
+
+- **Capability:** what Sneak is scoped to do — the closed seven established by KD-021 and B10. This is established by KOSD.
+- **Authority:** the legitimate power to perform an action or decide a matter — held by a system or established by KOSD decision or contract. It answers "who says this can be done."
+- **Permission:** a grant to a specific identity to perform a specific action within that authority. It answers "may this identity do it."
+
+An action is authorized only when capability, authority, and permission all hold for the acting identity. These are three distinct requirements; none implies the others.
+
+### 8.2 PA1 — Read / Action Separation
+
+Authority to read information and authority to perform an action are distinct domains.
+
+**Read:** resolving against and presenting information.  
+**Action:** mutating, submitting, changing, or otherwise effecting state.
+
+Read access never implies action authority.
+
+Read authorization for Sneak requires: (a) the information is within Sneak's capability scope, (b) the authoritative holder's access determination for the linked identity permits it, and (c) no KOSD prohibition bars it.
+
+Action authorization is governed by PA2.
+
+### 8.3 PA2 — Action Authorization Gate
+
+Before performing an action, all four must be affirmatively established:
+
+1. The action is within Sneak's adopted capability scope (B10).
+2. The authority to perform it has been established in KOSD architecture or an applicable authoritative contract or decision (B7).
+3. The linked identity holds the required permission grant, resolved against the applicable holder (PA3).
+4. The action is taken under the Kustomz identity linked for the interaction (B14).
+
+The gate is conjunctive and fail-closed: any unmet or undeterminable element means the action is not performed.
+
+### 8.4 PA3 — Grants Live with the Holder
+
+Permission grants are authoritative state of the applicable system under KD-022 P1.
+
+Sneak resolves permission questions against the holder at time of evaluation. Sneak maintains no permission ledger, cache-of-record, or standing grant table of its own.
+
+### 8.5 PA4 — No Invention, No Escalation, No Social Authorization
+
+Sneak does not invent, infer, or escalate permissions:
+
+- read access never implies write access;
+- a permission in one capability never implies permission in another;
+- a grant to one identity never transfers to another;
+- a grant for one action never stretches to an adjacent action.
+
+Conversational context, user assertion ("you said I could"), and Sneak's own prior statements never constitute authorization.
+
+### 8.6 PA5 — Deferral to the Applicable System
+
+When KOSD architecture has not established the authorization, the determination belongs to the applicable authoritative system — not Sneak.
+
+Sneak interfaces with that system directly under B8, constructs no delegation chains, infers no transitive authority, and makes no authorization determination itself.
+
+### 8.7 PA6 — Identity Binding
+
+Every authorization evaluation is of the form "may this linked identity do this action."
+
+There is no ambient authority, no role-abstract authority, and no Sneak-as-principal authority. This preserves B14 and KD-022 1b/2e.
+
+### 8.8 PA7 — Deny-by-Default Posture
+
+Where authorization cannot be affirmatively established through PA2, the action is not performed.
+
+The boundary's default state is closed. Each future mapping, contract, or KOSD decision opens specific actions explicitly, never by implication.
+
+### 8.9 PA8 — No Sneak-Level Access Judgments
+
+For reads, Sneak presents what the authoritative holder provides for the linked identity and enforces rules established by KOSD.
+
+Sneak adds no access judgments of its own: it neither widens nor narrows access on its own authority.
+
+### 8.10 PA9 — Derivation Neither Creates Authority Nor Expands Access
+
+Computing or presenting derived working information under B5 and KD-022 2f does not create read authority the identity lacks at the sources and does not expand access beyond what the source holders determine.
+
+Computation does not launder access.
+
+## 9. Explicitly Undefined / Not Established by KD-021, KD-022, KD-023, and KD-024
+
+KD-021 through KD-024 do not establish or select:
 
 - Sneak implementation model A, B, or C.
 - Executable Sneak implementation within KOSD.
@@ -204,6 +287,8 @@ KD-021, KD-022, and KD-023 do not establish or select:
 - CSR2 intelligence definition, including NSB, SCB, or TRB scope.
 - Platform or service contracts.
 - Role-to-permission mappings.
+- Discord permissions.
+- Ticket Engine permissions.
 - Transcript rules.
 - `#csr2-data-intake` rules.
 - Kustomz-to-Discord identity-linking mechanics or lifecycle rules.
@@ -222,13 +307,18 @@ KD-021, KD-022, and KD-023 do not establish or select:
 - Personality definition/content.
 - The designated contract set and its consumption obligations.
 - The interface/presentation semantic boundary's detailed definition.
-- Any other item not explicitly adopted by KD-021, KD-022, or KD-023.
+- Grant-holder designation per capability.
+- The applicable system for cross-system authorization.
+- Revocation freshness standards.
+- Positive derived-information attribution standards.
+- Standing-as-permission-input rules.
+- Any other item not explicitly adopted by KD-021, KD-022, KD-023, or KD-024.
 
 All such items remain **UNDEFINED** or **OPEN** as applicable.
 
-## 9. Known Architectural Tensions
+## 10. Known Architectural Tensions
 
-### 9.1 Derived Statistics
+### 10.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -236,13 +326,33 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 9.2 Cross-Interface Continuity
+### 10.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-## 10. Implementation-Owned Mechanics
+### 10.3 Permission Grant-Holder Designation
+
+PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
+
+### 10.4 Cross-System Authorization
+
+PA5 defers unresolved authorization determinations to the applicable authoritative system, but the applicable system for cross-system actions remains **UNDEFINED** until future contract/architecture decisions establish it.
+
+### 10.5 Revocation Freshness
+
+PA2 and PA3 require permission resolution against the holder at evaluation time. The freshness standard for permitted ephemeral caching remains **UNDEFINED** under KD-022 2b and B3.
+
+### 10.6 Derived-Information Attribution
+
+PA9 establishes that derivation cannot expand access, but the positive attribution and traceability standard for derived information remains **UNDEFINED**, consistent with B12 and the KD-021 derived-statistics tension.
+
+### 10.7 Standing as Permission Input
+
+Member standing facts are authoritative under KD-022 1c, but whether or how standing may factor into future permission grants remains **UNDEFINED** and is part of the future role-to-permission mapping question.
+
+## 11. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -254,7 +364,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 11. Architectural Boundary
+## 12. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -262,8 +372,8 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 12. Change Control
+## 13. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, or KD-023.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, or KD-024.
