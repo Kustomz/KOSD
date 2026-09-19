@@ -307,3 +307,27 @@
 4. "Present" means the applicable dependency or relationship is identified and documented sufficiently for the release to account for it. It does not, by itself, require independent verification or satisfaction of every relationship.
 5. Dependency direction or order is optional unless explicitly established as necessary or release-relevant.
 6. Module-to-module dependencies must be explicitly declared when they are applicable and release-relevant, but not every possible relationship between modules must be declared.
+
+---
+
+## KD-013
+
+1. **Decision ID:** KD-013
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(f), term 1 only — "applicable project decision." The remaining 7(f) terms are untouched by this decision.
+4. **Action:** ADOPT — adoption of the owner's 7(f) term 1 decision (term 1 only)
+5. **Rationale:** The owner has explicitly decided what makes a project decision "applicable." The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(f) term 1. Factual context only, not an added rule: the adopted protocol's eight-field decision record includes a stated-scope field (Item(s)). Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** This decision resolves only 7(f) term 1. The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
+   - KD-003 7(f) terms 4 ("applicable validation/release process"), 5 ("authoritative KOS/project state"), and 6 ("Master") remain open. In particular, this decision's use of "applicable" applies only to project decisions; it does not define "applicable" for any other 7(f) term.
+   - KD-003 7(f) terms 2 ("silently altered") and 3 ("silently treated as authoritative") remain as previously categorized (established by KD-007; clarification only) — untouched by this decision.
+   - KD-003 blockers 7(c), 7(g), 7(h), 7(i) remain open.
+   - KD-011 (validation), KD-012 (dependencies/relationships), and KD-003 7(j) (no-invention boundary) remain intact and unchanged.
+   - KD-003 itself and all prior KDs are unaltered.
+
+   This decision adds no applicability criteria beyond the owner's explicit statement, invents no new protocol action, and does not redefine the KOS Decision & Promotion Protocol.
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 1 recorded as resolved by owner decision; all other 7(f) terms and blockers remain as stated above.
+
+**Owner's decided statement (recorded verbatim as the decision content):**
+
+1. A project decision is applicable when its stated scope explicitly covers the item or action for which the decision is being relied upon.
