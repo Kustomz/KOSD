@@ -32,3 +32,189 @@
    - The terms "silently," "applicable validation/release process," and "Master" need clarification once the governing documents are reviewed.
    - The Boundary stays intact: no detailed field schemas or validation criteria are to be invented.
 8. **Execution / Resulting State:** Authorized execution: none against the repository. No file modification, no status change, and no promotion is authorized by this decision. A future PROMOTE decision may cite KD-002 once its blockers clear; that future action requires its own decision. Resulting state: unchanged — CORE/STD-001.md remains exactly as before this record: Status Draft, "Kustomz Decision: _Not yet reviewed._", "Master Promotion: Not yet promoted." The authoritative record of this ruling is KD-002 in this log.
+
+---
+
+## KD-003
+
+1. **Decision ID:** KD-003
+2. **Date:** 2026-09-19
+3. **Item(s):** `CORE/KOS-RELEASE.md`, Version 2.0.0 (Draft), Status Draft, as reviewed at commit `89954356d7882c442c5df61ed617662111dc8912`.
+4. **Action:** APPROVE-IN-PRINCIPLE
+5. **Rationale:** The owner accepts the KOS-RELEASE document's current release-process design, ten release requirements, release-integrity concepts, and overall direction as the intended KOSD release framework. This is approval in principle only. It does not promote the document, make its requirements operative, or represent that the unresolved procedures and dependencies have been satisfied.
+6. **Basis / Evidence:** Owner judgment based on the read-only KD-003 decision brief and the repository evidence identified there, including KOS-RELEASE, STD-001, GOV-001, recovery/reconciliation records, the recovery build map, source inventory, CHANGELOG, and the adopted KOS Decision & Promotion Protocol.
+7. **Conditions / Blockers:**
+   (a) STD-001 remains APPROVED-IN-PRINCIPLE and not promoted; its related release-process dependency remains unresolved until KOS-RELEASE is eventually promoted.
+   (b) GOV-001 O-001/O-002/O-003 remain unresolved and unpromoted; their relationship to KOS-RELEASE requirements concerning locked content and recovery/project-state conflicts must be resolved before KOS-RELEASE promotion.
+   (c) The required-module set is not yet formally enumerated or reconciled; the MANIFEST/INDEX discrepancy must be resolved before promotion.
+   (d) Validation criteria/process are not yet established. No validation criteria or schemas are to be invented merely to satisfy this condition.
+   (e) Applicable dependencies and relationships are not yet formally defined.
+   (f) The terms "applicable project decision," "silently altered," "silently treated as authoritative," "applicable validation/release process," "authoritative KOS/project state," and "Master" require explicit resolution before promotion.
+   (g) Release-version semantics require clarification before promotion.
+   (h) The distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology requires reconciliation if both are intended to represent the same state.
+   (i) The strength of the "should include" / "may be used" language in Release Integrity requires owner clarification if those provisions are intended to be mandatory release requirements.
+   (j) The existing boundary remains intact: do not invent detailed field schemas, validation criteria, or other missing implementation rules in order to clear these conditions.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-003. `CORE/KOS-RELEASE.md` remains Draft and unpromoted. Its existing "Kustomz Decision: _Not yet reviewed._" and "Master Promotion: Not yet promoted." fields remain unchanged. The authoritative record of this APPROVE-IN-PRINCIPLE ruling is KD-003 in `CORE/DECISIONS.md`. No promotion, lock, unlock, or activation is authorized.
+
+---
+
+## KD-004
+
+1. **Decision ID:** KD-004
+2. **Date:** 2026-09-19
+3. **Item(s):** `GOVERNANCE/GOV-001.md`, section "Master / Locked / Pause Handling — O-001/O-002/O-003", Version 2.0.0 (Draft), as reviewed at commit `89954356d7882c442c5df61ed617662111dc8912`.
+4. **Action:** ADOPT
+5. **Rationale:** The owner recognizes the three recovery bullets under the O-001/O-002/O-003 heading as the three governance questions requiring review, but the current document does not explicitly map individual bullet text to individual O-IDs. The inferred reading used during inspection must not be silently converted into authoritative per-ID assignments.
+6. **Basis / Evidence:** Owner judgment based on the KD-004 decision brief and direct inspection of `GOVERNANCE/GOV-001.md`. The section heading identifies O-001/O-002/O-003, while the three bullets themselves are not individually labeled.
+7. **Conditions / Blockers:**
+   (a) KD-004 does not resolve the substantive governance questions concerning Master, LOCKED, or Pause handling.
+   (b) The natural inspection mapping — O-001 = Master, O-002 = LOCKED, O-003 = Pause — is recognized as an interpretation only, not as authoritative source text.
+   (c) Before any substantive promotion or activation based on individual O-IDs, the repository should explicitly map each O-ID to its corresponding item.
+   (d) No missing governance definitions, authority mechanisms, pause-record schema, or other implementation rules may be invented through this decision.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-004. `GOVERNANCE/GOV-001.md` remains unchanged and remains DRAFT / RECOVERY-MAPPED. No substantive ruling is made on: whether Master is authoritative; the meaning or authority of LOCKED; pause-record requirements. The three questions remain unresolved pending explicit owner rulings.
+
+---
+
+## KD-005
+
+1. **Decision ID:** KD-005
+2. **Date:** 2026-09-19
+3. **Item(s):** `GOVERNANCE/GOV-001.md`, section "Master / Locked / Pause Handling — O-001/O-002/O-003", specifically the O-001 Master-authority question, reviewed through the O-001 decision brief at commit `89954356d7882c442c5df61ed617662111dc8912`.
+4. **Action:** DEFER
+5. **Rationale:** The repository contains an O-001 recovery statement that says "Master is authoritative," but the repository does not currently define what "Master" is, identify a formally established Master artifact or state, establish the source or mechanism of its authority, or define its relationship to recovery-derived project state and historical information. `CORE/KOS-MANIFEST.md` and `CORE/KOS-INDEX-001.md` both contain "Master" descriptions but neither is established as the authoritative Master. Selecting either, or creating a new Master construct, would require an additional owner design decision not supported by the existing source.
+6. **Basis / Evidence:** Owner judgment based on the O-001 decision brief and direct repository evidence:
+   - GOV-001 contains the O-001 recovery statement but does not define Master.
+   - KOS-MANIFEST describes itself as the "Master table of contents for the Kustomz Operating System (KOS)."
+   - KOS-INDEX-001 describes itself as the "Master index for KOS."
+   - Both are Draft/unpromoted and their contents differ.
+   - The recovery build map states that recovery establishes project state to be carried forward, while existing modules are not authoritative merely because they exist.
+   - Source inventory states that old modules are not authoritative merely because they exist.
+   - The adopted KOS Decision & Promotion Protocol establishes how owner decisions are recorded but does not itself define the Master artifact/state.
+   - No existing source establishes a precedence rule between Recovery and Master.
+7. **Conditions / Blockers:**
+   (a) O-001 remains unresolved as an operative governance rule.
+   (b) No artifact, branch, state, or record is designated as "Master" by KD-005.
+   (c) No authority mechanism for Master is created or inferred by KD-005.
+   (d) No precedence rule between Master, recovery-derived project state, historical information, MANIFEST, or INDEX-001 is created by KD-005.
+   (e) Any future establishment of Master requires a separate explicit owner decision defining what constitutes Master and the basis of its authority.
+   (f) The O-001 statement in GOV-001 must not be treated as an operative authority rule merely because it exists in the recovery-mapped document.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-005. `GOVERNANCE/GOV-001.md` remains unchanged and remains DRAFT / RECOVERY-MAPPED. O-001 is formally DEFERRED pending a future explicit owner decision establishing what "Master" is and how its authority operates. O-002 and O-003 remain untouched and unresolved. No promotion, lock, unlock, activation, or new governance mechanism is authorized.
+
+---
+
+## KD-006
+
+1. **Decision ID:** KD-006
+2. **Date:** 2026-09-19
+3. **Item(s):**
+   - `ACQUISITION/CSR2_DIRECT_ACQUISITION_MODEL.md`
+   - `PRODUCTION/RP-001.md`
+   - Their existing `LOCKED` status labels, as identified in the O-002 decision brief.
+4. **Action:** ADOPT
+5. **Rationale:** The repository contains two pre-existing files explicitly labeled LOCKED, both predating the adopted KOS Decision & Promotion Protocol and neither citing a prior decision that granted LOCKED status. Their historical LOCKED labels therefore cannot be retroactively treated as having been granted under the new protocol. At the same time, removing, stripping, or reclassifying those labels without an explicit owner decision would alter existing project state. The owner therefore adopts preservation of their existing status as historical project state pending substantive resolution of O-002.
+6. **Basis / Evidence:** Owner judgment based on the O-002 decision brief and direct repository evidence:
+   - `ACQUISITION/CSR2_DIRECT_ACQUISITION_MODEL.md` is explicitly labeled `Status: LOCKED`, effective 2026-09-06.
+   - `PRODUCTION/RP-001.md` is explicitly labeled `Status: LOCKED SPECIFICATION`, version 1.0.
+   - Neither file cites a decision, authority grant, or unlock mechanism for its LOCKED status.
+   - KD-001 adopted the KOS Decision & Promotion Protocol only after these labels already existed.
+   - KD-001 did not retroactively grant or validate those LOCKED statuses.
+   - The O-002 substantive definition and authority of LOCKED remain unresolved.
+7. **Conditions / Blockers:**
+   (a) KD-006 does not define what LOCKED means.
+   (b) KD-006 does not establish who or what grants LOCKED authority.
+   (c) KD-006 does not establish an unlock, change, or supersession procedure.
+   (d) KD-006 does not validate the historical basis of either existing LOCKED label.
+   (e) KD-006 does not strip, downgrade, re-lock, or otherwise alter either existing status label.
+   (f) The two files are preserved in their existing state pending substantive O-002 resolution.
+   (g) Future locking, unlocking, changing, or superseding of these files remains subject to an explicit owner decision; KD-006 does not itself authorize any such action.
+   (h) O-001 remains deferred under KD-005 and is not resolved or used to establish authority by KD-006.
+   (i) O-003 remains untouched and unresolved.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-006. `ACQUISITION/CSR2_DIRECT_ACQUISITION_MODEL.md` remains unchanged and retains its existing `LOCKED` status label. `PRODUCTION/RP-001.md` remains unchanged and retains its existing `LOCKED SPECIFICATION` status label. O-002 remains unresolved as to the operative meaning, authority, grant mechanism, and change/unlock mechanism for LOCKED. No promotion, lock, unlock, supersession, or other status change is authorized by KD-006.
+
+---
+
+## KD-007
+
+1. **Decision ID:** KD-007
+2. **Date:** 2026-09-19
+3. **Item(s):** `GOVERNANCE/GOV-001.md`, section "Master / Locked / Pause Handling — O-001/O-002/O-003", specifically the O-002 LOCKED authority and meaning question, as reviewed through the O-002 decision brief and substantive resolution proposal.
+4. **Action:** ADOPT
+5. **Rationale:** The owner adopts the GOV-001 formulation as the operative definition of LOCKED because it establishes authority while preserving an explicit path for deliberate owner-authorized change, supersession, or unlocking. This is consistent with the adopted KOS Decision & Promotion Protocol, which already recognizes LOCK, UNLOCK, and SUPERSEDE as controlled actions and separates the decision authorizing an action from its execution and resulting repository state. LOCKED therefore does not mean immutable. It means authoritative and protected from silent alteration until an explicit owner-authorized action changes, supersedes, or unlocks it.
+6. **Basis / Evidence:**
+   - GOV-001 states: "LOCKED means authoritative until explicitly changed, superseded, or unlocked."
+   - KD-001 adopted the KOS Decision & Promotion Protocol, including LOCK, UNLOCK, and SUPERSEDE as controlled actions requiring explicit decision records.
+   - The protocol distinguishes decision/ruling, authorized execution, and resulting repository state.
+   - CORE/KOS-CORE-001 Principle 4 states that locked assets remain locked unless explicitly superseded; this is narrower than the adopted O-002 rule and requires later textual reconciliation.
+   - KD-006 preserved the two pre-existing LOCKED artifacts without retroactively validating their historical grant of LOCKED status.
+   - No evidence establishes that LOCKED means permanently immutable.
+7. **Conditions / Blockers:**
+   (a) Any change, supersession, or unlock of LOCKED status requires an explicit Kustomz owner decision recorded under the adopted KOS Decision & Promotion Protocol.
+   (b) "LOCKED" does not authorize silent modification of the locked content.
+   (c) KD-007 does not establish criteria for when an item should be locked.
+   (d) KD-007 does not establish validation or evidence requirements for locking, changing, superseding, or unlocking.
+   (e) KD-007 does not retroactively validate the original authority or grant mechanism of the two pre-existing LOCKED artifacts.
+   (f) The existing LOCKED artifacts remain preserved under KD-006.
+   (g) CORE/KOS-CORE-001 Principle 4 and any other conflicting LOCKED language require later reconciliation; KD-007 does not silently rewrite those files.
+   (h) O-001 remains deferred under KD-005 and is not resolved by KD-007.
+   (i) O-003 remains untouched and unresolved.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-007. `GOVERNANCE/GOV-001.md` remains unchanged and remains DRAFT / RECOVERY-MAPPED. The operative O-002 ruling is now established in the decision log: LOCKED means authoritative until explicitly changed, superseded, or unlocked, with each such action requiring an explicit Kustomz owner decision under the adopted protocol. No lock, unlock, change, supersession, promotion, or other repository status action is executed by KD-007 itself.
+
+---
+
+## KD-008
+
+1. **Decision ID:** KD-008
+2. **Date:** 2026-09-19
+3. **Item(s):** `GOVERNANCE/GOV-001.md`, section "Master / Locked / Pause Handling — O-001/O-002/O-003", specifically the O-003 pause-handling question, as reviewed through the O-003 decision brief.
+4. **Action:** DEFER
+5. **Rationale:** The repository demonstrates an established practice of documenting paused work through reconciliation "Pause Boundary" sections, and those existing records contain the substantive information identified by the O-003 recovery statement: stopping point, current state/hypothesis, active boundaries, and next intended target. However, the repository does not currently define a formal pause-record obligation, trigger, schema, storage location, or resume authority. The O-003 statement also requires recording in "Master," while KD-005 expressly deferred establishment of Master. Formalizing a pause-record requirement or creating an interim destination would therefore require new governance design not established by the current repository evidence. O-003 is deferred until the relationship between pause handling and the eventual definition of Master can be explicitly resolved.
+6. **Basis / Evidence:**
+   - GOV-001 contains the O-003 recovery statement requiring four categories of information to be recorded when a workstream is paused, but GOV-001 remains DRAFT / RECOVERY-MAPPED and unpromoted.
+   - `RECOVERY/KOSD_RECOVERY_RECONCILIATION_v1.6.md` contains a "Pause Boundary" section documenting paused research, its evidence boundary, checkpoint contents, and resume condition.
+   - `RECOVERY/KOSD_RECOVERY_RECONCILIATION_v1.7.md` contains a "Pause Boundary" section documenting the exact evidence boundary, proven/unresolved state, and intended resume target.
+   - These sections are existing recovery/reconciliation records, not formal standalone pause records.
+   - No pause-record schema, template, storage location, trigger definition, or resume-authority rule exists in the repository.
+   - KD-005 established that no artifact, branch, state, or record is currently designated as Master.
+   - KD-005 also established that the O-001 Master statement must not be treated as an operative authority rule merely because it exists in GOV-001.
+   - KD-004 prohibited inventing a pause-record schema or missing governance definitions through interpretation.
+   - KD-007 resolved O-002 but does not establish a pause-record mechanism or Master destination.
+7. **Conditions / Blockers:**
+   (a) O-003 remains unresolved as an operative pause-handling rule.
+   (b) No formal definition of "paused" is established by KD-008.
+   (c) No pause-record schema or mandatory field set is established by KD-008.
+   (d) No pause-record storage location or interim Master substitute is established by KD-008.
+   (e) No resume authority or authorization mechanism is established by KD-008.
+   (f) Existing v1.6 and v1.7 "Pause Boundary" sections remain preserved as historical/recovery project-state records and are not declared invalid or noncompliant.
+   (g) Their preservation does not constitute formal adoption of the O-003 obligation.
+   (h) O-001 remains deferred under KD-005.
+   (i) O-002 remains resolved under KD-007.
+   (j) Any future formalization of O-003 requires an explicit owner decision defining the obligation and its relationship to Master.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-008. `GOVERNANCE/GOV-001.md` remains unchanged and remains DRAFT / RECOVERY-MAPPED. The existing v1.6 and v1.7 Pause Boundary records remain unchanged. O-003 is formally DEFERRED pending explicit resolution of the pause obligation, its trigger, required record contents, recording destination, and resume authority. No pause-record artifact, schema, workflow, Master substitute, promotion, lock, unlock, or other governance mechanism is created by KD-008.
+
+---
+
+## KD-009
+
+1. **Decision ID:** KD-009
+2. **Date:** 2026-09-19
+3. **Item(s):** `CORE/KOS-CORE-001.md`, Principle 4, specifically the reconciliation of its LOCKED wording with KD-007.
+4. **Action:** ADOPT
+5. **Rationale:** KD-007 established the operative definition of LOCKED as authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol. CORE-001 Principle 4 currently states only that locked assets remain locked unless explicitly superseded, creating a textual discrepancy that cannot be resolved by interpretation without inventing governance meaning. KD-009 authorizes the minimum textual reconciliation necessary to make Principle 4 express the already-adopted KD-007 rule.
+6. **Basis / Evidence:**
+   - KD-007 resolved O-002 and established the operative LOCKED definition and decision mechanism.
+   - KD-007 field 7(g) explicitly identified CORE-001 Principle 4 as requiring later reconciliation.
+   - KD-007 field 8 explicitly withheld repository modification authority.
+   - The reconciliation brief established that the current Principle 4 wording is not fully compatible with KD-007 by interpretation alone.
+   - The reconciliation brief identified the following minimum replacement wording: "4. Locked assets are authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol."
+   - The reconciliation brief found no other CORE-001 principle requiring modification as part of this reconciliation.
+7. **Conditions / Blockers:**
+   (a) Only Principle 4 may be changed under KD-009.
+   (b) The replacement text must be exactly the wording identified in the reconciliation brief, unless a further owner decision explicitly authorizes a different wording.
+   (c) No other principle, section, metadata, version, status, or file may be changed under KD-009.
+   (d) KD-009 does not alter CORE-001's Draft status.
+   (e) KD-009 does not promote CORE-001.
+   (f) KD-009 does not establish lock criteria, validation requirements, additional authority roles, approval chains, schemas, or unlock procedures beyond KD-007.
+   (g) O-001 remains deferred under KD-005.
+   (h) O-003 remains deferred under KD-008.
+   (i) KD-007 remains unchanged.
+8. **Execution / Resulting State:** Authorize one repository modification only: Replace the existing CORE-001 Principle 4 sentence: "Locked assets remain locked unless explicitly superseded." With: "Locked assets are authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol." No other repository modification is authorized. Do not modify GOV-001.md. Do not modify STD-001.md. Do not modify KOS-RELEASE.md. Do not modify either existing LOCKED artifact. Do not modify any other file. Do not commit or push as part of KD-009.
