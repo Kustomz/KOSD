@@ -247,3 +247,32 @@
    (h) No promotion of MANIFEST, INDEX-001, or KOS-RELEASE is authorized by this KD.
    (i) KD-005 and all prior decisions remain unchanged.
 8. **Execution / Resulting State:** Add KD-010 to `CORE/DECISIONS.md` only. No repository modification is authorized beyond this log entry: do not modify `CORE/KOS-MANIFEST.md`, `CORE/KOS-INDEX-001.md`, `CORE/KOS-RELEASE.md`, or `GOVERNANCE/GOV-001.md`; do not modify KD-005 or any prior decision. No promotion, lock, unlock, merge, rename, or authority designation is authorized. No commit or push is authorized as part of KD-010 until the resulting diff is audited against this decision.
+
+---
+
+## KD-011
+
+1. **Decision ID:** KD-011
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(d) — validation criteria/process. Owner decision on the six 7(d) questions surfaced in the owner-decision brief: the meaning of validation, its criteria basis, the validation mechanism, required evidence, resulting status, and the validation↔release relationship.
+4. **Action:** ADOPT — adoption of the owner's 7(d) decision (blocker 7(d) only)
+5. **Rationale:** The owner has explicitly decided the 7(d) questions. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only owner-decision brief for KD-003 blocker 7(d). Classification, stated plainly: owner decision on inspected repository evidence.
+7. **Conditions / Blockers:** The following KD-003 blockers are explicitly preserved and remain open; nothing in this decision resolves, narrows, or absorbs them:
+   - 7(e) — applicable dependencies and relationships remain undefined.
+   - 7(f) — unresolved terminology remains unresolved, including "applicable validation/release process." This decision's use of the word "applicable" (see owner statements below) does not define "applicable" and does not identify the applicable process.
+   - 7(g) — release-version semantics remain unclarified.
+   - 7(h) — the distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology remains unreconciled. This decision's "marked VALIDATED" statement does not establish whether KOS-RELEASE's `VALIDATION` state is identical to the protocol's `VALIDATED` state.
+   - 7(i) — the strength of "should include" / "may be used" remains unclarified; this decision does not fix the normative force of "should" or "may."
+
+   This decision does not define: detailed validation criteria, acceptance thresholds, schemas, a universal validation workflow, a specific human/tool performer, evidence format or schema, release-version semantics, or dependency rules.
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 blocker 7(d) recorded as resolved by owner decision; blockers 7(e)–7(i) remain open as stated above.
+
+**Owner's decided statements (recorded verbatim as the decision content):**
+
+1. Validation checks a KOSD module against the requirements already established for that module.
+2. Validation does not create, invent, or establish those requirements.
+3. The validation mechanism is whatever mechanism is applicable to that module.
+4. Sufficient evidence must exist to demonstrate that the applicable validation was performed and passed.
+5. A module that passes validation is marked VALIDATED.
+6. Validation is a prerequisite for release, but validation itself does not constitute release.
