@@ -462,3 +462,35 @@
 
 1. KOS-RELEASE's `VALIDATION` state and the protocol's `VALIDATED` module status are distinct.
 2. A release in `VALIDATION` requires the applicable modules to have passed validation and been marked `VALIDATED`, but the release-level `VALIDATION` state is not itself a module `VALIDATED` status.
+
+---
+
+## KD-019
+
+Date: 2026-09-19
+
+Item(s): KD-003 7(c) — required-module set
+
+Action: ADOPT
+
+Rationale:
+Resolve the authority question for the required-module set without selecting either CORE/KOS-MANIFEST.md or CORE/KOS-INDEX-001.md as authoritative.
+
+Basis / Evidence:
+Owner decision.
+
+Conditions / Blockers:
+- KD-010's containment remains in force until KOS-RELEASE is promoted.
+- This decision does not promote KOS-RELEASE or establish its detailed required-module list beyond the authority rule below.
+- No existing MANIFEST/INDEX discrepancy is resolved by selecting either document as authoritative.
+- All prior decisions remain unchanged.
+
+Owner statements:
+1. KOS-RELEASE defines the required-module set for a KOSD release.
+2. The required-module set is established by the requirements of CORE/KOS-RELEASE.md, rather than by CORE/KOS-MANIFEST.md, CORE/KOS-INDEX-001.md, or any other Draft enumeration.
+3. Until KOS-RELEASE is promoted, its required-module set is not yet an authoritative released requirement.
+
+Execution / Resulting State:
+- KD-003 7(c) is resolved as an authority question.
+- The actual required-module set remains to be established through KOS-RELEASE.
+- No file other than CORE/DECISIONS.md is to be modified by this decision.
