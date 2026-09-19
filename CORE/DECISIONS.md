@@ -384,3 +384,29 @@
 2. The current authoritative KOS/project state is the authoritative state established by the latest applicable adopted decisions and their resulting project state.
 3. "KOS state" and "project state" refer to the same authoritative project state for purposes of KOSD.
 4. When authoritative project content conflicts, the latest applicable adopted decision and its resulting authorized project state controls.
+
+---
+
+## KD-016
+
+1. **Decision ID:** KD-016
+2. **Date:** 2026-09-19
+3. **Item(s):** KD-003 blocker 7(f), term 6 only — "Master."
+4. **Action:** DEFER — continuation of the existing KD-005 deferral (term 6 only)
+5. **Rationale:** The owner has decided that "Master" remains deferred. This decision affirms KD-005's existing deferral and adds nothing to it. No definition of Master, no designation, no authority mechanism, no substitute, and no alteration of any other decision results from this record.
+6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(f) term 6 and by KD-005's existing conditions. Classification, stated plainly: owner affirmation of an existing deferred decision.
+7. **Conditions / Blockers:** This decision resolves only 7(f) term 6, and it resolves it by deferral only. The following are explicitly preserved; nothing in this decision changes, narrows, or absorbs them:
+   - KD-005 remains in force in full, including its conditions 7(a)–7(f): O-001 remains unresolved; no artifact, branch, state, or record is designated as Master; no authority mechanism for Master is created or inferred; no precedence rule is created; any future establishment of Master requires a separate explicit owner decision defining what constitutes Master and the basis of its authority; the O-001 "Master is authoritative" REVIEW statement must not be treated as an operative authority rule merely because it exists in GOV-001.
+   - This decision does not define Master.
+   - This decision does not designate any artifact, branch, state, or record as Master.
+   - This decision does not establish a Master authority mechanism.
+   - This decision does not create a Master substitute or interim Master destination.
+   - KD-015's authoritative KOS/project state definition is unaltered. This decision creates no relationship between Master and the KD-015 authoritative state — that relationship remains unresolved.
+   - KD-003 7(f) terms 1, 2, 3, 4, and 5 remain resolved/recorded as in KD-013, KD-014, KD-015, and the prior categorizations — untouched by this decision.
+   - KD-003 blockers 7(c), 7(g), 7(h), 7(i) remain open.
+   - KD-001 through KD-015 remain intact and unchanged, including KD-008's no-substitute rule and KD-003 7(j) (no-invention boundary).
+8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 6 recorded as resolved-by-deferral, with the deferral defined entirely by KD-005 as affirmed above.
+
+**Owner's decided statement (recorded verbatim as the decision content):**
+
+- Master remains deferred.
