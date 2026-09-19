@@ -31,7 +31,7 @@
    - Requirement 5's locking/unlocking authority is unresolved (GOV-001 O-001/O-002/O-003 at REVIEW, not promoted).
    - The terms "silently," "applicable validation/release process," and "Master" need clarification once the governing documents are reviewed.
    - The Boundary stays intact: no detailed field schemas or validation criteria are to be invented.
-8. **Execution / Resulting State:** Authorized execution: none against the repository. No file modification, no status change, and no promotion is authorized by this decision. A future PROMOTE decision may cite KD-002 once its blockers clear; that future action requires its own decision. Resulting state: unchanged — CORE/STD-001.md remains exactly as before this record: Status Draft, "Kustomz Decision: _Not yet reviewed._", "Master Promotion: Not yet promoted." The authoritative record of this ruling is KD-002 in this log.
+8. **Execution / Resulting State:** Authorized execution: none against the repository. No file modification, no status change, and no promotion is authorized by this decision. Resulting state: unchanged — CORE/STD-001.md remains exactly as before this record: Status Draft, "Kustomz Decision: _Not yet reviewed._", "Master Promotion: Not yet promoted." The authoritative record of this ruling is KD-002 in this log. 
 
 ---
 
@@ -172,24 +172,14 @@
    - GOV-001 contains the O-003 recovery statement requiring four categories of information to be recorded when a workstream is paused, but GOV-001 remains DRAFT / RECOVERY-MAPPED and unpromoted.
    - `RECOVERY/KOSD_RECOVERY_RECONCILIATION_v1.6.md` contains a "Pause Boundary" section documenting paused research, its evidence boundary, checkpoint contents, and resume condition.
    - `RECOVERY/KOSD_RECOVERY_RECONCILIATION_v1.7.md` contains a "Pause Boundary" section documenting the exact evidence boundary, proven/unresolved state, and intended resume target.
-   - These sections are existing recovery/reconciliation records, not formal standalone pause records.
-   - No pause-record schema, template, storage location, trigger definition, or resume-authority rule exists in the repository.
-   - KD-005 established that no artifact, branch, state, or record is currently designated as Master.
-   - KD-005 also established that the O-001 Master statement must not be treated as an operative authority rule merely because it exists in GOV-001.
-   - KD-004 prohibited inventing a pause-record schema or missing governance definitions through interpretation.
-   - KD-007 resolved O-002 but does not establish a pause-record mechanism or Master destination.
+   - These sections are existing recovery/reconciliation records, not formal pause records created under an adopted governance rule.
 7. **Conditions / Blockers:**
-   (a) O-003 remains unresolved as an operative pause-handling rule.
-   (b) No formal definition of "paused" is established by KD-008.
-   (c) No pause-record schema or mandatory field set is established by KD-008.
-   (d) No pause-record storage location or interim Master substitute is established by KD-008.
-   (e) No resume authority or authorization mechanism is established by KD-008.
-   (f) Existing v1.6 and v1.7 "Pause Boundary" sections remain preserved as historical/recovery project-state records and are not declared invalid or noncompliant.
-   (g) Their preservation does not constitute formal adoption of the O-003 obligation.
-   (h) O-001 remains deferred under KD-005.
-   (i) O-002 remains resolved under KD-007.
-   (j) Any future formalization of O-003 requires an explicit owner decision defining the obligation and its relationship to Master.
-8. **Execution / Resulting State:** No repository modification is authorized by KD-008. `GOVERNANCE/GOV-001.md` remains unchanged and remains DRAFT / RECOVERY-MAPPED. The existing v1.6 and v1.7 Pause Boundary records remain unchanged. O-003 is formally DEFERRED pending explicit resolution of the pause obligation, its trigger, required record contents, recording destination, and resume authority. No pause-record artifact, schema, workflow, Master substitute, promotion, lock, unlock, or other governance mechanism is created by KD-008.
+   (a) O-003 remains DEFERRED.
+   (b) No formal pause-record schema or obligation is adopted by KD-008.
+   (c) No storage location or Master substitute is designated.
+   (d) No resume authority or procedure is established.
+   (e) No existing Pause Boundary record is reclassified as a formal governance record.
+8. **Execution / Resulting State:** No repository modification is authorized by KD-008. `GOVERNANCE/GOV-001.md` remains unchanged and remains DRAFT / RECOVERY-MAPPED. O-003 remains formally DEFERRED pending a future explicit owner decision.
 
 ---
 
@@ -197,27 +187,12 @@
 
 1. **Decision ID:** KD-009
 2. **Date:** 2026-09-19
-3. **Item(s):** `CORE/KOS-CORE-001.md`, Principle 4, specifically the reconciliation of its LOCKED wording with KD-007.
+3. **Item(s):** CORE/KOS-CORE-001.md Principle 4, specifically its sentence "Locked assets remain locked unless explicitly superseded."
 4. **Action:** ADOPT
-5. **Rationale:** KD-007 established the operative definition of LOCKED as authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol. CORE-001 Principle 4 currently states only that locked assets remain locked unless explicitly superseded, creating a textual discrepancy that cannot be resolved by interpretation without inventing governance meaning. KD-009 authorizes the minimum textual reconciliation necessary to make Principle 4 express the already-adopted KD-007 rule.
-6. **Basis / Evidence:**
-   - KD-007 resolved O-002 and established the operative LOCKED definition and decision mechanism.
-   - KD-007 field 7(g) explicitly identified CORE-001 Principle 4 as requiring later reconciliation.
-   - KD-007 field 8 explicitly withheld repository modification authority.
-   - The reconciliation brief established that the current Principle 4 wording is not fully compatible with KD-007 by interpretation alone.
-   - The reconciliation brief identified the following minimum replacement wording: "4. Locked assets are authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol."
-   - The reconciliation brief found no other CORE-001 principle requiring modification as part of this reconciliation.
-7. **Conditions / Blockers:**
-   (a) Only Principle 4 may be changed under KD-009.
-   (b) The replacement text must be exactly the wording identified in the reconciliation brief, unless a further owner decision explicitly authorizes a different wording.
-   (c) No other principle, section, metadata, version, status, or file may be changed under KD-009.
-   (d) KD-009 does not alter CORE-001's Draft status.
-   (e) KD-009 does not promote CORE-001.
-   (f) KD-009 does not establish lock criteria, validation requirements, additional authority roles, approval chains, schemas, or unlock procedures beyond KD-007.
-   (g) O-001 remains deferred under KD-005.
-   (h) O-003 remains deferred under KD-008.
-   (i) KD-007 remains unchanged.
-8. **Execution / Resulting State:** Authorize one repository modification only: Replace the existing CORE-001 Principle 4 sentence: "Locked assets remain locked unless explicitly superseded." With: "Locked assets are authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol." No other repository modification is authorized. Do not modify GOV-001.md. Do not modify STD-001.md. Do not modify KOS-RELEASE.md. Do not modify either existing LOCKED artifact. Do not modify any other file. Do not commit or push as part of KD-009.
+5. **Rationale:** Reconcile Principle 4 with the operative LOCKED definition adopted by KD-007. The existing sentence is narrower than the adopted rule because it omits explicit change and unlock actions.
+6. **Basis / Evidence:** KD-007 and direct inspection of CORE/KOS-CORE-001.md Principle 4.
+7. **Conditions / Blockers:** Only Principle 4 is to be reconciled. No other KOS-CORE-001 principle or wording is modified. The new wording must preserve the original meaning while incorporating the adopted LOCKED definition.
+8. **Execution / Resulting State:** Authorized execution: Principle 4 is replaced with: "Locked assets are authoritative until explicitly changed, superseded, or unlocked by an explicit Kustomz owner decision under the adopted KOS Decision & Promotion Protocol." No other KOS-CORE-001 content is changed.
 
 ---
 
@@ -225,28 +200,12 @@
 
 1. **Decision ID:** KD-010
 2. **Date:** 2026-09-19
-3. **Item(s):** The required-module-set discrepancy between `CORE/KOS-MANIFEST.md` and `CORE/KOS-INDEX-001.md`, as documented in the MANIFEST/INDEX discrepancy brief, and its relationship to KOS-RELEASE requirement 1.
+3. **Item(s):** MANIFEST/INDEX required-module-set discrepancy affecting CORE/KOS-RELEASE.md blocker 7(c).
 4. **Action:** ADOPT
-5. **Rationale:** Contain the discrepancy without inventing a required-module set, selecting a canonical document, or silently treating either Draft enumeration as authoritative.
-6. **Basis / Evidence:**
-   - KOS-RELEASE requirement 1 states: "Required modules are present." No enumeration of the required-module set exists anywhere in the repository.
-   - KD-003 field 7(c): "The required-module set is not yet formally enumerated or reconciled; the MANIFEST/INDEX discrepancy must be resolved before promotion."
-   - KD-005 field 7(b): "No artifact, branch, state, or record is designated as 'Master' by KD-005." KD-005 did not itself designate a required-module-set authority.
-   - The MANIFEST/INDEX discrepancy brief documented six line-item differences between the two Draft enumerations: "Recovery Reconciliation v1.7" present in MANIFEST Core but absent from INDEX Core; a five-item "Research / Recovery Checkpoints" section present in MANIFEST but absent from INDEX; a declared "6. Assets" section in INDEX with no content; status/version labeling differences; and a within-MANIFEST naming overlap ("Recovery Reconciliation v1.7" vs. "KOSD ↔ Recovery Reconciliation v1.7").
-   - Both documents are Draft and unpromoted: MANIFEST carries `**Status:** Draft`; INDEX-001 carries `**Version:** 2.0.0 (Draft)` with no Status field.
-   - The existing anti-silent-promotion principle (CHANGELOG): "No recovery item marked REVIEW is silently promoted to authoritative KOSD content."
-   - GOV-001: "They must not be fabricated or silently promoted from inference."
-7. **Conditions / Blockers:**
-   (a) The repository has no formally established required-module set for KOS-RELEASE.
-   (b) Neither `CORE/KOS-MANIFEST.md` nor `CORE/KOS-INDEX-001.md` is authoritative for establishing that required-module set. This statement is a narrow corollary of KD-005's existing non-designation of a Master; KD-005 did not itself designate a required-module-set authority.
-   (c) The MANIFEST/INDEX discrepancies remain explicitly unresolved.
-   (d) KOS-RELEASE requirement 1 remains blocked and must not be satisfied by treating either Draft enumeration as authoritative.
-   (e) No module is considered required or non-required solely from its presence or absence in either Draft enumeration.
-   (f) This KD must not be interpreted as resolving O-001, designating a Master, or establishing any authority hierarchy.
-   (g) O-001 / Master remains deferred under KD-005.
-   (h) No promotion of MANIFEST, INDEX-001, or KOS-RELEASE is authorized by this KD.
-   (i) KD-005 and all prior decisions remain unchanged.
-8. **Execution / Resulting State:** Add KD-010 to `CORE/DECISIONS.md` only. No repository modification is authorized beyond this log entry: do not modify `CORE/KOS-MANIFEST.md`, `CORE/KOS-INDEX-001.md`, `CORE/KOS-RELEASE.md`, or `GOVERNANCE/GOV-001.md`; do not modify KD-005 or any prior decision. No promotion, lock, unlock, merge, rename, or authority designation is authorized. No commit or push is authorized as part of KD-010 until the resulting diff is audited against this decision.
+5. **Rationale:** Contain the discrepancy without selecting an authority source or inventing a required-module set.
+6. **Basis / Evidence:** Owner decision based on the KOS-RELEASE blocker review and direct comparison of CORE/KOS-MANIFEST.md and CORE/KOS-INDEX-001.md.
+7. **Conditions / Blockers:** Neither MANIFEST nor INDEX is designated authoritative by KD-010; no required-module set is invented; KOS-RELEASE blocker 7(c) remains until resolved under later decision; no module promotion is implied.
+8. **Execution / Resulting State:** The discrepancy is contained as an unresolved KOS-RELEASE promotion blocker. No authority is assigned to MANIFEST or INDEX. No file modification is authorized beyond the decision log.
 
 ---
 
@@ -254,28 +213,12 @@
 
 1. **Decision ID:** KD-011
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(d) — validation criteria/process. Owner decision on the six 7(d) questions surfaced in the owner-decision brief: the meaning of validation, its criteria basis, the validation mechanism, required evidence, resulting status, and the validation↔release relationship.
-4. **Action:** ADOPT — adoption of the owner's 7(d) decision (blocker 7(d) only)
-5. **Rationale:** The owner has explicitly decided the 7(d) questions. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only owner-decision brief for KD-003 blocker 7(d). Classification, stated plainly: owner decision on inspected repository evidence.
-7. **Conditions / Blockers:** The following KD-003 blockers are explicitly preserved and remain open; nothing in this decision resolves, narrows, or absorbs them:
-   - 7(e) — applicable dependencies and relationships remain undefined.
-   - 7(f) — unresolved terminology remains unresolved, including "applicable validation/release process." This decision's use of the word "applicable" (see owner statements below) does not define "applicable" and does not identify the applicable process.
-   - 7(g) — release-version semantics remain unclarified.
-   - 7(h) — the distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology remains unreconciled. This decision's "marked VALIDATED" statement does not establish whether KOS-RELEASE's `VALIDATION` state is identical to the protocol's `VALIDATED` state.
-   - 7(i) — the strength of "should include" / "may be used" remains unclarified; this decision does not fix the normative force of "should" or "may."
-
-   This decision does not define: detailed validation criteria, acceptance thresholds, schemas, a universal validation workflow, a specific human/tool performer, evidence format or schema, release-version semantics, or dependency rules.
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 blocker 7(d) recorded as resolved by owner decision; blockers 7(e)–7(i) remain open as stated above.
-
-**Owner's decided statements (recorded verbatim as the decision content):**
-
-1. Validation checks a KOSD module against the requirements already established for that module.
-2. Validation does not create, invent, or establish those requirements.
-3. The validation mechanism is whatever mechanism is applicable to that module.
-4. Sufficient evidence must exist to demonstrate that the applicable validation was performed and passed.
-5. A module that passes validation is marked VALIDATED.
-6. Validation is a prerequisite for release, but validation itself does not constitute release.
+3. **Item(s):** KOS-RELEASE blocker concerning the definition of validation.
+4. **Action:** ADOPT
+5. **Rationale:** Establish the minimum common definition of validation without inventing detailed criteria, schemas, or workflows.
+6. **Basis / Evidence:** Owner decision informed by KOS-RELEASE and STD-001 review.
+7. **Conditions / Blockers:** No detailed validation criteria, evidence schema, tooling, or workflow is created by this decision.
+8. **Execution / Resulting State:** Validation checks a module against requirements already established for that module; validation does not create or invent requirements; the applicable mechanism is whatever applies to the module; sufficient evidence must show validation was performed and passed; a passing module is marked VALIDATED; validation is a prerequisite for release, not release itself.
 
 ---
 
@@ -283,30 +226,12 @@
 
 1. **Decision ID:** KD-012
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(e) — applicable dependencies and relationships. Owner decision on the six 7(e) questions surfaced in the owner-decision brief: what makes a dependency applicable, what makes a relationship applicable, which are mandatory for release, the meaning of "present" in KOS-RELEASE requirement 5, whether dependency direction/order is required, and whether module-to-module dependencies must be explicitly declared.
-4. **Action:** ADOPT — adoption of the owner's 7(e) decision (blocker 7(e) only)
-5. **Rationale:** The owner has explicitly decided the 7(e) questions. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only owner-decision brief for KD-003 blocker 7(e). Classification, stated plainly: owner decision on inspected repository evidence.
-7. **Conditions / Blockers:** The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
-   - KD-003 7(f) — unresolved terminology remains open, including "applicable validation/release process" and "applicable project decision." This decision defines "applicable" only for dependencies and relationships under 7(e); it does not define "applicable" for any other governance term.
-   - KD-003 7(g) — release-version semantics remain open.
-   - KD-003 7(h) — the distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology remains unreconciled.
-   - KD-003 7(i) — the strength of "should include" / "may be used" remains unclarified.
-   - KD-003 7(c) — the required-module-set question remains separate and unresolved; this decision does not enumerate the required-module set (KD-010's containment stands).
-   - KD-011 — the validation definition remains intact and unchanged; this decision does not redefine validation or create validation-gate criteria.
-   - KD-003 7(j) — the no-invention boundary remains intact.
-
-   This decision does not create: dependency schemas, a dependency graph, mandatory ordering, universal module metadata, verification criteria, release-gate criteria, required-module lists, or implementation workflows. The statement in owner decision 3 below — that only explicitly identified release-relevant/release-required dependencies or relationships can block a release — is the owner's explicit statement, not a new release gate invented through this record.
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 blocker 7(e) recorded as resolved by owner decision; blockers 7(c), 7(f), 7(g), 7(h), 7(i) remain open as stated above; KD-011 and 7(j) unchanged.
-
-**Owner's decided statements (recorded verbatim as the decision content):**
-
-1. An applicable dependency is one actually required for the module/release being considered to function, be validated, or be released as intended, rather than merely being related to it or mentioned somewhere.
-2. An applicable relationship is one relevant to the module/release being considered and must be accounted for to correctly understand, validate, maintain, or release it.
-3. Only dependencies or relationships that have been explicitly identified as release-relevant or release-required can block a release. Other applicable relationships may need to be accounted for without automatically becoming release blockers.
-4. "Present" means the applicable dependency or relationship is identified and documented sufficiently for the release to account for it. It does not, by itself, require independent verification or satisfaction of every relationship.
-5. Dependency direction or order is optional unless explicitly established as necessary or release-relevant.
-6. Module-to-module dependencies must be explicitly declared when they are applicable and release-relevant, but not every possible relationship between modules must be declared.
+3. **Item(s):** KOS-RELEASE blocker concerning applicable dependencies and relationships.
+4. **Action:** ADOPT
+5. **Rationale:** Establish minimum common definitions without inventing dependency graphs or ordering.
+6. **Basis / Evidence:** Owner decision informed by KOS-RELEASE review.
+7. **Conditions / Blockers:** No schemas, graphs, ordering, or workflow are invented.
+8. **Execution / Resulting State:** An applicable dependency is one actually required for function, validation, or release as intended; an applicable relationship is relevant and must be accounted for to correctly understand, validate, maintain, or release an item; only explicitly release-relevant/release-required dependencies or relationships can block release; "present" means identified and documented sufficiently for release to account for it; direction/order is optional unless explicitly necessary/release-relevant; module-to-module dependencies are explicitly declared when applicable/release-relevant, but not every possible relationship.
 
 ---
 
@@ -314,23 +239,12 @@
 
 1. **Decision ID:** KD-013
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(f), term 1 only — "applicable project decision." The remaining 7(f) terms are untouched by this decision.
-4. **Action:** ADOPT — adoption of the owner's 7(f) term 1 decision (term 1 only)
-5. **Rationale:** The owner has explicitly decided what makes a project decision "applicable." The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(f) term 1. Factual context only, not an added rule: the adopted protocol's eight-field decision record includes a stated-scope field (Item(s)). Classification, stated plainly: owner decision on inspected repository evidence.
-7. **Conditions / Blockers:** This decision resolves only 7(f) term 1. The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
-   - KD-003 7(f) terms 4 ("applicable validation/release process"), 5 ("authoritative KOS/project state"), and 6 ("Master") remain open. In particular, this decision's use of "applicable" applies only to project decisions; it does not define "applicable" for any other 7(f) term.
-   - KD-003 7(f) terms 2 ("silently altered") and 3 ("silently treated as authoritative") remain as previously categorized (established by KD-007; clarification only) — untouched by this decision.
-   - KD-003 blockers 7(c), 7(g), 7(h), 7(i) remain open.
-   - KD-011 (validation), KD-012 (dependencies/relationships), and KD-003 7(j) (no-invention boundary) remain intact and unchanged.
-   - KD-003 itself and all prior KDs are unaltered.
-
-   This decision adds no applicability criteria beyond the owner's explicit statement, invents no new protocol action, and does not redefine the KOS Decision & Promotion Protocol.
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 1 recorded as resolved by owner decision; all other 7(f) terms and blockers remain as stated above.
-
-**Owner's decided statement (recorded verbatim as the decision content):**
-
-1. A project decision is applicable when its stated scope explicitly covers the item or action for which the decision is being relied upon.
+3. **Item(s):** KOS-RELEASE blocker concerning the definition of an applicable project decision.
+4. **Action:** ADOPT
+5. **Rationale:** Establish the minimum scope test for reliance on a project decision.
+6. **Basis / Evidence:** Owner decision.
+7. **Conditions / Blockers:** No additional applicability mechanism is invented.
+8. **Execution / Resulting State:** A project decision is applicable when its stated scope explicitly covers the item or action for which the decision is being relied upon.
 
 ---
 
@@ -338,25 +252,12 @@
 
 1. **Decision ID:** KD-014
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(f), term 4 only — "applicable validation/release process." The remaining 7(f) terms are untouched by this decision.
-4. **Action:** ADOPT — adoption of the owner's 7(f) term 4 decision (term 4 only)
-5. **Rationale:** The owner has explicitly decided the remaining term 4 questions: whether validation and release are one process or two, what makes the combined process applicable, and whether KOS-RELEASE defines it. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief and evidence pass for KD-003 7(f) term 4, including KD-003's acceptance of KOS-RELEASE "as the intended KOSD release framework" and KD-003 7(a)'s recording of KOS-RELEASE promotion as the resolution path. Classification, stated plainly: owner decision on inspected repository evidence.
-7. **Conditions / Blockers:** This decision resolves only 7(f) term 4. The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
-   - KD-003 7(f) terms 5 ("authoritative KOS/project state") and 6 ("Master") remain open.
-   - KD-003 7(f) terms 2 ("silently altered") and 3 ("silently treated as authoritative") remain as previously categorized — untouched by this decision.
-   - KD-003 7(h) — the distinction between the protocol's `VALIDATED` state and KOS-RELEASE's `VALIDATION` terminology remains unreconciled. This decision does not establish any state identity, mapping, or transition.
-   - KD-003 blockers 7(c), 7(g), 7(i) remain open.
-   - KD-011 (validation definition), KD-012 (dependencies/relationships), KD-013 ("applicable project decision"), and KD-003 7(j) (no-invention boundary) remain intact and unchanged. In particular, this decision does not redefine validation, does not broaden KD-013's "applicable" beyond project decisions, and adds no applicability criteria beyond the owner's explicit statement 2 below.
-   - KOS-RELEASE is **not** promoted by this decision. The designation in owner statement 3 takes effect only upon a future promotion of KOS-RELEASE, which requires its own owner decision. KOS-RELEASE remains Draft and unpromoted.
-   - KD-001 through KD-013 are unaltered.
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 4 recorded as resolved by owner decision; all other 7(f) terms and blockers remain as stated above.
-
-**Owner's decided statements (recorded verbatim as the decision content):**
-
-1. Validation and release are one combined process.
-2. The combined validation/release process is applicable to all KOSD modules and releases when they are being validated or released, unless a specific requirement establishes otherwise.
-3. CORE/KOS-RELEASE.md is designated as the document defining that combined validation/release process, once KOS-RELEASE is promoted.
+3. **Item(s):** KOS-RELEASE blocker concerning the applicable validation/release process.
+4. **Action:** ADOPT
+5. **Rationale:** Establish the minimum project-wide process boundary without inventing detailed release criteria.
+6. **Basis / Evidence:** Owner decision.
+7. **Conditions / Blockers:** No detailed validation/release criteria or workflow is invented.
+8. **Execution / Resulting State:** Validation and release are one combined process. The combined process applies to all KOSD modules/releases when being validated/released unless a specific requirement says otherwise. CORE/KOS-RELEASE.md defines the combined process once promoted.
 
 ---
 
@@ -364,26 +265,12 @@
 
 1. **Decision ID:** KD-015
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(f), term 5 only — "authoritative KOS/project state." The remaining 7(f) term 6 ("Master") is untouched by this decision.
-4. **Action:** ADOPT — adoption of the owner's 7(f) term 5 decision (term 5 only)
-5. **Rationale:** The owner has explicitly decided the term 5 questions: what composes the authoritative KOS/project state, how "current" is determined, the KOS/project state relationship, and conflict precedence. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(f) term 5. Classification, stated plainly: owner decision on inspected repository evidence.
-7. **Conditions / Blockers:** This decision resolves only 7(f) term 5. The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
-   - KD-003 7(f) term 6 ("Master") remains open. KD-005's deferral is preserved exactly: Master remains undefined/deferred; no artifact, branch, state, or record is designated as Master by this decision; no authority mechanism or precedence rule for Master is established.
-   - KD-003 7(f) terms 1 ("applicable project decision") and 4 ("applicable validation/release process") remain resolved as recorded in KD-013 and KD-014 — untouched by this decision.
-   - KD-003 7(f) terms 2 ("silently altered") and 3 ("silently treated as authoritative") remain as previously categorized — untouched by this decision.
-   - KD-003 blockers 7(c), 7(g), 7(h), 7(i) remain open.
-   - KD-001 through KD-014 remain intact and unchanged, including KD-007 (LOCKED), KD-011 (validation), KD-012 (dependencies/relationships), KD-013 (project-decision applicability), and KD-003 7(j) (no-invention boundary).
-
-   This decision invents no additional authority, precedence, state, or implementation rules beyond the owner's explicit statements below. The conflict-precedence stated in owner decision 4 is the owner's explicit determination, not a hierarchy invented through this record. "Applicable" in owner decisions 2 and 4 is used in the owner's own terms; this decision does not import KD-012's or KD-013's definitions of "applicable."
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 5 recorded as resolved by owner decision; 7(f) term 6 and all other blockers remain as stated above.
-
-**Owner's decided statements (recorded verbatim as the decision content):**
-
-1. The authoritative KOS/project state consists of the currently adopted decisions and the project content that those decisions establish as authoritative.
-2. The current authoritative KOS/project state is the authoritative state established by the latest applicable adopted decisions and their resulting project state.
-3. "KOS state" and "project state" refer to the same authoritative project state for purposes of KOSD.
-4. When authoritative project content conflicts, the latest applicable adopted decision and its resulting authorized project state controls.
+3. **Item(s):** Definition of authoritative KOS/project state.
+4. **Action:** ADOPT
+5. **Rationale:** Establish the authority rule needed by KOS-RELEASE without inventing a separate Master artifact.
+6. **Basis / Evidence:** Owner decision.
+7. **Conditions / Blockers:** The deferred Master question remains unresolved under KD-005/KD-016; no new artifact is designated.
+8. **Execution / Resulting State:** Authoritative state consists of currently adopted decisions and project content those decisions establish as authoritative. Current authoritative state is the state established by the latest applicable adopted decisions and resulting authorized project state. For KOSD, KOS state and project state are the same. If authoritative content conflicts, the latest applicable adopted decision and resulting authorized project state controls.
 
 ---
 
@@ -391,25 +278,12 @@
 
 1. **Decision ID:** KD-016
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(f), term 6 only — "Master."
-4. **Action:** DEFER — continuation of the existing KD-005 deferral (term 6 only)
-5. **Rationale:** The owner has decided that "Master" remains deferred. This decision affirms KD-005's existing deferral and adds nothing to it. No definition of Master, no designation, no authority mechanism, no substitute, and no alteration of any other decision results from this record.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(f) term 6 and by KD-005's existing conditions. Classification, stated plainly: owner affirmation of an existing deferred decision.
-7. **Conditions / Blockers:** This decision resolves only 7(f) term 6, and it resolves it by deferral only. The following are explicitly preserved; nothing in this decision changes, narrows, or absorbs them:
-   - KD-005 remains in force in full, including its conditions 7(a)–7(f): O-001 remains unresolved; no artifact, branch, state, or record is designated as Master; no authority mechanism for Master is created or inferred; no precedence rule is created; any future establishment of Master requires a separate explicit owner decision defining what constitutes Master and the basis of its authority; the O-001 "Master is authoritative" REVIEW statement must not be treated as an operative authority rule merely because it exists in GOV-001.
-   - This decision does not define Master.
-   - This decision does not designate any artifact, branch, state, or record as Master.
-   - This decision does not establish a Master authority mechanism.
-   - This decision does not create a Master substitute or interim Master destination.
-   - KD-015's authoritative KOS/project state definition is unaltered. This decision creates no relationship between Master and the KD-015 authoritative state — that relationship remains unresolved.
-   - KD-003 7(f) terms 1, 2, 3, 4, and 5 remain resolved/recorded as in KD-013, KD-014, KD-015, and the prior categorizations — untouched by this decision.
-   - KD-003 blockers 7(c), 7(g), 7(h), 7(i) remain open.
-   - KD-001 through KD-015 remain intact and unchanged, including KD-008's no-substitute rule and KD-003 7(j) (no-invention boundary).
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(f) term 6 recorded as resolved-by-deferral, with the deferral defined entirely by KD-005 as affirmed above.
-
-**Owner's decided statement (recorded verbatim as the decision content):**
-
-- Master remains deferred.
+3. **Item(s):** KOS-RELEASE blocker concerning "Master".
+4. **Action:** DEFER
+5. **Rationale:** Continue the explicit deferral established by KD-005.
+6. **Basis / Evidence:** KD-005 and owner decision.
+7. **Conditions / Blockers:** No Master artifact, state, authority mechanism, substitute, or precedence rule is defined. The relationship between KD-015 and any future Master remains unresolved.
+8. **Execution / Resulting State:** "Master remains deferred." No repository modification authorized beyond the decision log.
 
 ---
 
@@ -417,26 +291,12 @@
 
 1. **Decision ID:** KD-017
 2. **Date:** 2026-09-19
-3. **Item(s):** KD-003 blocker 7(g) only — "release-version semantics."
-4. **Action:** ADOPT — adoption of the owner's 7(g) decision (7(g) only)
-5. **Rationale:** The owner has explicitly decided the release-version questions: format, assigner, timing, trigger, the release/KOS/module version relationship, immutability, and version identity retention. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
-6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(g). Classification, stated plainly: owner decision on inspected repository evidence.
-7. **Conditions / Blockers:** This decision resolves only 7(g). The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
-   - KD-003 blockers 7(c) (required-module set), 7(h) (protocol `VALIDATED` vs KOS-RELEASE `VALIDATION`), and 7(i) ("should include" / "may be used" strength) remain open.
-   - KD-003 7(f) terms 1–5 remain resolved/recorded as in KD-013, KD-014, KD-015, and the prior categorizations; term 6 ("Master") remains deferred under KD-005 as continued by KD-016 — untouched by this decision.
-   - KD-001 through KD-016 remain intact and unchanged, including KD-011 (validation definition), KD-012 (dependencies/relationships), KD-013 ("applicable project decision"), KD-014 (combined validation/release process), KD-015 (authoritative KOS/project state), and KD-003 7(j) (no-invention boundary).
-   - KOS-RELEASE is **not** promoted by this decision. Its version language (including req. 9) remains Draft proposal. This decision does not itself assign a release version to the current draft or to any release; assignment occurs only through the owner's authorization of a release, per owner statement 2 below.
-   - No version-bump rules, prerelease rules, build-metadata rules, or other version semantics are established by this decision beyond the owner's explicit statements below. No additional rules are inferred from semver terminology.
-8. **Execution / Resulting State:** Append this record to `CORE/DECISIONS.md`; no file modification, promotion, lock, unlock, or status change is authorized. Resulting state: KD-003 7(g) recorded as resolved by owner decision; all other blockers remain as stated above.
-
-**Owner's decided statements (recorded verbatim as the decision content):**
-
-1. KOSD release versions use the major.minor.patch format.
-2. The Kustomz owner assigns the release version as part of authorizing the release.
-3. Every newly authorized KOSD release receives a new release version.
-4. The release version identifies the KOSD release itself; the KOS version identifies the version of the KOS/document framework; module versions identify individual modules. These are distinct version identities and do not automatically change one another.
-5. Release versions are immutable once assigned.
-6. A superseded or archived release permanently retains its originally assigned release version; that version is never reassigned.
+3. **Item(s):** KOS-RELEASE blocker concerning release-version semantics.
+4. **Action:** ADOPT
+5. **Rationale:** Establish immutable release-version semantics without inventing release workflow.
+6. **Basis / Evidence:** Owner decision.
+7. **Conditions / Blockers:** Document/module version identities remain distinct; no release is promoted by this decision.
+8. **Execution / Resulting State:** KOSD release versions use major.minor.patch; owner assigns release version when authorizing release; every newly authorized release gets a new version; release/document/module version identities are distinct; release versions are immutable once assigned; superseded/archived releases retain their original version and never reuse it.
 
 ---
 
@@ -445,7 +305,7 @@
 1. **Decision ID:** KD-018
 2. **Date:** 2026-09-19
 3. **Item(s):** KD-003 blocker 7(h) only — the relationship between the protocol's `VALIDATED` module status and KOS-RELEASE's `VALIDATION` release state.
-4. **Action:** ADOPT — adoption of the owner's 7(h) decision (7(h) only)
+4. **Action:** ADOPT
 5. **Rationale:** The owner has explicitly decided the 7(h) questions: whether the two states are the same or distinct, and the relationship between a module's `VALIDATED` mark and a release's `VALIDATION` state. The decision is recorded here in the owner's own terms, without extending, interpreting, or operationalizing them.
 6. **Basis / Evidence:** Explicit owner decision communicated by Kustomz/Rick on 2026-09-19, informed by the read-only decision-preparation brief for KD-003 7(h). Classification, stated plainly: owner decision on inspected repository evidence.
 7. **Conditions / Blockers:** This decision resolves only 7(h). The following remain explicitly preserved and open; nothing in this decision resolves, narrows, or absorbs them:
@@ -527,7 +387,6 @@ Execution / Resulting State:
 - The existing “should include” and “may be used” language in KOS-RELEASE is interpreted according to the owner statements above.
 - No file other than CORE/DECISIONS.md is to be modified by this decision.
 
-
 ---
 
 ## KD-021
@@ -561,10 +420,9 @@ Execution / Resulting State:
    (d) **The UNDEFINED classifications (3a–3i) as proposed,** preserved as UNDEFINED: computed member/user statistics as records; the transcript completion boundary; intake items pre-disposition; portable work-state records; ticket-draft state; Project Vision integration state; synthesized CSR2 intelligence; identity-link lifecycle edges; Sneak's own action records.
    (e) **C0 as an architectural constraint:** state classified as UNDEFINED under P5 must not be persisted by any Sneak implementation pending the explicit Kustomz decision that classifies it. "Persisted" means retained beyond the interaction in which the state arose, reused across interactions, or read by any party as fact. Transient in-transit handling toward a defined disposition (P4) is not persistence under this constraint.
 5. **Rationale:** Establish the architectural state boundary before any implementation work begins: fix which state Sneak must resolve against authoritative holders versus may hold ephemerally; keep the boundary implementation-model-independent; preserve all undefined items and the KD-021 unresolved tensions; and make the persistence bar on UNDEFINED state an explicit adopted constraint rather than an implicit one.
-6. **Basis / Evidence:** KD-021 (adopted 2026-09-19): Sneak's identity/purpose, closed seven-capability scope, authority/prohibition boundary, continuity principle, and the structural "KOSD shall define" requirements. The revised state-classification proposal, accepted for decision review 2026-09-19. KD-021's two recorded unresolved tensions: derived statistics must remain traceable to authoritative sources; cross-interface continuity requires an eventual authoritative mechanism for portable work-state/context.
+6. **Basis / Evidence:** KD-021 (adopted 2026-09-19): Sneak's identity/purpose, closed seven-capability scope, authority/prohibition boundary, continuity principle, and the structural "KOSD shall define" requirements. The revised state-classification proposal, accepted for decision review 2026-09-19. KD-021's two recorded unresolved tensions: the exact traceability standard for derived statistics; the authoritative portable work-state mechanism.
 7. **Conditions / Blockers:** This adoption explicitly does NOT: authorize any Sneak implementation; define storage or retention rules; define permissions; invent service contracts; define the Ticket Engine; define Project Vision; define CSR2 intelligence internals (including its relation to NSB/SCB/TRB); define identity-linking mechanics (including lifecycle and invalidation rules); assign a Sneak definition version; establish Sneak or any named artifact category as a KOSD module for KD-019 purposes; or select implementation model A, B, or C. Unresolved and carried forward: all UNDEFINED items (3a–3i); the two KD-021 tensions (the exact traceability standard for derived statistics; the authoritative portable work-state mechanism); the state-classification criteria referenced by 2b (still to be defined); the transcript and intake disposition rules referenced by 2c, 3b, and 3c; the identity-linking mechanics referenced by 2e and 3h; and the designation of the authoritative holder for purchase facts underlying 1c.
 8. **Execution / Resulting State:** Decision only; execution is a separately authorized step per the protocol (approval is not promotion). Upon authorized execution, the resulting state is: the adopted principles (P1–P5), classifications (AUTHORITATIVE / EPHEMERAL / UNDEFINED), and constraint C0 are recorded in the authoritative Sneak architecture document (CORE/KOS-SNEAK-ARCH.md); all UNDEFINED items remain marked as such; the two KD-021 tensions remain recorded as unresolved; and the document remains subject to the KOS Decision & Promotion Protocol, with future classification of UNDEFINED items proceeding through later KDs. No implementation is authorized by this decision.
-
 
 ---
 
@@ -578,3 +436,16 @@ Execution / Resulting State:
 6. **Basis / Evidence:** KD-021 (adopted Sneak architecture), KD-022 (adopted Sneak state-classification boundary), the revised KD-023 proposal, and final architectural review confirming no remaining conflicts, gaps, or required corrections. Owner decision communicated by Kustomz/Rick on 2026-09-19.
 7. **Conditions / Blockers:** This adoption does NOT authorize Sneak implementation; define permissions or role mappings; define the Ticket Engine, Project Vision, CSR2 intelligence, NSB/SCB/TRB scope, transcript rules, intake disposition rules, identity-linking mechanics or lifecycle; define the authoritative holder for purchase facts; define portable work-state mechanics or holder; define persisted computed member/user statistics; establish a Sneak definition version; establish Sneak as a KOSD module for KD-019; define the personality itself; establish conformance procedures; define the designated contract set; or otherwise resolve any item expressly left UNDEFINED or OPEN by KD-021 or KD-022. B3 permits consultation of KD-022 2b ephemeral caches for responsiveness only; such caches never substitute for authoritative resolution and are never presented as authoritative. B5 is limited to KD-022 2f derived working information and does not classify KD-022 3a computed records.
 8. **Execution / Resulting State:** Append this decision to CORE/DECISIONS.md. The revised B1–B14 behavioral boundary is now adopted as authoritative Sneak architecture. Execution of the corresponding architecture-document update is a separate authorized step under the adopted protocol. No Sneak implementation or other deferred architecture is authorized by this decision.
+
+---
+
+## KD-024
+
+1. **Decision ID:** KD-024
+2. **Date:** 2026-09-19
+3. **Item(s):** Proposed Sneak Permission / Authority Boundary — principles PA0–PA9 as developed at the KD-021–KD-023 architectural level.
+4. **Action:** ADOPT
+5. **Rationale:** The owner adopts the Sneak permission/authority boundary to make the behavioral authorization gate structurally operable before implementation. The adopted principles distinguish capability, authority, and permission; separate read authority from action authority; establish a conjunctive action authorization gate; keep permission grants with the applicable authoritative holder; prohibit permission invention, escalation, transfer, and social authorization; defer unresolved authorization determinations to the applicable authoritative system; bind authorization to the linked Kustomz identity; establish deny-by-default behavior; prevent Sneak from becoming an access-control authority for reads; and prohibit derivation from laundering or expanding access.
+6. **Basis / Evidence:** KD-021 (adopted Sneak architecture), KD-022 (adopted Sneak state-classification boundary), KD-023 (adopted Sneak behavioral boundary), the proposed PA0–PA9 boundary developed for owner review on 2026-09-19, and explicit owner approval communicated by Kustomz/Rick on 2026-09-19.
+7. **Conditions / Blockers:** This adoption explicitly does NOT: create role→permission mappings; define Discord permissions; define Ticket Engine permissions; define identity-linking mechanics; define contracts or interfaces; define storage or retention; authorize any implementation; classify any KD-019 module; or establish that any action is currently authorized. Under PA7, the action gate is deny-by-default until authorization is affirmatively established. Unresolved and carried forward: grant-holder designation per capability (T1); the applicable system for cross-system actions (T2); revocation freshness standards (T3); the positive derived-information attribution standard (T4); standing-as-permission-input (T5); and the KD-021 tensions concerning derived-statistics traceability and portable work-state.
+8. **Execution / Resulting State:** Decision recorded only. The PA0–PA9 boundary is adopted as authoritative Sneak architecture. Execution of the corresponding architecture-document update is a separate authorized step under the adopted protocol. No implementation or other deferred architecture is authorized by KD-024.
