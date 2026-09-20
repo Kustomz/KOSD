@@ -636,3 +636,27 @@ Execution / Resulting State:
    - No circularity is introduced: the resolved identity is never used to authorize or establish the authority required to resolve that identity. Sneak does not “verify” the holder through an independent authority and does not create a retained resolution ledger.
    - KD-033 does not designate an actual holder, establish the query/access contract, satisfy any unresolved KD-032 prerequisite except the architectural meaning of reliable resolution, or authorize dependent identity-bound actions by implication.
 8. **Execution / Resulting State:** Authorized execution: append KD-033 to CORE/DECISIONS.md and record the corresponding RL rules in CORE/KOS-SNEAK-ARCH.md. Resulting state: KD-033 is adopted as the authoritative Sneak identity-link resolution boundary. No actual holder designation, query/access mechanism, lifecycle implementation, verification mechanism, permission mapping, or currently unauthorized action is authorized.
+
+
+---
+
+## KD-034
+
+1. **Decision ID:** KD-034
+2. **Date:** 2026-09-20
+3. **Item(s):** Proposed Sneak Identity-Link Resolution Access / Query Basis boundary (QB-P, QB-Q, QB-R, QB-I, QB-F, QB-S, QB-X), as reviewed from the KD-034 proposal and owner-approved after Rico review.
+4. **Action:** ADOPT
+5. **Rationale:** Sneak requires an explicit architectural basis for obtaining the future designated identity-link holder's authoritative link-status determination. The adopted boundary establishes that query interest is decision-derived, limited to per-interaction identity-link determinations for the addressing Discord identity, and distinct from authorization. The future holder-designation decision must explicitly establish that bounded query interest; naming a holder alone does not silently create query access.
+6. **Basis / Evidence:** Owner judgment based on KD-032 IL-H/IL-R, KD-033 RL-P/RL-D/RL-H/RL-F/RL-T/RL-S/RL-X, KD-025 H3/R1, KD-023 PA1/B3/B9, KD-024 PA2/PA7, KD-026, KD-027, KD-022, and the reviewed KD-034 proposal. Rico review found no circularity or authority leak in the proposed separation of query basis, resolution, and authorization.
+7. **Conditions / Blockers:**
+   (a) A legitimate identity-link query requires a future explicit KD designating the actual link-record holder and explicitly establishing Sneak's bounded query interest for per-interaction link-status determinations for the addressing Discord identity.
+   (b) A resolvability contract must exist before legitimate query operation.
+   (c) No bulk reads, enumeration, access beyond the link-status determination, permission-state access, or authorized action is established.
+   (d) The query is routed through PA1 and its result feeds identity resolution/PA6 only; it does not satisfy PA2 authorization elements 1–3.
+   (e) The addressing Discord identity is forwarded from interaction context and is not invented, selected, asserted, or independently verified by Sneak; absent an addressing identity, no query is formed.
+   (f) Unavailable, inaccessible, refused, ambiguous, or malformed results are treated as undeterminable under KD-033; no escalation, bypass, probing, repair, fallback, cross-domain inference, or stale reuse is authorized.
+   (g) Query working state remains ephemeral under KD-022 2a/2e and is not persisted or ledgered.
+   (h) Cross-system crossings defer to KD-026; no authorization-owner, grant-holder, or state-owner/executor role is designated by KD-034.
+   (i) Actual holder, query/resolution mechanics, validity bounds, lifecycle procedures, platform presentation, Discord assertion strength, retry/timing, failure wording, and other QB-E items remain undefined.
+   (j) No implementation, identity-link lifecycle action, permission mapping, portable work-state mechanism, or currently unauthorized identity-bound action is established.
+8. **Execution / Resulting State:** Authorized execution: append KD-034 to `CORE/DECISIONS.md` and incorporate the adopted QB boundary into `CORE/KOS-SNEAK-ARCH.md`. Resulting state: KD-034 is the authoritative query-basis boundary for Sneak identity-link resolution. No actual identity-link holder is designated, no query/resolution implementation is authorized, and no permission or identity-bound action is enabled by this decision.
