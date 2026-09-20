@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -276,7 +276,40 @@ Computing or presenting derived working information under B5 and KD-022 2f does 
 
 Computation does not launder access.
 
-## 9. Explicitly Undefined / Not Established by KD-021, KD-022, KD-023, and KD-024
+## 9. Adopted Permission Grant-Holder Designation Boundary
+
+KD-025 establishes the following architectural rule for identifying and designating the authoritative holder of permission grants for Sneak authorization evaluations. PA0–PA9 remain unchanged.
+
+### 9.1 H — Holder Qualification
+
+- **H1 — Recognition:** The holder must be a system or service recognized in KOSD architecture as authoritative for the grant domain in question. Sneak itself never qualifies.
+- **H2 — Record-Holding:** The holder must be the system of record for the grants at issue — it originates or authoritatively maintains them — not a downstream consumer, cache, or reporter of another system's grants.
+- **H3 — Resolvability:** KOSD architecture must establish how Sneak obtains the holder's determinations. The mechanism remains future contract architecture; this rule requires only that resolvability be established, not how.
+- **H4 — No Circularity:** A system does not qualify where its grant determinations derive from Sneak, or where designations would create circular grant authority. Circularity yields no determinable holder.
+
+### 9.2 D — KOSD Designation
+
+- **D1 — Explicit KD:** A holder is designated by an explicit KOSD decision naming the holder for a given action domain.
+- **D2 — Per Action-Domain:** Designation covers specific actions, capabilities, or domains and never means "all permissions." A designated holder's answers are authoritative only within its designated domain.
+- **D3 — Designation Does Not Authorize:** Naming a holder opens no action. Every authorization evaluation still runs the full PA2 gate under PA7.
+- **D4 — Revisable by Later KD:** Competing designations resolve under KD-015, with the latest applicable decision controlling. Genuine ambiguity yields an undetermined holder.
+
+### 9.3 R — Grant Resolution
+
+- **R1 — Per-Evaluation, Identity-Bound:** Sneak obtains the holder's determination for the specific linked-identity/action pair at evaluation time.
+- **R2 — Acceptance Without Reinterpretation:** The holder's determination is the answer. Sneak does not second-guess, reinterpret, combine with other sources to override it, or substitute its own judgment.
+- **R3 — No Persistence as Record:** Grant determinations are authoritative state under P1. Sneak does not persist them as records. Any transient handling remains subject to KD-022 2b, B3, and C0.
+- **R4 — Ambiguity Fails Closed:** An ambiguous, partial, or unavailable determination is undeterminable and therefore fails PA7.
+
+### 9.4 U — Undefined or Unresolvable Holder
+
+- **U1 — No Designation:** No designated holder means PA5 has no target and the action is not performed under PA7. This remains the present state for actions without a designation.
+- **U2 — Designated but Unresolvable:** If a designated holder's determination cannot be reliably obtained, B9 and PA7 apply. Sneak does not fall back to another holder, infer from another domain, or treat a stale determination as authoritative.
+- **U3 — Circular or Irreconcilably Competing Designations:** These yield no determinable holder and therefore follow U2.
+
+KD-025 designates no actual permission-grant holder and authorizes no action. Actual holder designations remain subject to later per-domain Kustomz decisions.
+
+## 10. Explicitly Undefined / Not Established by KD-021, KD-022, KD-023, KD-024, and KD-025
 
 KD-021 through KD-024 do not establish or select:
 
@@ -318,7 +351,7 @@ All such items remain **UNDEFINED** or **OPEN** as applicable.
 
 ## 10. Known Architectural Tensions
 
-### 10.1 Derived Statistics
+### 11.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -326,33 +359,33 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 10.2 Cross-Interface Continuity
+### 11.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-### 10.3 Permission Grant-Holder Designation
+### 11.3 Permission Grant-Holder Designation
 
 PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
 
-### 10.4 Cross-System Authorization
+### 11.4 Cross-System Authorization
 
 PA5 defers unresolved authorization determinations to the applicable authoritative system, but the applicable system for cross-system actions remains **UNDEFINED** until future contract/architecture decisions establish it.
 
-### 10.5 Revocation Freshness
+### 11.5 Revocation Freshness
 
 PA2 and PA3 require permission resolution against the holder at evaluation time. The freshness standard for permitted ephemeral caching remains **UNDEFINED** under KD-022 2b and B3.
 
-### 10.6 Derived-Information Attribution
+### 11.6 Derived-Information Attribution
 
 PA9 establishes that derivation cannot expand access, but the positive attribution and traceability standard for derived information remains **UNDEFINED**, consistent with B12 and the KD-021 derived-statistics tension.
 
-### 10.7 Standing as Permission Input
+### 11.7 Standing as Permission Input
 
 Member standing facts are authoritative under KD-022 1c, but whether or how standing may factor into future permission grants remains **UNDEFINED** and is part of the future role-to-permission mapping question.
 
-## 11. Implementation-Owned Mechanics
+## 12. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -364,7 +397,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 12. Architectural Boundary
+## 13. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -372,7 +405,7 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 13. Change Control
+## 14. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
