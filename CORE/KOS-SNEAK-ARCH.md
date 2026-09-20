@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -89,7 +89,7 @@ The following are classified as **AUTHORITATIVE**:
 - **1a.** Kustomz ecosystem identity records.
 - **1b.** Discord-to-Kustomz identity link records.
 - **1c.** Member standing facts (Walk-in, Client, Regular, Booster, plus purchase-count facts). The authoritative holder for purchase facts remains **UNDEFINED**.
-- **1d.** Ticket Engine records.
+- **1d.** Ticket Engine records, held by the Kustomz Workspace as the authoritative Kustomz system of record under KD-043. The associated Ticket Engine permission-grant state is likewise held by Kustomz Workspace as the authoritative system of record. This recognition does not itself constitute the separate KD-025 permission-grant-holder designation.
 - **1e.** Dispositioned transcript records.
 - **1f.** CSR2 intelligence source data.
 - **1g.** Intake records after disposition.
@@ -147,6 +147,16 @@ The Kustomz side of KD-022 1b Discord-to-Kustomz identity-link records anchors t
 Recognition of the Kustomz Identity Engine as the 1a system of record does not define the Identity Engine's schemas, identifiers, account model, identity lifecycle, APIs, storage, implementation, permissions, resolution mechanics, validity bounds, lifecycle procedures, edge-awareness mechanisms, or other internal or operational details. Those matters remain undefined unless separately established by an applicable Kustomz owner decision.
 
 KD-038 now designates the Kustomz Identity Engine as the authoritative holder of KD-022 1b identity-link records and explicitly establishes the bounded Sneak query interest required by KD-034. The resolvability contract and dependent mechanics remain future work.
+
+### 7.4 Ticket Engine System of Record
+
+KD-043 recognizes **Kustomz Workspace** as the authoritative Kustomz system of record for KD-022 1d Ticket Engine records and their associated permission-grant state.
+
+This is architectural recognition of the system boundary, not the separate KD-025 D1 designation of Kustomz Workspace as the permission-grant holder for Ticket Engine actions.
+
+Recognition does not define the Ticket Engine's contents, schemas, mechanics, lifecycle procedures, APIs, storage, implementation, permission mappings, authorization rules, validity/freshness behavior, or cross-system roles. Those matters remain undefined unless separately established by an applicable Kustomz owner decision.
+
+Sneak's existing PA5/PA7 fail-closed posture is unchanged. No action is authorized by KD-043 merely because Kustomz Workspace is recognized as the system of record.
 
 ## 8. Adopted Behavioral Boundary
 
@@ -1173,7 +1183,7 @@ The portable work-state record mechanics and authoritative holder remain **UNDEF
 
 ### 23.3 Permission Grant-Holder Designation
 
-PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
+PA3 requires permission grants to reside with the applicable authoritative holder. KD-043 now recognizes Kustomz Workspace as the authoritative system of record for Ticket Engine records and their associated permission-grant state, but this recognition does not itself constitute the separate KD-025 D1 designation of Kustomz Workspace as the permission-grant holder for Ticket Engine actions. The applicable grant-holder designation and operational resolution remain **UNDEFINED**.
 
 ### 23.4 Cross-System Authorization
 
