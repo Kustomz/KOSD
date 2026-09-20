@@ -133,9 +133,7 @@ The existing **WEB → ANDROID → DISCORD/SNEAK** continuity principle remains 
 
 KD-040 now provides the adopted architectural boundary for portable work-state/context supporting that continuity. The holder, mechanics, permissions, and implementation remain unresolved.
 
-
-
-The existing WEB → ANDROID → DISCORD/SNEAK continuity principle is recognized as part of the Toolbox interface model.
+The existing continuity principle is recognized as part of the Toolbox interface model.
 
 The authoritative portable work-state/context mechanism and its holder remain **UNDEFINED**.
 
@@ -193,4 +191,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Kustomz Toolbox architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-001 through KD-039.
+This document does not supersede or independently redefine KD-001 through KD-040.
