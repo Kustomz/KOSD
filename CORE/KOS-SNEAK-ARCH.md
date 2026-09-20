@@ -895,6 +895,69 @@ KD-033 does not designate an actual holder, establish the query/access contract,
 
 KD-033 does not modify any prior adopted boundary.
 
+## 19. Adopted Identity-Link Resolution Access / Query Basis Boundary
+
+KD-034 establishes the following architectural boundary for Sneak obtaining the designated identity-link holder's authoritative link-status determination.
+
+### 19.1 QB-P — Decision-Derived Query Interest
+
+Sneak's identity-link query interest is decision-derived, not grant-derived. A future explicit KOSD decision designating the identity-link holder must also explicitly establish Sneak's bounded query interest. The query interest is limited to per-interaction link-status determinations for the addressing Discord identity.
+
+This does not authorize bulk reads, enumeration, access to records beyond the required link-status determination, permission-state access, or any authorized action.
+
+### 19.2 QB-Q — Preconditions for Legitimate Query
+
+No legitimate query exists until all applicable prerequisites are established: an explicit KD designates the identity-link holder; a resolvability contract exists; the holder-designation KD explicitly establishes Sneak's bounded query interest; and no applicable KOSD prohibition prevents the query.
+
+Naming a holder alone does not silently establish query interest. Explicit establishment of query interest is a required content element of the future designation decision. Until these prerequisites are satisfied, identity-link query access remains unestablished and dependent resolution is undeterminable under RL-D/B9/PA7.
+
+### 19.3 QB-R — Query Routed Through Authorization Boundary
+
+The query is routed through PA1 rather than bypassing it. The relevant scope is identity-link resolution, the query-interest element is satisfied only by the future designation decision's explicit establishment of that interest, and no applicable prohibition may be present.
+
+The query result feeds RL-D and the PA6 identity term only. It is never itself a permission grant and does not satisfy PA2 authorization elements 1–3.
+
+### 19.4 QB-I — Addressing Identity Input
+
+The addressing Discord identity is forwarded as a lookup parameter from interaction context. Sneak does not invent, select, assert, or independently verify that identity for purposes of establishing link state.
+
+If no addressing Discord identity is available, the query cannot be formed and resolution remains undeterminable under the applicable RL-D failure condition. Forwarding interaction context is not an assertion of link state.
+
+### 19.5 QB-F — Query Failure Handling
+
+Unavailable, inaccessible, or refused query access is treated as unavailable. Sneak does not escalate, bypass, probe, or substitute another source merely to obtain the determination.
+
+Ambiguous or malformed query results remain undeterminable and are not repaired or disambiguated by Sneak. These outcomes follow the KD-033 RL-F fail-closed boundary.
+
+### 19.6 QB-S — Transient Query State
+
+Query working state is ephemeral under KD-022 2a/2e. In-flight query state and the interaction-scoped addressing identity are not persisted, ledgered, or retained as cross-interaction identity state by Sneak.
+
+### 19.7 QB-X — Cross-System Boundary
+
+Cross-system crossings defer to KD-026. KD-034 assigns no authorization-owner, permission-grant-holder, or state-owner/executor role and does not establish a cross-system action footprint.
+
+### 19.8 QB Dependencies and Undefined Prerequisites
+
+The following remain prerequisites or undefined dependencies:
+
+- D-QB1 — Actual identity-link holder designation, including explicit establishment of Sneak's query interest.
+- D-QB2 — Resolvability contract.
+- D-QB3 — Identity-link lifecycle procedures.
+- D-QB4 — Validity bounds.
+- D-QB5 — Any conditional KD-026 cross-system role establishment.
+- D-QB6 — Platform-supplied addressing identity.
+
+Actual holder, query/resolution mechanics, query-basis implementation details, validity bounds, cross-system roles, platform presentation, Discord assertion strength, retry/timing behavior, failure wording, and all other QB-E items remain undefined.
+
+### 19.9 QB Boundary and Authority-Leak Check
+
+KD-034 does not allow the identity being resolved to establish the authority required to resolve itself. Query interest comes from an explicit KOSD decision, not from the resolved identity and not from the permission result being sought.
+
+The future holder-designation KD may establish both the holder designation and the bounded query interest, but it must do so explicitly; neither is inferred from the other. Query access remains a read determination, resolution remains distinct from authorization, and no permission state is obtained through this boundary.
+
+KD-034 does not designate the actual holder, establish implementation or API mechanics, create identity links, authorize identity-bound actions, or modify any prior adopted boundary.
+
 ## 19. Known Architectural Tensions
 
 ### 18.1 Derived Statistics
