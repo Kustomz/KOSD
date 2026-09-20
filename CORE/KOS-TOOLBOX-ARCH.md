@@ -22,7 +22,7 @@ The Toolbox interfaces are:
 - **Android:** planned Toolbox experience.
 - **Discord/Sneak:** conversational Toolbox interface.
 
-Users are intended to move between these interfaces without losing relevant work-state or ecosystem context, subject to the unresolved portable work-state boundary recorded below.
+Users are intended to move between these interfaces without losing relevant work-state or ecosystem context, subject to the portable work-state boundary and mechanics recorded below.
 
 ## 3. Shared Engine Principle
 
@@ -37,8 +37,6 @@ No interface is established as a separate source of Toolbox authority merely by 
 The Toolbox operates against authoritative Kustomz ecosystem state and shall not become a competing database, authority system, project-state source, or separate source of truth.
 
 The Toolbox does not originate, redefine, or independently master authoritative ecosystem state.
-
-No authoritative holder is designated by this architecture for Toolbox-modified state.
 
 Applicable KOSD state classifications remain controlling. In particular:
 
@@ -149,7 +147,7 @@ This architecture does not establish or implement the mechanism. The holder desi
 
 ## 9. Explicitly Undefined / Not Established
 
-The following remain undefined or unestablished by KD-039:
+The following remain undefined or unestablished by this architecture:
 
 - Toolbox formal classification as module, subsystem, or required-module-set member.
 - Shared-engine internals and mechanics.
@@ -161,7 +159,6 @@ The following remain undefined or unestablished by KD-039:
 - Cross-system contracts and conformance requirements.
 - Implementation location and implementation model.
 - NSB/SCB/page-level functional architecture.
-- Resolvability contract required for operational identity-bound access through Sneak.
 - Validity bounds, lifecycle procedures, and other future Toolbox-specific state procedures.
 
 ## 10. Dependencies and Blockers
@@ -181,9 +178,8 @@ The following remain genuine blockers for subsequent establishment or implementa
 2. Permission grant-holder designations.
 3. Authoritative holders for Toolbox-modified CSR2 state.
 4. KOS-RELEASE promotion for any future module/release treatment.
-5. Resolvability contract for operational identity-bound access through Sneak.
 
-The portable work-state holder blocker is satisfied by KD-042. The remaining blockers concern mechanics, permissions, other authoritative holders, release treatment, and operational resolvability as separately identified.
+The portable work-state holder blocker is satisfied by KD-042. The remaining blockers concern mechanics, permissions, other authoritative holders, and release treatment as separately identified.
 
 ## 11. Implementation Boundary
 
