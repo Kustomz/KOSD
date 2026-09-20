@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -364,7 +364,7 @@ Grant and authorization determinations remain with their respective owners. Any 
 
 ## 10. Explicitly Undefined / Not Established by KD-021, KD-022, KD-023, KD-024, and KD-025
 
-KD-021 through KD-026 do not establish or select:
+KD-021 through KD-027 do not establish or select:
 
 - Sneak implementation model A, B, or C.
 - Executable Sneak implementation within KOSD.
@@ -396,16 +396,81 @@ KD-021 through KD-026 do not establish or select:
 - Grant-holder designation per capability.
 - Actual authorization owners, grant holders, or state owners/executors for any specific action.
 - The system footprint for any specific cross-system action.
-- Revocation freshness standards.
+- Validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency values for revocation freshness.
 - Positive derived-information attribution standards.
 - Standing-as-permission-input rules.
 - Any other item not explicitly adopted by KD-021, KD-022, KD-023, or KD-024.
 
 All such items remain **UNDEFINED** or **OPEN** as applicable.
 
-## 11. Known Architectural Tensions
+## 11. Adopted Revocation Freshness Boundary
 
-### 11.1 Derived Statistics
+KD-027 establishes the following architectural rule for revocation freshness of cached permission/grant determinations.
+
+### 11.1 T3-P1 — Event-Relative Freshness
+
+Freshness is event-relative, not time-relative. A cached determination is fresh only within its established validity bounds and while no invalidating event has occurred. Validity bounds are established by KOSD architecture or the applicable holder's determination terms, never by Sneak's clock, heuristics, or assumptions. Elapsed time alone neither validates nor invalidates a determination.
+
+### 11.2 T3-P2 — Cached Consultation in Authorization
+
+During the PA2 gate, Sneak may consult a cached grant determination only when:
+
+1. established validity bounds still cover the evaluation;
+2. no invalidating event is known;
+3. the consultation is transient and limited to the single evaluation; and
+4. the cached value does not substitute for resolution under B3, but only reproduces the holder's still-valid determination.
+
+If any condition fails, Sneak must re-resolve. If re-resolution is impossible, R4 and PA7 apply. Stricter requirements established for a domain may require direct holder resolution regardless of caching.
+
+### 11.3 T3-P3 — Invalidating Events
+
+A cached determination becomes invalid upon:
+
+- explicit revocation established by the holder;
+- expiration of its established validity bounds;
+- supersession by a newer determination for the same linked-identity/action pair;
+- change in the designated holder under KD-025 D4;
+- an identity-link change affecting the evaluated identity under B14; or
+- a KOSD decision altering the authorization landscape for the applicable domain under KD-015.
+
+An invalid determination must not be used in any evaluation. Removal or cache-invalidation mechanics remain implementation-owned.
+
+### 11.4 T3-P4 — Loss of Permission
+
+Loss of permission is effective when the holder or KOSD establishes that loss, not when Sneak becomes aware of it. A cached affirmative grant does not survive an established revocation, expiration, or supersession. Failure to observe a loss is never evidence that permission remains valid.
+
+### 11.5 T3-P5 — Freshness Unestablishable
+
+When freshness cannot be established — including where validity bounds are unknown, invalidating events cannot be reliably accounted for, or the applicable holder is unreachable — the cached determination is undeterminable. For authorization, R4 and PA7 apply and the action is not performed.
+
+For reads, the cached value must not be presented as the holder's current determination. B3 and B9 govern any further presentation or handling.
+
+### 11.6 T3-P6 — Differential Stringency
+
+Freshness requirements may differ by action, domain, or consequence only through KOSD-established architectural rules. Sneak does not create its own risk tiers, consequence ratings, or duration rules.
+
+### 11.7 T3-P7 — Authorization Freshness vs. Read-Data Caching
+
+Authorization caching and read-data caching are distinct regimes.
+
+For authorization caching, T3-P1 through T3-P6 apply strictly. The default posture is re-resolution unless established validity permits transient cached consultation.
+
+For read-data caching, KD-022 2b and B3 govern. Cached data does not substitute for authoritative resolution and must not be presented as authoritative merely because it is cached.
+
+### 11.8 T3-P8 — Anti-Ledger Guarantees
+
+The cache does not become a source of truth or standing permission ledger:
+
+- cached determinations carry no independent authority and are never themselves grants;
+- Sneak maintains no aggregate grant-state table;
+- each evaluation consults within its established bounds rather than creating cross-evaluation precedent;
+- once a determination is invalid for an evaluation, it is unusable for that evaluation; and
+- cache contents are not authoritative to users, other systems, or future evaluations merely because they exist.
+
+
+## 12. Known Architectural Tensions
+
+### 12.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -413,29 +478,29 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 11.2 Cross-Interface Continuity
+### 12.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-### 11.3 Permission Grant-Holder Designation
+### 12.3 Permission Grant-Holder Designation
 
 PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
 
-### 11.4 Cross-System Authorization
+### 12.4 Cross-System Authorization
 
 KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
 
-### 11.5 Revocation Freshness
+### 12.5 Revocation Freshness
 
-PA2 and PA3 require permission resolution against the holder at evaluation time. The freshness standard for permitted ephemeral caching remains **UNDEFINED** under KD-022 2b and B3.
+KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
 
-### 11.6 Derived-Information Attribution
+### 12.6 Derived-Information Attribution
 
 PA9 establishes that derivation cannot expand access, but the positive attribution and traceability standard for derived information remains **UNDEFINED**, consistent with B12 and the KD-021 derived-statistics tension.
 
-### 11.7 Standing as Permission Input
+### 12.7 Standing as Permission Input
 
 Member standing facts are authoritative under KD-022 1c, but whether or how standing may factor into future permission grants remains **UNDEFINED** and is part of the future role-to-permission mapping question.
 
