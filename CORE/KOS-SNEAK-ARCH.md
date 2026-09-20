@@ -343,10 +343,11 @@ The designation satisfies the KD-025 D1 holder-designation requirement for this 
 
 For Ticket Engine actions, PA5 now has an established holder target and PA2's permission-holder element has a designated resolution target. The full PA2 gate remains conjunctive and fail-closed. If the holder determination cannot be reliably obtained or is ambiguous, partial, or unavailable, U2/B9/PA7 applies.
 
-The concrete mechanism by which Sneak obtains the holder's determination remains undefined and requires future contract architecture. No implementation or Sneak-side permission ledger is established.
-- **U3 — Circular or Irreconcilably Competing Designations:** These yield no determinable holder and therefore follow U2.
+**U3 — Circular or Irreconcilably Competing Designations:** These yield no determinable holder and therefore follow U2.
 
-KD-025 designates no actual permission-grant holder and authorizes no action. Actual holder designations remain subject to later per-domain Kustomz decisions.
+The concrete mechanism by which Sneak obtains the holder's determination remains undefined and requires future contract architecture. No implementation or Sneak-side permission ledger is established.
+
+KD-025 establishes the holder-designation framework and does not itself authorize actions. Actual holder designations are established by later per-domain KOSD decisions, including KD-044 for the Ticket Engine action domain.
 
 ## 11. Adopted Cross-System Authorization Boundary
 
