@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -397,11 +397,12 @@ KD-021 through KD-027 do not establish or select:
 - Actual authorization owners, grant holders, or state owners/executors for any specific action.
 - The system footprint for any specific cross-system action.
 - Validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency values for revocation freshness.
-- Positive derived-information attribution standards.
+- Application of derived-information attribution to specific derivations.
+- Provenance retention mechanics, attribution presentation/display, description sufficiency criteria, conflict presentation choices, and reuse of derived values across interactions.
 - Standing-as-permission-input rules.
 - Any other item not explicitly adopted by KD-021, KD-022, KD-023, or KD-024.
 
-All such items remain **UNDEFINED** or **OPEN** as applicable.
+All such items remain **UNDEFINED** or **OPEN** as applicable, except where a later adopted decision establishes a specific boundary.
 
 ## 11. Adopted Revocation Freshness Boundary
 
@@ -468,9 +469,78 @@ The cache does not become a source of truth or standing permission ledger:
 - cache contents are not authoritative to users, other systems, or future evaluations merely because they exist.
 
 
-## 12. Known Architectural Tensions
 
-### 12.1 Derived Statistics
+## 12. Adopted Derived-Information Attribution Boundary
+
+KD-028 establishes the following positive attribution and traceability standard for derived information.
+
+### 12.1 T4-P1 — Attribution Defined
+
+Derived information is positively attributable when it can be established:
+
+1. which authoritative source or sources it derives from;
+2. what was done to derive it, described at the architectural level; and
+3. which obtained source determination it is anchored to, with any applicable freshness lineage preserved.
+
+Attribution is an establishable property; how much of that attribution is displayed to a user remains presentation architecture. Derivation does not alter the authority status of its source content.
+
+### 12.2 T4-P2 — Minimum Provenance
+
+A derived value is traceable only when all three minimum elements are established:
+
+1. **Source identity:** the authoritative holder or source identified under the applicable architecture, not merely a copy of its data.
+2. **Derivation description:** the operation performed, described in ordinary architectural terms.
+3. **Determination anchor:** the specific obtained source determination on which the derivation rests, rather than a reference to the source only in general.
+
+Where a source determination is subject to KD-027/T3, T3 invalidation governs that attribution anchor. T3 is not a universal freshness regime for all read or source data.
+
+### 12.3 T4-P3 — Direct and Multi-Source Derivation
+
+For direct-source presentation that passes through an authoritative holder's determination without transformation, attribution requires source identity and the applicable freshness of the obtained determination; no separate transformation description is required beyond identifying the presentation as the source's determination.
+
+For multi-source derivation, each source must independently satisfy the applicable attribution requirements. Sources must not be blended in a manner that obscures which component derives from which source. Conflicting sources do not justify a synthesized consensus; the conflict is surfaced or the derived result is withheld under B9.
+
+### 12.4 T4-P4 — Attributable Transformation
+
+The derivation description states what was computed or transformed in ordinary architectural terms, such as a count, filter, sum, selection, ranking, or join, at a level sufficient for an independent reviewer with the same source determinations to reproduce the derivation's logic.
+
+This requirement does not define metric internals, create new authoritative measures, reinterpret the meaning of a source determination, or depend on implementation artifacts such as query text, code, identifiers, or formats.
+
+### 12.5 T4-P5 — Source Failure Modes
+
+- **Unknown source:** attribution cannot be established; B5 does not authorize presentation as derived information and B9 governs.
+- **Unavailable source:** a new derivation cannot be performed from that source; an existing derivation remains subject to the applicable freshness and validity rules for its anchored determination.
+- **Ambiguous source:** B9 applies; Sneak does not guess.
+- **Stale source determination:** where the applicable freshness regime establishes invalidity, the attribution anchor lapses; Sneak must re-derive or withhold.
+- **Conflicting sources:** T4-P3 applies; Sneak does not invent a consensus.
+
+### 12.6 T4-P6 — Authority Preservation
+
+Derivation acquires no authority merely through computation. Each source retains its existing authority status, and the derived result remains derived unless a later explicit Kustomz decision establishes otherwise.
+
+Derivation cannot promote, demote, or otherwise alter the authority status of its sources. This does not establish an authority-status hierarchy.
+
+### 12.7 T4-P7 — Presentation Without Record-Creation
+
+Derived working information classified under KD-022 2f may be presented as an answer within the interaction when:
+
+1. T4-P1 and T4-P2 are satisfied;
+2. the information is presented as derived and attributable, not as an authoritative record;
+3. it is not persisted as an undefined record; and
+4. PA9 is satisfied, with no access expansion.
+
+Presenting an answer in-conversation does not by itself create an authoritative ecosystem record. This principle does not classify persisted computed statistics, which remain UNDEFINED under KD-022 3a and subject to C0.
+
+### 12.8 T4-P8 — Attribution Is Not Authorization
+
+Attribution establishes whether a derived value can be traced to its source and derivation basis. Authorization establishes whether the linked identity may see or use the information.
+
+They are independent requirements. An attributable but unauthorized derivation must not be presented, and an authorized but unattributable derivation must not be presented as derived information. Neither requirement substitutes for the other.
+
+
+## 13. Known Architectural Tensions
+
+### 13.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -478,29 +548,29 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 12.2 Cross-Interface Continuity
+### 13.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-### 12.3 Permission Grant-Holder Designation
+### 13.3 Permission Grant-Holder Designation
 
 PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
 
-### 12.4 Cross-System Authorization
+### 13.4 Cross-System Authorization
 
 KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
 
-### 12.5 Revocation Freshness
+### 13.5 Revocation Freshness
 
 KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
 
-### 12.6 Derived-Information Attribution
+### 13.6 Derived-Information Attribution
 
-PA9 establishes that derivation cannot expand access, but the positive attribution and traceability standard for derived information remains **UNDEFINED**, consistent with B12 and the KD-021 derived-statistics tension.
+KD-028 establishes the positive attribution and traceability standard. Remaining tensions are the application and mechanics left explicitly undefined by KD-028: provenance retention without shadow records; attribution display; description sufficiency; conflict presentation choice; reuse pressure on the KD-022 3a boundary; and any source-data freshness rules not otherwise established by applicable architecture or contracts.
 
-### 12.7 Standing as Permission Input
+### 13.7 Standing as Permission Input
 
 Member standing facts are authoritative under KD-022 1c, but whether or how standing may factor into future permission grants remains **UNDEFINED** and is part of the future role-to-permission mapping question.
 
@@ -516,7 +586,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 13. Architectural Boundary
+## 15. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -524,8 +594,8 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 14. Change Control
+## 16. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, or KD-026.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, or KD-028.
