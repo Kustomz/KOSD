@@ -774,7 +774,7 @@ A link change is an invalidating event for cached authorization determinations u
 
 No new state category is created.
 
-Identity-link records remain AUTHORITATIVE under KD-022 1b. Identity-link usage reference remains EPHEMERAL under KD-022 2e. Lifecycle edges are AUTHORITATIVE holder-held state under KD-022 1b as established by KD-035 (LC-P, §20.9).
+Identity-link records remain AUTHORITATIVE under KD-022 1b. Identity-link usage reference remains EPHEMERAL under KD-022 2e. Lifecycle edges are AUTHORITATIVE holder-held state under KD-022 1b as established by KD-035 (LC-P, §21.9).
 
 No persistence or lifecycle mechanism for 3h is established by KD-032.
 
