@@ -980,14 +980,14 @@ KD-034 does not designate the actual holder, establish implementation or API mec
 
 KD-041 establishes the following architectural contract connecting Sneak's KD-038 bounded identity-link query interest to the Kustomz Identity Engine's authoritative 1b identity-link determination.
 
-### 23.1 RC-P — Contract Parties
+### 21.1 RC-P — Contract Parties
 
 - **Querier:** Sneak, acting solely on KD-038's bounded, per-interaction query interest for authoritative 1b link-status determination for the addressing Discord identity.
 - **Authority:** the Kustomz Identity Engine, designated holder of KD-022 1b identity-link records under KD-038.
 
 No other party exercises authority under this contract. No corroborating source is introduced.
 
-### 23.2 RC-Q — Request Semantics
+### 21.2 RC-Q — Request Semantics
 
 A contract request is:
 
@@ -998,7 +998,7 @@ A contract request is:
 
 If no addressing Discord identity is available in interaction context, no request is formed and resolution is undeterminable under the applicable RL-D/QB-I boundary.
 
-### 23.3 RC-R — Response Semantics
+### 21.3 RC-R — Response Semantics
 
 The holder's authoritative determination consists of:
 
@@ -1009,7 +1009,7 @@ The determination is the answer. Sneak does not corroborate it, combine it with 
 
 This is a read determination, not authorization, and does not satisfy any PA2 authorization element.
 
-### 23.4 RC-A — Authoritativeness Conditions
+### 21.4 RC-A — Authoritativeness Conditions
 
 A determination counts as authoritative under this contract only when all three conditions hold:
 
@@ -1019,13 +1019,13 @@ A determination counts as authoritative under this contract only when all three 
 
 Sneak never independently verifies the holder's determination.
 
-### 23.5 RC-T — Temporal Semantics
+### 21.5 RC-T — Temporal Semantics
 
 - **Per-interaction.** Each interaction obtains its own determination. Determinations are not reused across interactions as authoritative.
 - **Lifecycle invalidation.** Each established lifecycle edge invalidates pre-edge determinations under the existing LC-F/T3-P3 boundary. A determination anchored before a known edge is invalid for new evaluations. Mid-interaction handling follows LC-M: no mandatory re-resolution is established solely by passage of time; a known edge renders the prior 2e usage state unusable for a new identity-bound evaluation.
 - **No validity extension.** KD-041 establishes no validity duration or scope beyond the existing interaction-scoped boundary.
 
-### 23.6 RC-F — Failure Semantics
+### 21.6 RC-F — Failure Semantics
 
 | Contract outcome | Classification | Handling |
 |---|---|---|
@@ -1037,7 +1037,7 @@ Sneak never independently verifies the holder's determination.
 
 All undeterminable outcomes fail closed for identity-bound use under B9/PA7. Failed requests leave no retained resolution state. There is no fallback, cross-domain inference, or stale reuse.
 
-### 23.7 RC-E — Explicit Exclusions
+### 21.7 RC-E — Explicit Exclusions
 
 KD-041 does not establish:
 
@@ -1054,7 +1054,7 @@ KD-041 does not establish:
 
 The contract is a semantic boundary connecting already-established holder authority and query interest. It does not itself authorize any identity-bound action.
 
-### 23.8 RC-D — Dependency Consequence
+### 21.8 RC-D — Dependency Consequence
 
 KD-041 satisfies:
 
@@ -1063,7 +1063,7 @@ KD-041 satisfies:
 
 The QB-Q named prerequisite set is complete at the architectural level. Legitimate query operation remains subject to the separately identified unresolved dependencies and mechanics, including D-RL2, D-RL4/D-QB3, D-RL5/D-QB4, D-RL6/D-QB5, and D-QB6.
 
-### 22.9 RC-X — Historical and Boundary Preservation
+### 21.9 RC-X — Historical and Boundary Preservation
 
 KD-041 does not supersede, modify, or reinterpret KD-032 through KD-040.
 
@@ -1077,23 +1077,23 @@ The resolved identity does not establish the authority required to resolve itsel
 
 KD-035 establishes the following architectural boundary for identity-link lifecycle semantics.
 
-### 21.1 LC-D — Lifecycle State
+### 22.1 LC-D — Lifecycle State
 
 Lifecycle state is the authoritative holder's record of a link's standing through time. KD-035 establishes lifecycle semantics; lifecycle procedures remain future architecture or contract work.
 
-### 21.2 LC-E — Lifecycle Edges
+### 22.2 LC-E — Lifecycle Edges
 
 The necessary lifecycle edges are creation, change, suspension, removal, and restoration.
 
 Restoration is distinct from removal because suspension and removal are distinct status conditions under RL-D. No expiry edge is established; validity bounds remain undefined and expiry cannot be assumed.
 
-### 21.3 LC-S — Lifecycle Status Vocabulary
+### 22.3 LC-S — Lifecycle Status Vocabulary
 
 Identity-link status is expressed as active, suspended, no-link, or unknown.
 
 Removed and never-existed states both present as no-link at the status level. Sneak does not distinguish those histories unless a future authoritative procedure establishes a basis for doing so.
 
-### 21.4 LC-R — Status, Edge, Resolution, and Usage Distinction
+### 22.4 LC-R — Status, Edge, Resolution, and Usage Distinction
 
 The following remain distinct:
 
@@ -1104,31 +1104,31 @@ The following remain distinct:
 
 Resolution is not a lifecycle edge, and usage state is not the authoritative link.
 
-### 21.5 LC-F — Lifecycle Invalidation
+### 22.5 LC-F — Lifecycle Invalidation
 
 Each established lifecycle edge affecting authoritative link status invalidates determinations anchored to the pre-edge status under the applicable KD-027 freshness boundary.
 
 The edge becomes effective when the authoritative holder establishes it, not when Sneak observes it. Unobserved loss of validity does not preserve a superseded determination merely because Sneak has not yet received awareness of the edge.
 
-### 21.6 LC-M — Mid-Interaction Lifecycle Change
+### 22.6 LC-M — Mid-Interaction Lifecycle Change
 
 A Sneak interaction does not require mandatory re-resolution solely because time has passed or because a lifecycle edge might have occurred.
 
 Where an established edge is known through an applicable established mechanism, the prior 2e usage reference is not usable for a new identity-bound evaluation. Sneak does not infer an edge, speculate about an unestablished change, or retroactively alter completed work.
 
-### 21.7 LC-U — Unknown and Failure Conditions
+### 22.7 LC-U — Unknown and Failure Conditions
 
 Unknown, stale, conflicting, or unavailable lifecycle conditions remain within the existing KD-033 RL-D/RL-F and KD-034 QB-F fail-closed taxonomy.
 
 Sneak does not repair, synthesize, adjudicate, or create a new failure mode for such conditions.
 
-### 21.8 LC-A — Authoritative Lifecycle Source
+### 22.8 LC-A — Authoritative Lifecycle Source
 
 Authoritative lifecycle state is held by the designated identity-link holder. The actual holder is designated by KD-038.
 
 Sneak never determines, authors, repairs, infers, or adjudicates authoritative lifecycle state.
 
-### 21.9 LC-P — State Classification and Persistence Boundary
+### 22.9 LC-P — State Classification and Persistence Boundary
 
 Identity-link lifecycle state is authoritative holder-held state under KD-022 P1/1b. No new state category is created.
 
@@ -1157,7 +1157,7 @@ KD-035 does not modify any prior adopted boundary.
 
 ## 23. Known Architectural Tensions
 
-### 22.1 Derived Statistics
+### 23.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -1165,34 +1165,34 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 22.2 Cross-Interface Continuity
+### 23.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-### 22.3 Permission Grant-Holder Designation
+### 23.3 Permission Grant-Holder Designation
 
 PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
 
-### 22.4 Cross-System Authorization
+### 23.4 Cross-System Authorization
 
 KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
 
-### 22.5 Revocation Freshness
+### 23.5 Revocation Freshness
 
 KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
 
-### 22.6 Derived-Information Attribution
+### 23.6 Derived-Information Attribution
 
 KD-028 establishes the positive attribution and traceability standard. Remaining tensions are the application and mechanics left explicitly undefined by KD-028: provenance retention without shadow records; attribution display; description sufficiency; conflict presentation choice; reuse pressure on the KD-022 3a boundary; and any source-data freshness rules not otherwise established by applicable architecture or contracts.
 
-### 22.7 Standing as Permission Input
+### 23.7 Standing as Permission Input
 
 KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
 
 
-### 22.8 Intake Disposition Without an Established Path
+### 23.8 Intake Disposition Without an Established Path
 
 KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
 
