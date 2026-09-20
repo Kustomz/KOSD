@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043; KD-044  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -48,7 +48,7 @@ The Web interface is the primary Toolbox experience. Android is planned. Sneak i
 
 Users are intended to move between these interfaces without losing relevant work-state or ecosystem context.
 
-The authoritative portable work-state/context mechanism required to fully realize this continuity is currently **UNDEFINED**.
+The authoritative portable work-state/context mechanism is held by the Kustomz Toolbox in its interface-independent shared-engine capacity under KD-042. Operational work-state mechanics remain **UNDEFINED**.
 
 ## 5. KOSD Architectural Requirements
 
@@ -89,7 +89,7 @@ The following are classified as **AUTHORITATIVE**:
 - **1a.** Kustomz ecosystem identity records.
 - **1b.** Discord-to-Kustomz identity link records.
 - **1c.** Member standing facts (Walk-in, Client, Regular, Booster, plus purchase-count facts). The authoritative holder for purchase facts remains **UNDEFINED**.
-- **1d.** Ticket Engine records, held by the Kustomz Workspace as the authoritative Kustomz system of record under KD-043. The associated Ticket Engine permission-grant state is likewise held by Kustomz Workspace as the authoritative system of record. This recognition does not itself constitute the separate KD-025 permission-grant-holder designation.
+- **1d.** Ticket Engine records, held by the Kustomz Workspace as the authoritative Kustomz system of record under KD-043. The associated Ticket Engine permission-grant state is likewise held by Kustomz Workspace as the authoritative system of record. KD-044 separately designates Kustomz Workspace as the KD-025 permission-grant holder for the Ticket Engine action domain.
 - **1e.** Dispositioned transcript records.
 - **1f.** CSR2 intelligence source data.
 - **1g.** Intake records after disposition.
@@ -152,11 +152,13 @@ KD-038 now designates the Kustomz Identity Engine as the authoritative holder of
 
 KD-043 recognizes **Kustomz Workspace** as the authoritative Kustomz system of record for KD-022 1d Ticket Engine records and their associated permission-grant state.
 
-This is architectural recognition of the system boundary, not the separate KD-025 D1 designation of Kustomz Workspace as the permission-grant holder for Ticket Engine actions.
+KD-044 separately designates **Kustomz Workspace** as the KD-025 D1 permission-grant holder for the Ticket Engine action domain. The designation is per-domain and does not extend to other permissions.
 
-Recognition does not define the Ticket Engine's contents, schemas, mechanics, lifecycle procedures, APIs, storage, implementation, permission mappings, authorization rules, validity/freshness behavior, or cross-system roles. Those matters remain undefined unless separately established by an applicable Kustomz owner decision.
+The designation establishes a holder target for PA5/PA3 resolution but does not authorize any action or complete the PA2 gate. Capability, action authority, linked-identity binding, and the applicable permission determination remain independently required.
 
-Sneak's existing PA5/PA7 fail-closed posture is unchanged. No action is authorized by KD-043 merely because Kustomz Workspace is recognized as the system of record.
+Recognition and designation do not define the Ticket Engine's contents, schemas, mechanics, lifecycle procedures, APIs, storage, implementation, permission mappings, authorization rules, validity/freshness behavior, or cross-system roles. Those matters remain undefined unless separately established by an applicable Kustomz owner decision.
+
+If the designated holder's determination is unavailable, inaccessible, ambiguous, partial, or otherwise unresolvable, U2/B9/PA7 applies and the action fails closed. PA7 deny-by-default is unchanged. Sneak holds no permission grants and makes no authorization determinations.
 
 ## 8. Adopted Behavioral Boundary
 
@@ -330,8 +332,18 @@ KD-025 establishes the following architectural rule for identifying and designat
 
 ### 10.4 U — Undefined or Unresolvable Holder
 
-- **U1 — No Designation:** No designated holder means PA5 has no target and the action is not performed under PA7. This remains the present state for actions without a designation.
+- **U1 — No Designation:** No designated holder means PA5 has no target and the action is not performed under PA7. This remains the state for action domains without a designation.
 - **U2 — Designated but Unresolvable:** If a designated holder's determination cannot be reliably obtained, B9 and PA7 apply. Sneak does not fall back to another holder, infer from another domain, or treat a stale determination as authoritative.
+
+### 10.5 D1-TICKET — Ticket Engine Grant-Holder Designation
+
+KD-044 designates **Kustomz Workspace** as the authoritative permission-grant holder for the **Ticket Engine action domain**.
+
+The designation satisfies the KD-025 D1 holder-designation requirement for this domain only. It does not designate Kustomz Workspace as a universal permission holder, does not grant action authority, and does not establish the Ticket Engine's permission contents or mappings.
+
+For Ticket Engine actions, PA5 now has an established holder target and PA2's permission-holder element has a designated resolution target. The full PA2 gate remains conjunctive and fail-closed. If the holder determination cannot be reliably obtained or is ambiguous, partial, or unavailable, U2/B9/PA7 applies.
+
+The concrete mechanism by which Sneak obtains the holder's determination remains undefined and requires future contract architecture. No implementation or Sneak-side permission ledger is established.
 - **U3 — Circular or Irreconcilably Competing Designations:** These yield no determinable holder and therefore follow U2.
 
 KD-025 designates no actual permission-grant holder and authorizes no action. Actual holder designations remain subject to later per-domain Kustomz decisions.
@@ -395,7 +407,7 @@ Grant and authorization determinations remain with their respective owners. Any 
 
 The following architectural boundaries are adopted through KD-038. Their enabling establishments — holders, declarers, rules, values, mechanics — remain undefined and proceed through later KDs, contracts, or owner decisions. Adoption of a boundary establishes none of its pending establishments.
 
-- Permission grant-holder designation per capability/domain (boundary: KD-025; no actual holder designated).
+- Permission grant-holder designation per capability/domain remains undefined except where a later explicit decision has designated a holder; KD-044 establishes Kustomz Workspace for the Ticket Engine action domain only.
 - Actual authorization owners, grant holders, or state owners/executors for any specific action; system footprints for specific cross-system actions (boundary: KD-026).
 - Validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency for revocation freshness (boundary: KD-027).
 - Application of derived-information attribution to specific derivations; provenance retention mechanics, attribution presentation/display, description sufficiency criteria, conflict presentation choices, and reuse of derived values across interactions (boundary: KD-028).
@@ -416,7 +428,7 @@ The following architectural boundaries are adopted through KD-038. Their enablin
 - Platform or service contracts.
 - Role-to-permission mappings.
 - Discord permissions.
-- Ticket Engine permissions.
+- Ticket Engine permission contents and mappings.
 - Kustomz-to-Discord identity-linking implementation mechanics, lifecycle procedures, and edge-awareness mechanism.
 - Conformance procedures.
 - Sneak definition version.
@@ -1177,13 +1189,15 @@ KD-022 classifies derived working values as ephemeral only when they remain trac
 
 ### 23.2 Cross-Interface Continuity
 
-The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
+The adopted WEB → ANDROID → DISCORD/SNEAK continuity model uses the Kustomz Toolbox, in its interface-independent shared-engine capacity, as the authoritative portable work-state holder under KD-042.
 
-The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
+The portable work-state record mechanics and lifecycle procedures remain **UNDEFINED**.
 
 ### 23.3 Permission Grant-Holder Designation
 
-PA3 requires permission grants to reside with the applicable authoritative holder. KD-043 now recognizes Kustomz Workspace as the authoritative system of record for Ticket Engine records and their associated permission-grant state, but this recognition does not itself constitute the separate KD-025 D1 designation of Kustomz Workspace as the permission-grant holder for Ticket Engine actions. The applicable grant-holder designation and operational resolution remain **UNDEFINED**.
+PA3 requires permission grants to reside with the applicable authoritative holder. KD-043 recognizes Kustomz Workspace as the authoritative system of record for Ticket Engine records and their associated permission-grant state. KD-044 separately designates Kustomz Workspace as the KD-025 D1 permission-grant holder for the Ticket Engine action domain.
+
+The designation establishes the holder target for this domain but does not authorize actions, complete PA2, define permission contents/mappings, or establish the concrete resolution mechanism. Those remaining matters are **UNDEFINED** or unauthorized as applicable.
 
 ### 23.4 Cross-System Authorization
 
@@ -1231,4 +1245,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, KD-037, KD-038, or KD-041.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, KD-037, KD-038, KD-041, KD-042, KD-043, or KD-044.
