@@ -120,7 +120,6 @@ The following remain **UNDEFINED**. Items marked **[PARTIALLY CLASSIFIED]** have
 - **3e.** Ticket-draft state.
 - **3f.** Project Vision integration state.
 - **3g.** Synthesized CSR2 intelligence.
-- **3h.** Identity-link lifecycle edges — governed by KD-035 lifecycle semantics; lifecycle procedures, holder, validity bounds, and edge-awareness mechanism remain unestablished.
 - **3i.** Sneak's own action records.
 
 ### 6.5 C0 — Persistence Boundary
@@ -959,48 +958,6 @@ The future holder-designation KD may establish both the holder designation and t
 
 KD-034 does not designate the actual holder, establish implementation or API mechanics, create identity links, authorize identity-bound actions, or modify any prior adopted boundary.
 
-## 21. Known Architectural Tensions
-
-### 21.1 Derived Statistics
-
-Derived statistics must remain traceable to authoritative sources.
-
-The standard, mechanism, and evidence requirements for that traceability remain **UNDEFINED**.
-
-KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
-
-### 21.2 Cross-Interface Continuity
-
-The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
-
-The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
-
-### 21.3 Permission Grant-Holder Designation
-
-PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
-
-### 21.4 Cross-System Authorization
-
-KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
-
-### 21.5 Revocation Freshness
-
-KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
-
-### 21.6 Derived-Information Attribution
-
-KD-028 establishes the positive attribution and traceability standard. Remaining tensions are the application and mechanics left explicitly undefined by KD-028: provenance retention without shadow records; attribution display; description sufficiency; conflict presentation choice; reuse pressure on the KD-022 3a boundary; and any source-data freshness rules not otherwise established by applicable architecture or contracts.
-
-### 21.7 Standing as Permission Input
-
-KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
-
-
-### 21.8 Intake Disposition Without an Established Path
-
-KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
-
-
 ## 20. Adopted Identity-Link Lifecycle Boundary
 
 KD-035 establishes the following architectural boundary for identity-link lifecycle semantics.
@@ -1083,6 +1040,48 @@ Restoration does not authorize Sneak to infer that a prior link was restored. Re
 KD-035 does not designate the actual holder, establish lifecycle implementation, authorize identity-link creation/removal, establish permission mappings, create portable work-state, or authorize identity-bound actions.
 
 KD-035 does not modify any prior adopted boundary.
+
+## 21. Known Architectural Tensions
+
+### 21.1 Derived Statistics
+
+Derived statistics must remain traceable to authoritative sources.
+
+The standard, mechanism, and evidence requirements for that traceability remain **UNDEFINED**.
+
+KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
+
+### 21.2 Cross-Interface Continuity
+
+The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
+
+The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
+
+### 21.3 Permission Grant-Holder Designation
+
+PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
+
+### 21.4 Cross-System Authorization
+
+KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
+
+### 21.5 Revocation Freshness
+
+KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
+
+### 21.6 Derived-Information Attribution
+
+KD-028 establishes the positive attribution and traceability standard. Remaining tensions are the application and mechanics left explicitly undefined by KD-028: provenance retention without shadow records; attribution display; description sufficiency; conflict presentation choice; reuse pressure on the KD-022 3a boundary; and any source-data freshness rules not otherwise established by applicable architecture or contracts.
+
+### 21.7 Standing as Permission Input
+
+KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
+
+
+### 21.8 Intake Disposition Without an Established Path
+
+KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
+
 
 ## 22. Implementation-Owned Mechanics
 
