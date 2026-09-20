@@ -810,7 +810,7 @@ The authoritative portable work-state/context mechanism remains UNDEFINED under 
 
 The following remain prerequisites for dependent identity-bound operation:
 
-- Actual identity-link holder designation.
+
 - Lifecycle procedures.
 - Reliable link-state resolution.
 - Any conditional cross-system role establishment required by KD-026.
