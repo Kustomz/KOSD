@@ -755,3 +755,61 @@ Execution / Resulting State:
    (i) No Identity Engine schemas, identifiers, account model, lifecycle implementation, APIs, storage, implementation model, permission model, verification mechanics, resolution mechanics, validity bounds, awareness mechanism, or other internal details are established by this decision.
    (j) No portable work-state mechanism, cross-system authorization role, identity-link creation/removal procedure, or currently unauthorized identity-bound action is established by implication.
 8. **Execution / Resulting State:** Authorized execution is to append KD-038 to `CORE/DECISIONS.md` and record the corresponding adopted 1b holder/query boundary in `CORE/KOS-SNEAK-ARCH.md` as a separate execution step. Resulting state: the Kustomz Identity Engine is the explicitly designated authoritative 1b holder, and Sneak has only the bounded query interest established above. Resolvability mechanics, procedures, validity bounds, awareness, implementation, permissions, and dependent actions remain unestablished until separately decided.
+
+## KD-039 — Kustomz Toolbox Architectural Recognition
+
+**Decision ID:** KD-039
+
+**Date:** 2026-09-20
+
+**Item(s):** Kustomz Toolbox architectural recognition — identity, purpose, interface relationships, shared-engine principle, and authority/state boundary principles for the shared CSR2 editing/tooling environment, as a named KOSD architectural concept.
+
+**Action:** ADOPT
+
+**Rationale:** The Kustomz Toolbox is an established project-level concept but does not yet have a KOSD architectural definition. This decision establishes the smallest coherent architectural recognition needed to govern future Toolbox work without treating the Toolbox as a KOSD module or authorizing implementation.
+
+The recognition establishes:
+- the Toolbox's identity and purpose;
+- Web, Android, and Discord/Sneak as its three interfaces;
+- the one shared engine / three interfaces principle;
+- authority and state-boundary principles;
+- applicable Sneak architecture by reference;
+- explicit blockers and exclusions.
+
+It does not define implementation internals, authority holders, permissions, contracts, or storage, and does not authorize implementation.
+
+**Basis / Evidence:**
+- Owner-established project-level Toolbox concept and functional description.
+- Existing KOSD three-interface and continuity architecture.
+- Existing Sneak architecture, KD-021 through KD-038.
+- KD-022 state-classification framework.
+- KD-023 through KD-029 authority, permission, cross-system, freshness, attribution, and standing boundaries.
+- KD-019 required-module-set authority.
+- KD-003 KOS-RELEASE Draft status.
+- KD-037 precedent for recognizing a named system without defining its internals.
+- CORE/KOS-SNEAK-ARCH.md §24 implementation boundary.
+
+**Conditions / Blockers:**
+- (a) The Toolbox is recognized as a named architectural concept only. It is not classified as a KOSD module, subsystem, or required-module-set member.
+- (b) The one shared engine / three interfaces principle is adopted as an architectural principle, while engine internals, contracts, schemas, APIs, storage, and mechanics remain undefined.
+- (c) The three interfaces are: Web — primary; Android — planned; Discord/Sneak — conversational.
+- (d) Sneak remains subject to all applicable KD-021 through KD-038 boundaries. Its identification as a Toolbox interface does not grant Sneak additional authority.
+- (e) NSB/SCB/page-level functional definitions remain project-level material and are not adopted as KOSD architecture.
+- (f) No authoritative holders are designated for Toolbox-modified state.
+- (g) No permissions, grants, authorizations, or mappings are established.
+- (h) The portable work-state mechanism and holder remain undefined. The existing WEB → ANDROID → DISCORD/SNEAK continuity principle is therefore not being newly implemented or resolved by this decision.
+- (i) Implementation is not authorized. Implementation location and model remain open.
+- (j) This decision does not supersede or independently redefine KD-001 through KD-038.
+- (k) The future architecture artifact is CORE/KOS-TOOLBOX-ARCH.md.
+- (l) The recognition decision shall be included in that architecture's authority header.
+- (m) No subsequent architectural subject is established by this decision; sequencing remains open.
+
+**Execution / Resulting State:** Upon separately authorized execution:
+- Append KD-039 to CORE/DECISIONS.md.
+- Separately create CORE/KOS-TOOLBOX-ARCH.md containing the adopted recognition and boundaries.
+- Do not modify CORE/KOS-SNEAK-ARCH.md.
+- Do not authorize or place Toolbox implementation.
+- Do not establish holders, permissions, contracts, schemas, APIs, storage, or module classification.
+
+Resulting state: Kustomz Toolbox is recognized within KOSD as a governed architectural concept with explicit boundaries and explicit unresolved dependencies.
+
