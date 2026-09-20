@@ -147,8 +147,7 @@
    - CORE/KOS-CORE-001 Principle 4 states that locked assets remain locked unless explicitly superseded; this is narrower than the adopted O-002 rule and requires later textual reconciliation.
    - KD-006 preserved the two pre-existing LOCKED artifacts without retroactively validating their historical grant of LOCKED status.
    - No evidence establishes that LOCKED means permanently immutable.
-7. **Conditions / Blockers:**
-   (a) Any change, supersession, or unlock of LOCKED status requires an explicit Kustomz owner decision recorded under the adopted KOS Decision & Promotion Protocol.
+7. **Conditions / Blockers:**   (a) Any change, supersession, or unlock of LOCKED status requires an explicit Kustomz owner decision recorded under the adopted KOS Decision & Promotion Protocol.
    (b) "LOCKED" does not authorize silent modification of the locked content.
    (c) KD-007 does not establish criteria for when an item should be locked.
    (d) KD-007 does not establish validation or evidence requirements for locking, changing, superseding, or unlocking.
@@ -297,7 +296,6 @@
 6. **Basis / Evidence:** Owner decision.
 7. **Conditions / Blockers:** Document/module version identities remain distinct; no release is promoted by this decision.
 8. **Execution / Resulting State:** KOSD release versions use major.minor.patch; owner assigns release version when authorizing release; every newly authorized release gets a new version; release/document/module version identities are distinct; release versions are immutable once assigned; superseded/archived releases retain their original version and never reuse it.
-
 ---
 
 ## KD-018
@@ -449,3 +447,16 @@ Execution / Resulting State:
 6. **Basis / Evidence:** KD-021 (adopted Sneak architecture), KD-022 (adopted Sneak state-classification boundary), KD-023 (adopted Sneak behavioral boundary), the proposed PA0–PA9 boundary developed for owner review on 2026-09-19, and explicit owner approval communicated by Kustomz/Rick on 2026-09-19.
 7. **Conditions / Blockers:** This adoption explicitly does NOT: create role→permission mappings; define Discord permissions; define Ticket Engine permissions; define identity-linking mechanics; define contracts or interfaces; define storage or retention; authorize any implementation; classify any KD-019 module; or establish that any action is currently authorized. Under PA7, the action gate is deny-by-default until authorization is affirmatively established. Unresolved and carried forward: grant-holder designation per capability (T1); the applicable system for cross-system actions (T2); revocation freshness standards (T3); the positive derived-information attribution standard (T4); standing-as-permission-input (T5); and the KD-021 tensions concerning derived-statistics traceability and portable work-state.
 8. **Execution / Resulting State:** Decision recorded only. The PA0–PA9 boundary is adopted as authoritative Sneak architecture. Execution of the corresponding architecture-document update is a separate authorized step under the adopted protocol. No implementation or other deferred architecture is authorized by KD-024.
+
+---
+
+## KD-025
+
+1. **Decision ID:** KD-025
+2. **Date:** 2026-09-20
+3. **Item(s):** Proposed Sneak Permission Grant-Holder Designation framework — holder qualification (H1–H4), KOSD designation (D1–D4), grant resolution (R1–R4), and undefined/unresolvable-holder handling (U1–U3) — developed 2026-09-20 to address architectural tension T1. Designates no actual holder.
+4. **Action:** ADOPT. The owner adopts H1–H4, D1–D4, R1–R4, and U1–U3 as the architectural rule for identifying and designating the authoritative holder of permission grants for Sneak authorization evaluations: a holder must be a KOSD-recognized system of record for the grant domain with KOSD-established resolvability and no circularity (H1–H4); holders are designated per action-domain by explicit KD, designation conferring no authorization (D1–D4); Sneak resolves per-evaluation, identity-bound determinations, accepting them without reinterpretation and persisting none as records (R1–R4); undefined, unresolvable, circular, or irreconcilably competing holders yield no determinable holder, in which case the action is not performed (U1–U3). PA0–PA9 are preserved exactly as adopted and are unmodified by this decision.
+5. **Rationale:** KD-024 PA3 requires permission grants to live with the authoritative holder, but T1 left “which holder” without a rule — leaving PA5 deferral targetless and PA7’s closed gate a default rather than a governed state. This framework establishes *how* a holder qualifies and is designated, so future per-domain designations can proceed as individual KDs without revisiting the framework, while guaranteeing that adoption designates nothing and authorizes nothing.
+6. **Basis / Evidence:** KD-024 (PA0–PA9, adopted); KD-022 (P1 authoritative-reference, P5 deferral, C0); KD-023 (B7 action gate, B8 deferral, B9 unresolved conditions); KD-021 (KOSD shall define permission/authority boundaries; role→permission mapping explicitly not adopted; designated contract set as future architecture); KD-015 (latest applicable decision controls); KD-007 (explicit change); KD-001 (protocol).
+7. **Conditions / Blockers:** This adoption explicitly does NOT: designate any actual permission-grant holder for any capability, action, or domain; create role→permission mappings; define Discord permissions; define Ticket Engine permissions; define identity-link mechanics; define implementation, storage, caching behavior, APIs, contracts, or runtime behavior; authorize any currently undefined action; resolve T2 (applicable holder for cross-system actions); resolve T3 (revocation freshness); resolve T4 (derived-information positive attribution standard); resolve T5 (standing as permission input); classify any KD-019 module; or select implementation model A/B/C. Unresolved and carried forward: all per-domain holder designations (each requiring its own future KD); resolvability mechanisms (future contract architecture); T2–T5.
+8. **Execution / Resulting State:** Decision only; execution is a separately authorized step per the protocol. Upon authorized execution, H1–H4, D1–D4, R1–R4, and U1–U3 are recorded in the authoritative Sneak architecture document (CORE/KOS-SNEAK-ARCH.md), which remains subject to the KOS Decision & Promotion Protocol; per-domain holder designations proceed through later KDs. No implementation is authorized by this decision.
