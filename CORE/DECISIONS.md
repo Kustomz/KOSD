@@ -660,3 +660,27 @@ Execution / Resulting State:
    (i) Actual holder, query/resolution mechanics, validity bounds, lifecycle procedures, platform presentation, Discord assertion strength, retry/timing, failure wording, and other QB-E items remain undefined.
    (j) No implementation, identity-link lifecycle action, permission mapping, portable work-state mechanism, or currently unauthorized identity-bound action is established.
 8. **Execution / Resulting State:** Authorized execution: append KD-034 to `CORE/DECISIONS.md` and incorporate the adopted QB boundary into `CORE/KOS-SNEAK-ARCH.md`. Resulting state: KD-034 is the authoritative query-basis boundary for Sneak identity-link resolution. No actual identity-link holder is designated, no query/resolution implementation is authorized, and no permission or identity-bound action is enabled by this decision.
+
+
+---
+
+## KD-035
+
+1. **Decision ID:** KD-035
+2. **Date:** 2026-09-20
+3. **Item(s):** Sneak Identity-Link Lifecycle / 3h architectural boundary (LC-D, LC-E, LC-S, LC-R, LC-F, LC-M, LC-U, LC-A, LC-P), as proposed and owner-approved after Rico review.
+4. **Action:** ADOPT
+5. **Rationale:** The identity-link lifecycle-edge category was the remaining undefined semantic center referenced by KD-032, KD-033, KD-034, and KD-027. The adopted boundary defines lifecycle state and its necessary edges without defining implementation procedures, preserving the distinction between authoritative link status, lifecycle edges, Sneak resolution, and ephemeral usage state.
+6. **Basis / Evidence:** Owner judgment based on KD-022 P1/P3/P5/C0, KD-023 B3/B4/B6/B9/B12, KD-024 PA1/PA2/PA5/PA7, KD-025, KD-026, KD-027 T3-P3/T3-P4, KD-028 where applicable, KD-032 IL-L/IL-S/IL-F/IL-R, KD-033 RL-D/RL-H/RL-B/RL-F/RL-S, KD-034 QB-F/QB-S, and the reviewed KD-035 proposal.
+7. **Conditions / Blockers:**
+   (a) Lifecycle state means the authoritative holder's record of a link's standing through time; lifecycle semantics are established, while lifecycle procedures remain future work.
+   (b) The necessary lifecycle edges are creation, change, suspension, removal, and restoration. No expiry edge is established because validity bounds remain undefined.
+   (c) Link status is expressed as active, suspended, no-link, or unknown. Removed and never-existed both resolve to no-link at status level and are not distinguished by Sneak absent a future authoritative procedure establishing such history.
+   (d) Link status, lifecycle edges, Sneak resolution, and Sneak usage state remain distinct concepts; resolution is not a lifecycle edge and usage state is not the authoritative link.
+   (e) Each established lifecycle edge affecting authoritative link status invalidates determinations anchored to the pre-edge status. Effectiveness is established by the holder, not by Sneak's awareness.
+   (f) During an interaction, no mandatory re-resolution is created. A known established edge makes the prior ephemeral usage reference unusable for new evaluations; Sneak does not infer edges, speculate about re-resolution, or retroactively alter completed work.
+   (g) Unknown, stale, conflicting, or unavailable lifecycle conditions remain within the existing RL-D/RL-F/QB-F fail-closed taxonomy and do not create new failure modes.
+   (h) The designated identity-link holder remains unnamed; Sneak never determines, authors, repairs, infers, or adjudicates authoritative lifecycle state.
+   (i) Lifecycle state remains authoritative holder-held state under KD-022 P1/1b; Sneak persistence remains constrained by KD-022 C0/P3.
+   (j) Dependencies include actual holder designation, lifecycle procedures, validity bounds, an established edge-awareness channel where required, and other previously established prerequisites. No implementation, permission mapping, portable work-state, or identity-bound action is authorized.
+8. **Execution / Resulting State:** Authorized execution: append KD-035 to CORE/DECISIONS.md and incorporate the adopted lifecycle boundary into CORE/KOS-SNEAK-ARCH.md. Resulting state: KD-035 is the authoritative lifecycle-semantic boundary for identity links. The actual holder, lifecycle procedures, implementation, edge-awareness mechanism, validity bounds, and dependent identity-bound operation remain unestablished unless separately decided.
