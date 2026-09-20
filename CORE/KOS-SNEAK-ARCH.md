@@ -972,7 +972,7 @@ Query/resolution mechanics, query-basis implementation details, validity bounds,
 
 KD-034 does not allow the identity being resolved to establish the authority required to resolve itself. Query interest comes from an explicit KOSD decision, not from the resolved identity and not from the permission result being sought.
 
-The future holder-designation KD may establish both the holder designation and the bounded query interest, but it must do so explicitly; neither is inferred from the other. Query access remains a read determination, resolution remains distinct from authorization, and no permission state is obtained through this boundary.
+KD-038 established both the holder designation and the bounded query interest explicitly; neither is inferred from the other. Query access remains a read determination, resolution remains distinct from authorization, and no permission state is obtained through this boundary.
 
 KD-034 does not designate the actual holder, establish implementation or API mechanics, create identity links, authorize identity-bound actions, or modify any prior adopted boundary.
 
