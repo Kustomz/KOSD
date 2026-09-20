@@ -938,3 +938,37 @@ Resulting state: Kustomz Toolbox is recognized within KOSD as a governed archite
 - (n) No implementation is authorized by KD-042. Architecture-document execution is a separate authorized step under the adopted protocol.
 
 **Execution / Resulting State:** Authorized execution includes recording KD-042 in CORE/DECISIONS.md and, separately, updating CORE/KOS-TOOLBOX-ARCH.md to record the holder designation and resulting boundary. The portable work-state holder blocker identified by KD-040 is satisfied. Operational mechanics, write authorization, conflict resolution, validity bounds, retention/disposition, Sneak-originated update path, implementation, and the other explicitly unresolved dependencies remain unestablished.
+
+
+## KD-043 — Kustomz Workspace Architectural Recognition
+
+**Decision ID:** KD-043
+
+**Date:** 2026-09-20
+
+**Item(s):** Kustomz Workspace architectural recognition as the authoritative Kustomz system of record for Ticket Engine records (KD-022 1d) and their associated permission-grant state, as proposed by Izzy and reviewed by Rico.
+
+**Action:** ADOPT
+
+**Rationale:** The owner recognizes Kustomz Workspace as the authoritative Kustomz system of record for the already-classified Ticket Engine record domain and its associated permission-grant state. This establishes the required system boundary before any later permission-grant-holder designation. Recognition does not itself designate Kustomz Workspace as the KD-025 permission-grant holder, define the Ticket Engine, establish grant mechanics, authorize any action, or expand Sneak authority.
+
+**Basis / Evidence:**
+- KD-022 1d — Ticket Engine records are classified as AUTHORITATIVE, while their authoritative holder was previously undefined.
+- KD-024 — Sneak permission and authority boundary, including PA3 and the requirement to resolve applicable permission grants against an authoritative holder.
+- KD-025 — permission-grant-holder framework, including H1/H2 and the requirement for an explicit holder designation before a grant domain becomes operationally resolvable.
+- KD-021 — Ticket Engine interaction is within Sneak's adopted capability scope.
+- Izzy's Kustomz Workspace recognition proposal, reviewed by Rico as CLEAN.
+- The recognition-first precedent established by KD-037: system recognition is established separately from later holder/contract/mechanics decisions.
+
+**Conditions / Blockers:**
+- (a) Kustomz Workspace is recognized as the authoritative Kustomz system of record for KD-022 1d Ticket Engine records.
+- (b) Kustomz Workspace is also recognized as the authoritative Kustomz system of record for the associated Ticket Engine permission-grant state.
+- (c) This recognition does not by itself constitute the KD-025 D1 designation of Kustomz Workspace as the permission-grant holder for Ticket Engine actions. That designation remains a separate future decision.
+- (d) The Ticket Engine itself remains undefined as to contents, records, schemas, mechanics, lifecycle procedures, APIs, storage, implementation, and other internal details unless separately established.
+- (e) Permission-grant semantics, mappings, authorization rules, action domains, resolution mechanics, validity/freshness behavior, and cross-system roles remain undefined unless separately established.
+- (f) Sneak's existing PA5/PA7 fail-closed posture remains unchanged until a later holder designation and applicable authorization decisions establish an operational permission path.
+- (g) No action is authorized by this recognition. Recognition of a system of record does not itself grant Sneak, Kustomz Workspace, or any interface permission to perform actions.
+- (h) KD-037/KD-038 Identity Engine authority and KD-042 Kustomz Toolbox portable work-state holder authority are unaffected.
+- (i) No implementation is authorized by KD-043. Architecture-document execution is a separate execution step under the adopted protocol.
+
+**Execution / Resulting State:** Authorized execution includes recording KD-043 in CORE/DECISIONS.md and, separately, updating CORE/KOS-SNEAK-ARCH.md to reflect Kustomz Workspace's recognized Ticket Engine system-of-record boundary. The recognition blocker for identifying the authoritative Ticket Engine system boundary is satisfied. The separate permission-grant-holder designation, Ticket Engine definition, permission mechanics, cross-system authorization, and implementation remain unresolved.
