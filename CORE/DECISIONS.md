@@ -684,3 +684,29 @@ Execution / Resulting State:
    (i) Lifecycle state remains authoritative holder-held state under KD-022 P1/1b; Sneak persistence remains constrained by KD-022 C0/P3.
    (j) Dependencies include actual holder designation, lifecycle procedures, validity bounds, an established edge-awareness channel where required, and other previously established prerequisites. No implementation, permission mapping, portable work-state, or identity-bound action is authorized.
 8. **Execution / Resulting State:** Authorized execution: append KD-035 to CORE/DECISIONS.md and incorporate the adopted lifecycle boundary into CORE/KOS-SNEAK-ARCH.md. Resulting state: KD-035 is the authoritative lifecycle-semantic boundary for identity links. The actual holder, lifecycle procedures, implementation, edge-awareness mechanism, validity bounds, and dependent identity-bound operation remain unestablished unless separately decided.
+
+
+---
+
+## KD-036
+
+1. **Decision ID:** KD-036
+2. **Date:** 2026-09-20
+3. **Item(s):** Documentation alignment of `CORE/KOS-SNEAK-ARCH.md) following adopted KD-032 through KD-035, limited to clerical correction of stale classification references, section numbering, historical decision-range references, and terminology that no longer matches adopted architecture.
+4. **Action:** ADOPT
+5. **Rationale:** The owner adopts the proposed documentation-alignment scope so the architecture document accurately reflects already-adopted decisions KD-032 through KD-035. The alignment corrects stale 3h UNDEFINED statements, preserves the distinction between lifecycle semantics and lifecycle procedures, resolves duplicate and stale section numbering, and updates historical references without changing substantive architectural meaning.
+6. **Basis / Evidence:** Owner judgment following Rico review of the KD-032–KD-035 checkpoint audit and the KD-036 documentation-alignment proposal. The proposed corrections are directly grounded in adopted KD-032, KD-033, KD-034, and KD-035, including KD-035 §20.9 and the adopted lifecycle semantics/procedure distinction. The audit found no substantive contradictions and identified the stale documentation as the remaining actionable issue.
+7. **Conditions / Blockers:**
+   (a) Alignment is strictly clerical and must be traceable to already-adopted KD-032 through KD-035.
+   (b) §6.4 must no longer describe 3h as UNDEFINED; KD-035 established lifecycle state as authoritative 1b while leaving lifecycle procedures future work.
+   (c) §17.3 must remove the stale "UNDEFINED under KD-022 3h" qualifier, distinguish established lifecycle semantics from undefined procedures, and include restoration in the adopted lifecycle-edge enumeration.
+   (d) §17.4 must identify lifecycle edges as authoritative holder-held state under KD-022 1b as established by KD-035, while retaining the separate statement that no lifecycle mechanism was established by KD-032.
+   (e) KD-034 retains section 19; the former duplicate section 19 must be renumbered as part of the documentation cascade.
+   (f) KD-035 retains section 20; the former duplicate section 20 and stale 18.x subsection numbering must be corrected by cascading the affected later sections while preserving adopted boundary-section identities.
+   (g) Stale "through KD-031" references in §11 and the later change-control material must be updated through KD-035 where applicable, and the corresponding "boundaries adopted; establishments pending" language must remain limited to the scopes and pending items actually established by KD-032 through KD-035.
+   (h) "Lifecycle rules" must be corrected to "lifecycle procedures" where the text refers to the still-unestablished procedural layer.
+   (i) The non-supersession/historical list in the change-control material must extend through KD-035.
+   (j) No substantive architecture may be added, removed, broadened, narrowed, reinterpreted, or silently changed through this clerical alignment.
+   (k) This decision does not designate the identity-link holder, establish lifecycle procedures, establish an edge-awareness channel, establish permissions or authorization, establish implementation, create schemas/APIs/storage, change state classification, or make any previously undefined matter actionable except to correct stale wording directly contradicted by an already-adopted decision.
+   (l) Decision history remains append-only; no decision record is edited in place. Repository architecture text may be corrected only through separately authorized execution of this decision.
+8. **Execution / Resulting State:** This decision authorizes the specified documentation-alignment scope, but repository execution is a separate step. Until separately executed, `CORE/KOS-SNEAK-ARCH.md` remains unchanged. No holder designation, lifecycle procedure, awareness mechanism, permission mapping, implementation, or other substantive establishment is authorized by KD-036.
