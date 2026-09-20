@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -114,7 +114,7 @@ The following are classified as **EPHEMERAL**:
 The following remain **UNDEFINED**:
 
 - **3a.** Computed member/user statistics as records.
-- **3b.** Transcript completion boundary.
+- **3b.** Transcript completion boundary — governed by KD-030; the completion declarer, designated holder, and transcript content rules remain undefined until their prerequisites are established.
 - **3c.** Intake items before disposition.
 - **3d.** Portable work-state records.
 - **3e.** Ticket-draft state.
@@ -384,7 +384,6 @@ KD-021 through KD-027 do not establish or select:
 - The authoritative holder for purchase-count facts.
 - Portable work-state record mechanics or its authoritative holder.
 - Computed statistics as persistent records.
-- Transcript completion/disposition boundary.
 - Intake pre-disposition persistence rules.
 - Ticket-draft persistence.
 - Project Vision integration state.
@@ -602,6 +601,69 @@ KD-029 does not designate any standing source, permission or grant holder, or sy
 Adoption of KD-029 enables no action by implication. Where the prerequisites for standing-aware permission have not been established, Sneak remains closed under PA7.
 
 
+## 13. Adopted Transcript Completion and Disposition Boundary
+
+KD-030 establishes the following architectural boundary for the transition from 2c in-progress transcript capture to 1e dispositioned transcript records.
+
+### 13.1 T6-P1 — No Silent Promotion
+
+A 2c capture buffer becomes a 1e dispositioned record only upon an authorized completion declaration. Aging, accumulation, session end, or Sneak unilateral action do not constitute a declaration.
+
+### 13.2 T6-P2 — Declaration Authority Is Established, Never Assumed
+
+Completion-declaration authority and its conditions must be established by KOSD architecture or decision. Sneak does not declare completion on its own authority. Inactivity, session idle, and conversational closure are not declarations.
+
+### 13.3 T6-P3 — Disposition Is a Status Transition, Not a Destination
+
+Disposition is the authorized status transition from 2c to 1e. Destination, format, channel, and other mechanics remain future architecture, contract, or implementation concerns.
+
+### 13.4 T6-P4 — Effective Disposition Requires a Designated Holder
+
+Effective disposition requires a KOSD-designated holder for the dispositioned transcript record. Without a designated holder, a declaration is ineffective and does not create a 1e record.
+
+### 13.5 T6-P5 — Faithful Transition
+
+Disposition changes status, not content. Sneak does not summarize, redact, reorder, or reinterpret during the transition. Any transformation requires separate KOSD establishment and applicable KD-028 attribution; the default transition is faithful.
+
+### 13.6 T6-P6 — 1e and 3i Remain Distinct
+
+A 1e transcript record concerns the interaction itself. 3i Sneak action records remain a distinct UNDEFINED category and are not classified by KD-030.
+
+### 13.7 T6-R1 — Completion-Declaration Authority
+
+Who or what may declare completion, and under what conditions, remains to be established by a future KOSD decision or architecture.
+
+### 13.8 T6-R2 — Designated Transcript Holder
+
+The designated holder for dispositioned transcript records remains to be established under KD-022 P3. This holder designation is distinct from permission grant-holder designation under KD-025.
+
+### 13.9 T6-R3 — Transcript Content Rules
+
+Transcript content rules remain undefined under KD-021 and must exist before disposition can occur.
+
+### 13.10 T6-F1 — No Authorized Declaration
+
+If no authorized declaration exists, content remains 2c and remains subject to KD-022 P4. It may not be retained indefinitely as an unauthorized persistent record. No discard, archival, transfer, or other final disposition is implied until an applicable disposition authority and rule are established.
+
+### 13.11 T6-F2 — No Designated Holder
+
+A declaration without a designated holder is ineffective. The undeliverable buffer must not become a de facto 1e record through retention.
+
+### 13.12 T6-F3 — Sneak Does Not Self-Declare
+
+Sneak never self-declares completion. Idle, inactivity, and conversational closure are not declarations.
+
+### 13.13 T6-F4 — Undeliverable Case Remains Unresolved
+
+The undeliverable-transcript case has no authorized resolution under KD-030. No archiving, indefinite retention, or discard authority is established; the gap remains an explicit future decision item.
+
+### 13.14 T6 Exclusions
+
+KD-030 does not define transcript content, formats, schemas, channels, destination mechanics, retention durations, actual holder designation, grant-holder designation, completion declarer, KD-022 3c intake specifics, 3i classification, implementation, or any currently unauthorized action.
+
+KD-030 does not modify any prior adopted boundary and does not authorize implementation.
+
+
 ## 13. Known Architectural Tensions
 
 ### 13.1 Derived Statistics
@@ -662,4 +724,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, or KD-028.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, or KD-030.
