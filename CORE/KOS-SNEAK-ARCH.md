@@ -392,7 +392,7 @@ The following architectural boundaries are adopted through KD-038. Their enablin
 - Standing-as-permission-input establishments: designated standing source, designated permission holder, established standing-to-permission basis (boundary: KD-029; no mapping, designation, or authorization created).
 - Transcript completion/disposition establishments: completion-declaration authority and conditions, designated transcript holder, transcript content rules (boundary: KD-030).
 - Intake establishments: intake declaration authority, designated intake holder, intake routing/content rules including any hold bound (boundary: KD-031).
-- Identity-link holder designation, query/access establishment, lifecycle procedures, validity bounds, and edge-awareness mechanism remain pending (boundaries: KD-032; KD-033; KD-034; KD-035; no actual holder or dependent operation established).
+- Identity-link holder designation is established by KD-038. Query operation remains subject to the unresolved resolvability contract and dependent prerequisites; lifecycle procedures, validity bounds, and edge-awareness mechanism remain pending (boundaries: KD-032; KD-033; KD-034; KD-035; KD-038).
 - Portable work-state record mechanics and authoritative holder (classification: KD-022 1i AUTHORITATIVE with holder designated by KOSD architecture, never Sneak; mechanics and actual holder pending; 3d records remain UNDEFINED).
 - The authoritative holder for purchase-count facts (KD-022 1c).
 
