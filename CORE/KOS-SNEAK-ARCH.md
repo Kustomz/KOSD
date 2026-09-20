@@ -829,19 +829,19 @@ KD-033 establishes the following architectural boundary for reliable Kustomz-to-
 
 Resolution means Sneak obtaining the designated holder's authoritative link-status determination for the addressing Discord identity, per interaction. “Reliable” means the determination is holder-sourced, unambiguous as to one Kustomz identity, and within established validity. Sneak never independently verifies the holder's determination.
 
-### 21.2 RL-D — Determinability
+### 18.2 RL-D — Determinability
 
 Resolution is determinable only when exactly one Kustomz identity is established for the addressing Discord identity, the determination is unambiguous, and no invalidating condition applies.
 
 No designated holder, unreachable holder, no-link/suspended/removed/unknown status, multiple candidates, stale determination, or otherwise unascertainable addressing identity makes resolution undeterminable. Undeterminable resolution fails closed for identity-bound use under B9/PA7.
 
-### 21.3 RL-H — Holder Authority
+### 18.3 RL-H — Holder Authority
 
 Without a designated holder, no reliable resolution exists.
 
 The designated holder's determination is the answer. Sneak does not corroborate, combine sources, or adjudicate against it. Holder designation and resolution are distinct establishments.
 
-### 21.4 RL-B — Boundary Interaction
+### 18.4 RL-B — Boundary Interaction
 
 B3 grounds resolution in the designated holder. KD-022 2b caches never substitute for holder resolution.
 
@@ -849,25 +849,25 @@ B9 surfaces ambiguity without converting it into fact. The resolved identity sup
 
 Link changes invalidate applicable determinations under KD-027 T3-P3. Where validity bounds have not been established, a resolution determination is limited to the interaction's ephemeral 2e usage scope.
 
-### 21.5 RL-F — Failure Handling
+### 18.5 RL-F — Failure Handling
 
 Unavailable resolution has no fallback, cross-domain inference, or stale reuse. Ambiguous resolution is not disambiguated by Sneak. Stale resolution requires re-resolution or R4/PA7.
 
 A conflict within the holder's determination is ambiguous. Non-holder information does not override the holder's authoritative determination.
 
-### 21.6 RL-T — Read / Authorization Separation
+### 18.6 RL-T — Read / Authorization Separation
 
 Identity-link resolution is a read determination, never authorization.
 
 It satisfies none of PA2's authorization elements 1–3. Any action still requires the complete PA2 gate, including identity binding.
 
-### 21.7 RL-S — Transient Resolution State
+### 18.7 RL-S — Transient Resolution State
 
 Resolution handling is transient only: in-flight request/response state, a parsed candidate, or a 2e identity-link usage reference.
 
 Sneak does not persist resolution results as a record, ledger, or cross-interaction shared state. Failed resolution leaves no retained resolution state.
 
-### 21.8 RL-X — Cross-System Boundary
+### 18.8 RL-X — Cross-System Boundary
 
 Cross-system crossings defer to KD-026. KD-033 assigns no authorization-owner, grant-holder, or state-owner/executor role.
 
