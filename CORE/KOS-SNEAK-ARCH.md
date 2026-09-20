@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -309,9 +309,62 @@ KD-025 establishes the following architectural rule for identifying and designat
 
 KD-025 designates no actual permission-grant holder and authorizes no action. Actual holder designations remain subject to later per-domain Kustomz decisions.
 
+## 10. Adopted Cross-System Authorization Boundary
+
+KD-026 establishes the following architectural rule for identifying the applicable authoritative systems when an action crosses system boundaries.
+
+### 10.1 T2-P1 — Decomposition Rule
+
+A cross-system action is evaluated as the set of its constituent state effects. For each effect, the applicable authoritative system is determined per-effect. There is no single applicable system for a cross-system action as a whole unless KOSD architecture, contract, or decision establishes one.
+
+### 10.2 T2-P2 — Three Roles per Effect
+
+For each effect, three roles are architecturally distinct:
+
+- **Authorization owner:** determines whether the effect may occur.
+- **Grant holder:** answers permission questions for the linked identity under KD-025.
+- **State owner / executor:** holds the authoritative state and applies the effect.
+
+The roles may coincide in one system or be split across systems. When split, each applicable role-owner must provide or establish its respective determination or application. No role's determination substitutes for another's.
+
+### 10.3 T2-P3 — Establishment Rule
+
+Which system fills each role for each effect is established by KOSD architecture, contract, or decision. Establishment is per-effect and per-role and is consistent with KD-025's per-action-domain designation boundary.
+
+### 10.4 T2-P4 — No Sneak-Side Decomposition
+
+Sneak does not decompose cross-system actions into effects, infer which systems are involved, or assign roles on its own authority. The action's system footprint — including its effects and applicable role-owners — must be established by KOSD architecture, contract, or decision.
+
+An action whose footprint is not established is not authorized under PA7.
+
+### 10.5 T2-P5 — Multiplicity and Conjunction
+
+When multiple systems are relevant, including multiple effects or split roles, authorization is conjunctive across every applicable role-owner. If role-owner determinations conflict, Sneak does not arbitrate between authoritative systems. B9 and PA7 apply.
+
+### 10.6 T2-P6 — Failure Modes Fail Closed
+
+Undefined ownership, meaning no established role-owner for an effect, means the action is not authorized.
+
+Ambiguous ownership, where multiple candidates exist without KOSD-established precedence, invokes B9 and PA7.
+
+An established but unavailable owner also invokes B9 and PA7; no substitute owner or stale determination is accepted.
+
+Circular ownership, including mutual dependency between role determinations for the same action, yields no determinable authorization and therefore PA7.
+
+### 10.7 T2-P7 — Legitimate Execution / Authorization Split
+
+Execution and authorization may belong to different systems only when:
+
+1. the split and each system's role are established by KOSD architecture, contract, or decision;
+2. determinations form an acyclic dependency structure; and
+3. the execution system does not originate authorization.
+
+Grant and authorization determinations remain with their respective owners. Any circular dependency invokes T2-P6.
+
+
 ## 10. Explicitly Undefined / Not Established by KD-021, KD-022, KD-023, KD-024, and KD-025
 
-KD-021 through KD-024 do not establish or select:
+KD-021 through KD-026 do not establish or select:
 
 - Sneak implementation model A, B, or C.
 - Executable Sneak implementation within KOSD.
@@ -341,7 +394,8 @@ KD-021 through KD-024 do not establish or select:
 - The designated contract set and its consumption obligations.
 - The interface/presentation semantic boundary's detailed definition.
 - Grant-holder designation per capability.
-- The applicable system for cross-system authorization.
+- Actual authorization owners, grant holders, or state owners/executors for any specific action.
+- The system footprint for any specific cross-system action.
 - Revocation freshness standards.
 - Positive derived-information attribution standards.
 - Standing-as-permission-input rules.
@@ -349,7 +403,7 @@ KD-021 through KD-024 do not establish or select:
 
 All such items remain **UNDEFINED** or **OPEN** as applicable.
 
-## 10. Known Architectural Tensions
+## 11. Known Architectural Tensions
 
 ### 11.1 Derived Statistics
 
@@ -371,7 +425,7 @@ PA3 requires permission grants to reside with the applicable authoritative holde
 
 ### 11.4 Cross-System Authorization
 
-PA5 defers unresolved authorization determinations to the applicable authoritative system, but the applicable system for cross-system actions remains **UNDEFINED** until future contract/architecture decisions establish it.
+KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
 
 ### 11.5 Revocation Freshness
 
@@ -409,4 +463,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, or KD-024.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, or KD-026.
