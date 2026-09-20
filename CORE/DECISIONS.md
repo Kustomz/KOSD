@@ -900,3 +900,41 @@ Resulting state: Kustomz Toolbox is recognized within KOSD as a governed archite
 - (o) No implementation is authorized by KD-041. Execution of the Sneak architecture artifact is a separate step requiring explicit owner authorization.
 
 **Execution / Resulting State:** Authorized execution is limited initially to recording KD-041 in CORE/DECISIONS.md. Updating CORE/KOS-SNEAK-ARCH.md to incorporate the adopted contract is a separate execution step requiring explicit owner authorization. Resulting state after the decision record is appended: the Identity-Link Resolvability Contract is adopted as KOSD architecture, satisfying D-RL3 and D-QB2 while the separately identified operational dependencies and mechanics remain unresolved.
+
+
+## KD-042 — Portable Work-State Holder Designation
+
+**Decision ID:** KD-042
+
+**Date:** 2026-09-20
+
+**Item(s):** Portable Work-State Holder Designation, as proposed by Izzy and reviewed by Rico, naming the **Kustomz Toolbox** in its interface-independent capacity as the authoritative holder of KD-022 1i portable work-state.
+
+**Action:** ADOPT
+
+**Rationale:** The owner designates the Kustomz Toolbox as the authoritative portable work-state holder required by KD-040 §7.2. The designation attaches to the Toolbox's interface-independent shared-engine capacity established by KD-039, not to Web, Android, or Discord/Sneak as interfaces. This satisfies the explicit holder requirement without granting any interface holder status or expanding Sneak authority.
+
+**Basis / Evidence:**
+- KD-039 — Kustomz Toolbox architectural recognition, including the one shared engine / three interfaces principle.
+- KD-040 — portable work-state definition, holder criteria H-WS1–H-WS4, identity scoping, lifecycle boundary, invalidation boundary, and holder requirements.
+- KD-022 1i — portable work-state classification as AUTHORITATIVE.
+- KD-038 — precedent for explicit system designation while preserving separate roles and interface boundaries.
+- Izzy's Portable Work-State Holder Designation proposal, reviewed by Rico and approved by Kustomz/Rick on 2026-09-20.
+
+**Conditions / Blockers:**
+- (a) **H-WS1 — KOSD designation:** The portable work-state holder is established by this explicit KOSD owner decision. No holder status existed under KD-040 before this decision.
+- (b) **H-WS2 — Never Sneak:** The designated holder is the Kustomz Toolbox in its interface-independent capacity. Web, Android, and Discord/Sneak are explicitly excluded as holder interfaces; Sneak does not hold portable work-state.
+- (c) **H-WS3 — Interface-independence:** The designation attaches to the shared-engine aspect of the Kustomz Toolbox established by KD-039's one-engine / three-interface model, not to any individual interface or interface-specific store.
+- (d) **H-WS4 — Identity-scoping:** Held portable work-state is partitioned and addressed by Kustomz identity, consistent with KD-040 §7.3 and the established identity architecture.
+- (e) The Kustomz Toolbox holds the single authoritative portable work-state record per Kustomz identity and applicable work-state scope. No competing authoritative interface-specific record is established.
+- (f) The holder has authority over the recognized work-state lifecycle edges — creation, update, consumption, and termination — while lifecycle procedures and mechanics remain undefined.
+- (g) The holder has authority over holder-established invalidation within the existing KD-040 §7.5 boundary. No new invalidation category or validity-bound value is established.
+- (h) Designation does not authorize any write path. Holding is not a grant to create, update, or terminate held records. Write-path authorization remains subject to future permission-grant-holder and applicable cross-system decisions.
+- (i) Designation does not establish conflict-resolution policy, validity bounds, retention/disposition, lifecycle procedures, schemas, storage, APIs, implementation, or internal shared-engine responsibilities.
+- (j) Whether Sneak-originated work may reach the holder remains unresolved and is now a concrete future KD-026 cross-system question plus applicable permission-grant question.
+- (k) The Kustomz Identity Engine retains its established KD-037 1a and KD-038 1b authority and gains no portable work-state authority, read/write role, or lifecycle role by this decision.
+- (l) KD-022 1i remains AUTHORITATIVE. No state category is created or reclassified.
+- (m) KD-039 and KD-040 remain in force and are not superseded, modified, or reinterpreted except that KD-040's previously unresolved holder designation is now separately established by this decision.
+- (n) No implementation is authorized by KD-042. Architecture-document execution is a separate authorized step under the adopted protocol.
+
+**Execution / Resulting State:** Authorized execution includes recording KD-042 in CORE/DECISIONS.md and, separately, updating CORE/KOS-TOOLBOX-ARCH.md to record the holder designation and resulting boundary. The portable work-state holder blocker identified by KD-040 is satisfied. Operational mechanics, write authorization, conflict resolution, validity bounds, retention/disposition, Sneak-originated update path, implementation, and the other explicitly unresolved dependencies remain unestablished.
