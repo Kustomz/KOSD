@@ -980,14 +980,14 @@ KD-034 does not designate the actual holder, establish implementation or API mec
 
 KD-041 establishes the following architectural contract connecting Sneak's KD-038 bounded identity-link query interest to the Kustomz Identity Engine's authoritative 1b identity-link determination.
 
-### 21.1 RC-P — Contract Parties
+### 23.1 RC-P — Contract Parties
 
 - **Querier:** Sneak, acting solely on KD-038's bounded, per-interaction query interest for authoritative 1b link-status determination for the addressing Discord identity.
 - **Authority:** the Kustomz Identity Engine, designated holder of KD-022 1b identity-link records under KD-038.
 
 No other party exercises authority under this contract. No corroborating source is introduced.
 
-### 21.2 RC-Q — Request Semantics
+### 23.2 RC-Q — Request Semantics
 
 A contract request is:
 
@@ -998,7 +998,7 @@ A contract request is:
 
 If no addressing Discord identity is available in interaction context, no request is formed and resolution is undeterminable under the applicable RL-D/QB-I boundary.
 
-### 21.3 RC-R — Response Semantics
+### 23.3 RC-R — Response Semantics
 
 The holder's authoritative determination consists of:
 
@@ -1009,7 +1009,7 @@ The determination is the answer. Sneak does not corroborate it, combine it with 
 
 This is a read determination, not authorization, and does not satisfy any PA2 authorization element.
 
-### 21.4 RC-A — Authoritativeness Conditions
+### 23.4 RC-A — Authoritativeness Conditions
 
 A determination counts as authoritative under this contract only when all three conditions hold:
 
@@ -1019,13 +1019,13 @@ A determination counts as authoritative under this contract only when all three 
 
 Sneak never independently verifies the holder's determination.
 
-### 21.5 RC-T — Temporal Semantics
+### 23.5 RC-T — Temporal Semantics
 
 - **Per-interaction.** Each interaction obtains its own determination. Determinations are not reused across interactions as authoritative.
 - **Lifecycle invalidation.** Each established lifecycle edge invalidates pre-edge determinations under the existing LC-F/T3-P3 boundary. A determination anchored before a known edge is invalid for new evaluations. Mid-interaction handling follows LC-M: no mandatory re-resolution is established solely by passage of time; a known edge renders the prior 2e usage state unusable for a new identity-bound evaluation.
 - **No validity extension.** KD-041 establishes no validity duration or scope beyond the existing interaction-scoped boundary.
 
-### 21.6 RC-F — Failure Semantics
+### 23.6 RC-F — Failure Semantics
 
 | Contract outcome | Classification | Handling |
 |---|---|---|
@@ -1037,7 +1037,7 @@ Sneak never independently verifies the holder's determination.
 
 All undeterminable outcomes fail closed for identity-bound use under B9/PA7. Failed requests leave no retained resolution state. There is no fallback, cross-domain inference, or stale reuse.
 
-### 21.7 RC-E — Explicit Exclusions
+### 23.7 RC-E — Explicit Exclusions
 
 KD-041 does not establish:
 
@@ -1054,7 +1054,7 @@ KD-041 does not establish:
 
 The contract is a semantic boundary connecting already-established holder authority and query interest. It does not itself authorize any identity-bound action.
 
-### 21.8 RC-D — Dependency Consequence
+### 23.8 RC-D — Dependency Consequence
 
 KD-041 satisfies:
 
@@ -1063,7 +1063,7 @@ KD-041 satisfies:
 
 The QB-Q named prerequisite set is complete at the architectural level. Legitimate query operation remains subject to the separately identified unresolved dependencies and mechanics, including D-RL2, D-RL4/D-QB3, D-RL5/D-QB4, D-RL6/D-QB5, and D-QB6.
 
-### 21.9 RC-X — Historical and Boundary Preservation
+### 22.9 RC-X — Historical and Boundary Preservation
 
 KD-041 does not supersede, modify, or reinterpret KD-032 through KD-040.
 
@@ -1073,7 +1073,7 @@ QB-Q's prerequisite list is completed, not rewritten.
 
 The resolved identity does not establish the authority required to resolve itself. Query interest remains decision-derived under KD-038, not grant-derived and not derived from the resolution result.
 
-## 23. Adopted Identity-Link Lifecycle Boundary
+## 22. Adopted Identity-Link Lifecycle Boundary
 
 KD-035 establishes the following architectural boundary for identity-link lifecycle semantics.
 
@@ -1134,7 +1134,7 @@ Identity-link lifecycle state is authoritative holder-held state under KD-022 P1
 
 Sneak's handling remains subject to KD-022 C0/P3. KD-035 does not authorize Sneak to persist lifecycle-edge state merely because lifecycle semantics are now established.
 
-### 21.10 LC Dependencies and Undefined Procedures
+### 22.10 LC Dependencies and Undefined Procedures
 
 Dependent lifecycle operation still requires, as applicable:
 
@@ -1145,7 +1145,7 @@ Dependent lifecycle operation still requires, as applicable:
 
 Lifecycle procedures, edge-awareness mechanism, validity bounds, implementation mechanics, platform presentation, retry/timing behavior, permission mappings, portable work-state, and dependent identity-bound actions remain undefined or unauthorized.
 
-### 21.11 LC Boundary and Authority-Leak Check
+### 22.11 LC Boundary and Authority-Leak Check
 
 KD-035 does not permit Sneak to infer authoritative lifecycle state from interaction behavior, time passage, absence of a signal, or its own observations. Invalidation does not depend on Sneak being the authority that establishes the edge.
 
@@ -1155,7 +1155,7 @@ KD-035 does not designate the actual holder, establish lifecycle implementation,
 
 KD-035 does not modify any prior adopted boundary.
 
-## 22. Known Architectural Tensions
+## 23. Known Architectural Tensions
 
 ### 22.1 Derived Statistics
 
