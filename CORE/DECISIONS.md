@@ -710,3 +710,24 @@ Execution / Resulting State:
    (k) This decision does not designate the identity-link holder, establish lifecycle procedures, establish an edge-awareness channel, establish permissions or authorization, establish implementation, create schemas/APIs/storage, change state classification, or make any previously undefined matter actionable except to correct stale wording directly contradicted by an already-adopted decision.
    (l) Decision history remains append-only; no decision record is edited in place. Repository architecture text may be corrected only through separately authorized execution of this decision.
 8. **Execution / Resulting State:** This decision authorizes the specified documentation-alignment scope, but repository execution is a separate step. Until separately executed, `CORE/KOS-SNEAK-ARCH.md` remains unchanged. No holder designation, lifecycle procedure, awareness mechanism, permission mapping, implementation, or other substantive establishment is authorized by KD-036.
+
+
+---
+
+## KD-037
+
+1. **Decision ID:** KD-037
+2. **Date:** 2026-09-20
+3. **Item(s):** Recognition of the **Kustomz Identity Engine** as the authoritative Kustomz identity system of record for the Kustomz identity state classified as KD-022 1a, and the resulting architectural anchor for the Kustomz side of KD-022 1b identity-link records.
+4. **Action:** ADOPT
+5. **Rationale:** The adopted Sneak architecture requires Kustomz identity to be authoritative state, but the repository did not previously identify any system of record holding that identity. The owner therefore recognizes the Kustomz Identity Engine as the authoritative Kustomz identity system of record so that the existing 1a classification has a concrete authoritative holder and the Kustomz side of future 1b identity links has an architectural referent. This recognition is intentionally separate from designation of the Kustomz Identity Engine as the 1b Discord-link holder.
+6. **Basis / Evidence:** Owner judgment based on the Identity Engine inventory and the adopted architecture in KD-021, KD-022, KD-032, KD-033, KD-034, and KD-035. The inventory established that the repository previously named no identity system of record and that the term "Identity Engine" was not established in the repository. The owner supplied the concrete system name **Kustomz Identity Engine** for this decision. KD-001 requires the decision to be explicit and distinguishes the decision/ruling from its later execution.
+7. **Conditions / Blockers:**
+   (a) KOSD recognizes the **Kustomz Identity Engine** as the authoritative Kustomz identity system of record and authoritative holder of the KD-022 1a Kustomz identity records.
+   (b) The Kustomz side of KD-022 1b identity-link records anchors to Kustomz identities held by the Kustomz Identity Engine.
+   (c) Sneak remains a consumer of authoritative Kustomz identity state and does not become its holder or author.
+   (d) Recognition of the Kustomz Identity Engine as the 1a identity system of record does **not** designate it as the 1b Kustomz↔Discord identity-link holder. That holder requires a separate explicit owner decision under KD-032 IL-H, with the explicit query-interest establishment required by KD-034.
+   (e) This decision does not define the Kustomz Identity Engine itself. Schemas, identifiers, account model, identity lifecycle, APIs, storage, implementation, permissions, resolution mechanics, validity bounds, lifecycle procedures, edge-awareness mechanisms, and other internal or operational details remain undefined unless separately decided.
+   (f) No state classification is changed or newly created by this decision. KD-022 1a remains AUTHORITATIVE and KD-022 1b remains AUTHORITATIVE; this decision identifies the authoritative holder of 1a and the architectural anchor for the Kustomz side of 1b.
+   (g) The future 1b holder designation, resolvability contract, lifecycle procedures, validity bounds, edge-awareness mechanism, platform addressing identity, and conditional KD-026 roles remain unresolved.
+8. **Execution / Resulting State:** Authorized execution is limited to recording KD-037 in CORE/DECISIONS.md and, separately, incorporating the adopted recognition into the applicable KOSD architecture documentation. No 1b holder designation, Identity Engine implementation, identity-link mechanics, permission mapping, or currently unauthorized identity-bound action is authorized by KD-037.
