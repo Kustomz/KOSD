@@ -766,7 +766,7 @@ The identity-link holder is architecturally distinct from any permission-grant h
 
 Sneak consumes link state and never authors it.
 
-The adopted lifecycle semantics include creation, change, suspension, removal, and restoration as lifecycle edges under KD-035. Lifecycle procedures for those edges, together with the holder, validity bounds, and edge-awareness mechanism, remain unestablished until separately established.
+The adopted lifecycle semantics include creation, change, suspension, removal, and restoration as lifecycle edges under KD-035. Lifecycle procedures for those edges, together with validity bounds and the edge-awareness mechanism, remain unestablished until separately established.
 
 A link change is an invalidating event for cached authorization determinations under KD-027 T3-P3.
 
