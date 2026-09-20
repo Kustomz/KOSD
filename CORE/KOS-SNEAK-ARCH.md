@@ -111,11 +111,11 @@ The following are classified as **EPHEMERAL**:
 
 ### 6.4 UNDEFINED State
 
-The following remain **UNDEFINED**:
+The following remain **UNDEFINED**. Items marked **[PARTIALLY CLASSIFIED]** have an adopted boundary governing part of the item while the noted establishments remain undefined. The marking changes no classification and creates no new state category.
 
 - **3a.** Computed member/user statistics as records.
-- **3b.** Transcript completion boundary — governed by KD-030; the completion declarer, designated holder, and transcript content rules remain undefined until their prerequisites are established.
-- **3c.** Intake items before disposition — governed by KD-031; intake pre-disposition holdings are EPHEMERAL and interaction-scoped, while cross-interaction persistence requires an established authoritative holder/classification.
+- **3b.** **[PARTIALLY CLASSIFIED]** Transcript completion boundary — governed by KD-030 (2c→1e crossing: authorized declaration, designated holder, faithful transition); the completion declarer, designated holder, and transcript content rules remain undefined until their prerequisites are established.
+- **3c.** **[PARTIALLY CLASSIFIED]** Intake items before disposition — governed by KD-031 (pre-disposition holdings classified EPHEMERAL and interaction-scoped); hold duration, routing specifics, declaration authority, holder, and content/vetting rules remain undefined until their prerequisites are established.
 - **3d.** Portable work-state records.
 - **3e.** Ticket-draft state.
 - **3f.** Project Vision integration state.
@@ -362,9 +362,23 @@ Execution and authorization may belong to different systems only when:
 Grant and authorization determinations remain with their respective owners. Any circular dependency invokes T2-P6.
 
 
-## 10. Explicitly Undefined / Not Established by KD-021, KD-022, KD-023, KD-024, and KD-025
+## 11. Explicitly Undefined / Not Established by KD-021 through KD-031
 
-KD-021 through KD-027 do not establish or select:
+### Boundaries adopted; establishments pending
+
+The following architectural boundaries are adopted through KD-031. Their enabling establishments — holders, declarers, rules, values, mechanics — remain undefined and proceed through later KDs, contracts, or owner decisions. Adoption of a boundary establishes none of its pending establishments.
+
+- Permission grant-holder designation per capability/domain (boundary: KD-025; no actual holder designated).
+- Actual authorization owners, grant holders, or state owners/executors for any specific action; system footprints for specific cross-system actions (boundary: KD-026).
+- Validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency for revocation freshness (boundary: KD-027).
+- Application of derived-information attribution to specific derivations; provenance retention mechanics, attribution presentation/display, description sufficiency criteria, conflict presentation choices, and reuse of derived values across interactions (boundary: KD-028).
+- Standing-as-permission-input establishments: designated standing source, designated permission holder, established standing-to-permission basis (boundary: KD-029; no mapping, designation, or authorization created).
+- Transcript completion/disposition establishments: completion-declaration authority and conditions, designated transcript holder, transcript content rules (boundary: KD-030).
+- Intake establishments: intake declaration authority, designated intake holder, intake routing/content rules including any hold bound (boundary: KD-031).
+- Portable work-state record mechanics and authoritative holder (classification: KD-022 1i AUTHORITATIVE with holder designated by KOSD architecture, never Sneak; mechanics and actual holder pending; 3d records remain UNDEFINED).
+- The authoritative holder for purchase-count facts (KD-022 1c).
+
+### Not established at any level
 
 - Sneak implementation model A, B, or C.
 - Executable Sneak implementation within KOSD.
@@ -375,43 +389,31 @@ KD-021 through KD-027 do not establish or select:
 - Role-to-permission mappings.
 - Discord permissions.
 - Ticket Engine permissions.
-- Transcript rules.
-- `#csr2-data-intake` rules.
 - Kustomz-to-Discord identity-linking mechanics or lifecycle rules.
 - Conformance procedures.
 - Sneak definition version.
 - Sneak as a KOSD module for the purposes of KD-019.
-- The authoritative holder for purchase-count facts.
-- Portable work-state record mechanics or its authoritative holder.
-- Computed statistics as persistent records.
-- Intake pre-disposition persistence rules.
-- Ticket-draft persistence.
-- Project Vision integration state.
-- Synthesized CSR2 intelligence state.
-- Sneak action-record persistence.
+- Computed statistics as persistent records (KD-022 3a).
+- Ticket-draft persistence (3e).
+- Project Vision integration state (3f).
+- Synthesized CSR2 intelligence state (3g).
+- Sneak action-record persistence (3i).
 - Personality definition/content.
 - The designated contract set and its consumption obligations.
 - The interface/presentation semantic boundary's detailed definition.
-- Grant-holder designation per capability.
-- Actual authorization owners, grant holders, or state owners/executors for any specific action.
-- The system footprint for any specific cross-system action.
-- Validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency values for revocation freshness.
-- Application of derived-information attribution to specific derivations.
-- Provenance retention mechanics, attribution presentation/display, description sufficiency criteria, conflict presentation choices, and reuse of derived values across interactions.
-- Standing-as-permission-input rules.
-- Any other item not explicitly adopted by KD-021, KD-022, KD-023, or KD-024.
+- Any other item not explicitly adopted by KD-021 through KD-031.
 
-All such items remain **UNDEFINED** or **OPEN** as applicable, except where a later adopted decision establishes a specific boundary.
+All such items remain **UNDEFINED** or **OPEN** as applicable.
 
-## 11. Adopted Revocation Freshness Boundary
+## 12. Adopted Revocation Freshness Boundary
 
 KD-027 establishes the following architectural rule for revocation freshness of cached permission/grant determinations.
 
-### 11.1 T3-P1 — Event-Relative Freshness
+### 16.1 T3-P1 — Event-Relative Freshness
 
 Freshness is event-relative, not time-relative. A cached determination is fresh only within its established validity bounds and while no invalidating event has occurred. Validity bounds are established by KOSD architecture or the applicable holder's determination terms, never by Sneak's clock, heuristics, or assumptions. Elapsed time alone neither validates nor invalidates a determination.
 
-### 11.2 T3-P2 — Cached Consultation in Authorization
+### 16.2 T3-P2 — Cached Consultation in Authorization
 
 During the PA2 gate, Sneak may consult a cached grant determination only when:
 
@@ -422,7 +424,7 @@ During the PA2 gate, Sneak may consult a cached grant determination only when:
 
 If any condition fails, Sneak must re-resolve. If re-resolution is impossible, R4 and PA7 apply. Stricter requirements established for a domain may require direct holder resolution regardless of caching.
 
-### 11.3 T3-P3 — Invalidating Events
+### 16.3 T3-P3 — Invalidating Events
 
 A cached determination becomes invalid upon:
 
@@ -435,21 +437,21 @@ A cached determination becomes invalid upon:
 
 An invalid determination must not be used in any evaluation. Removal or cache-invalidation mechanics remain implementation-owned.
 
-### 11.4 T3-P4 — Loss of Permission
+### 16.4 T3-P4 — Loss of Permission
 
 Loss of permission is effective when the holder or KOSD establishes that loss, not when Sneak becomes aware of it. A cached affirmative grant does not survive an established revocation, expiration, or supersession. Failure to observe a loss is never evidence that permission remains valid.
 
-### 11.5 T3-P5 — Freshness Unestablishable
+### 16.5 T3-P5 — Freshness Unestablishable
 
 When freshness cannot be established — including where validity bounds are unknown, invalidating events cannot be reliably accounted for, or the applicable holder is unreachable — the cached determination is undeterminable. For authorization, R4 and PA7 apply and the action is not performed.
 
 For reads, the cached value must not be presented as the holder's current determination. B3 and B9 govern any further presentation or handling.
 
-### 11.6 T3-P6 — Differential Stringency
+### 16.6 T3-P6 — Differential Stringency
 
 Freshness requirements may differ by action, domain, or consequence only through KOSD-established architectural rules. Sneak does not create its own risk tiers, consequence ratings, or duration rules.
 
-### 11.7 T3-P7 — Authorization Freshness vs. Read-Data Caching
+### 16.7 T3-P7 — Authorization Freshness vs. Read-Data Caching
 
 Authorization caching and read-data caching are distinct regimes.
 
@@ -457,7 +459,7 @@ For authorization caching, T3-P1 through T3-P6 apply strictly. The default postu
 
 For read-data caching, KD-022 2b and B3 govern. Cached data does not substitute for authoritative resolution and must not be presented as authoritative merely because it is cached.
 
-### 11.8 T3-P8 — Anti-Ledger Guarantees
+### 16.8 T3-P8 — Anti-Ledger Guarantees
 
 The cache does not become a source of truth or standing permission ledger:
 
@@ -469,11 +471,11 @@ The cache does not become a source of truth or standing permission ledger:
 
 
 
-## 12. Adopted Derived-Information Attribution Boundary
+## 13. Adopted Derived-Information Attribution Boundary
 
 KD-028 establishes the following positive attribution and traceability standard for derived information.
 
-### 12.1 T4-P1 — Attribution Defined
+### 16.1 T4-P1 — Attribution Defined
 
 Derived information is positively attributable when it can be established:
 
@@ -483,7 +485,7 @@ Derived information is positively attributable when it can be established:
 
 Attribution is an establishable property; how much of that attribution is displayed to a user remains presentation architecture. Derivation does not alter the authority status of its source content.
 
-### 12.2 T4-P2 — Minimum Provenance
+### 16.2 T4-P2 — Minimum Provenance
 
 A derived value is traceable only when all three minimum elements are established:
 
@@ -493,19 +495,19 @@ A derived value is traceable only when all three minimum elements are establishe
 
 Where a source determination is subject to KD-027/T3, T3 invalidation governs that attribution anchor. T3 is not a universal freshness regime for all read or source data.
 
-### 12.3 T4-P3 — Direct and Multi-Source Derivation
+### 16.3 T4-P3 — Direct and Multi-Source Derivation
 
 For direct-source presentation that passes through an authoritative holder's determination without transformation, attribution requires source identity and the applicable freshness of the obtained determination; no separate transformation description is required beyond identifying the presentation as the source's determination.
 
 For multi-source derivation, each source must independently satisfy the applicable attribution requirements. Sources must not be blended in a manner that obscures which component derives from which source. Conflicting sources do not justify a synthesized consensus; the conflict is surfaced or the derived result is withheld under B9.
 
-### 12.4 T4-P4 — Attributable Transformation
+### 16.4 T4-P4 — Attributable Transformation
 
 The derivation description states what was computed or transformed in ordinary architectural terms, such as a count, filter, sum, selection, ranking, or join, at a level sufficient for an independent reviewer with the same source determinations to reproduce the derivation's logic.
 
 This requirement does not define metric internals, create new authoritative measures, reinterpret the meaning of a source determination, or depend on implementation artifacts such as query text, code, identifiers, or formats.
 
-### 12.5 T4-P5 — Source Failure Modes
+### 16.5 T4-P5 — Source Failure Modes
 
 - **Unknown source:** attribution cannot be established; B5 does not authorize presentation as derived information and B9 governs.
 - **Unavailable source:** a new derivation cannot be performed from that source; an existing derivation remains subject to the applicable freshness and validity rules for its anchored determination.
@@ -513,13 +515,13 @@ This requirement does not define metric internals, create new authoritative meas
 - **Stale source determination:** where the applicable freshness regime establishes invalidity, the attribution anchor lapses; Sneak must re-derive or withhold.
 - **Conflicting sources:** T4-P3 applies; Sneak does not invent a consensus.
 
-### 12.6 T4-P6 — Authority Preservation
+### 16.6 T4-P6 — Authority Preservation
 
 Derivation acquires no authority merely through computation. Each source retains its existing authority status, and the derived result remains derived unless a later explicit Kustomz decision establishes otherwise.
 
 Derivation cannot promote, demote, or otherwise alter the authority status of its sources. This does not establish an authority-status hierarchy.
 
-### 12.7 T4-P7 — Presentation Without Record-Creation
+### 16.7 T4-P7 — Presentation Without Record-Creation
 
 Derived working information classified under KD-022 2f may be presented as an answer within the interaction when:
 
@@ -530,191 +532,191 @@ Derived working information classified under KD-022 2f may be presented as an an
 
 Presenting an answer in-conversation does not by itself create an authoritative ecosystem record. This principle does not classify persisted computed statistics, which remain UNDEFINED under KD-022 3a and subject to C0.
 
-### 12.8 T4-P8 — Attribution Is Not Authorization
+### 16.8 T4-P8 — Attribution Is Not Authorization
 
 Attribution establishes whether a derived value can be traced to its source and derivation basis. Authorization establishes whether the linked identity may see or use the information.
 
 They are independent requirements. An attributable but unauthorized derivation must not be presented, and an authorized but unattributable derivation must not be presented as derived information. Neither requirement substitutes for the other.
 
 
-## 13. Adopted Standing-as-Permission-Input Boundary
+## 14. Adopted Standing-as-Permission-Input Boundary
 
 KD-029 establishes the following architectural boundary for the relationship between authoritative standing facts and future permission determinations.
 
-### 13.1 T5-P1 — Four Levels
+### 16.1 T5-P1 — Four Levels
 
 - **L1 — Standing as authoritative fact:** Standing facts classified under KD-022 1c are authoritative ecosystem facts. Sneak resolves them against the applicable authoritative source and does not track or originate them.
 - **L2 — Standing as permission input:** Standing may be considered by the applicable permission holder within an established grant determination basis. The consideration is the holder's act, not Sneak's.
 - **L3 — Standing-derived information:** Values Sneak computes from authoritative standing facts under KD-022 2f remain ephemeral derived working information, subject to B5, PA9, and KD-028 attribution. They are not authoritative merely because Sneak computed them.
 - **L4 — Standing as permission:** Treating standing itself as authorizing an action is prohibited. L1, L2, and L3 never imply L4.
 
-### 13.2 T5-P2 — Standing May Be an Input; Sneak Does Not Perform the Inference
+### 16.2 T5-P2 — Standing May Be an Input; Sneak Does Not Perform the Inference
 
 There is no architectural bar on a designated permission holder considering authoritative standing when deciding a grant, but the standing-to-permission inference is never Sneak's. Sneak may resolve or provide standing facts when legitimately required by an established holder determination procedure, but never frames standing as permission or acts on standing alone as authorization.
 
-### 13.3 T5-P3 — The Permission Holder Remains Responsible
+### 16.3 T5-P3 — The Permission Holder Remains Responsible
 
 Standing is an input, not the grant decision. The applicable permission holder remains responsible for the actual determination. A holder denial or unavailable determination governs and cannot be overridden by favorable standing.
 
-### 13.4 T5-P4 — Informational Eligibility Is Not Authorization
+### 16.4 T5-P4 — Informational Eligibility Is Not Authorization
 
 Informational statements about eligibility do not constitute a permission grant and do not satisfy any element of the PA2 action authorization gate.
 
-### 13.5 T5-R1 — Designated Standing Source
+### 16.5 T5-R1 — Designated Standing Source
 
 The authoritative source or holder for the standing facts in question must be designated before Sneak relies on those facts as an authorization input. The standing fact remains authoritative under KD-022 1c even when its authorization usability has not been established.
 
-### 13.6 T5-R2 — Designated Permission Holder
+### 16.6 T5-R2 — Designated Permission Holder
 
 The permission holder for the action must be designated under KD-025 D1.
 
-### 13.7 T5-R3 — Established Standing-to-Permission Basis
+### 16.7 T5-R3 — Established Standing-to-Permission Basis
 
 An established basis must exist for standing to participate in the permission determination, whether through a future KOSD-established mapping or a holder-established determination procedure. T5 selects neither path.
 
-### 13.8 T5-R4 — Identity Binding
+### 16.8 T5-R4 — Identity Binding
 
 Standing evaluation is bound to the linked identity. Another identity's standing, aggregate standing, or comparative standing cannot substitute for the linked identity's standing.
 
-### 13.9 T5-F1 — Fail-Closed Standing Conditions
+### 16.9 T5-F1 — Fail-Closed Standing Conditions
 
 Standing that is unavailable, ambiguous, stale, or conflicting makes a dependent permission evaluation undeterminable and therefore subject to PA7. Stale standing follows the applicable T3 validity regime; conflicting standing is not synthesized.
 
-### 13.10 T5-F2 — Standing Change
+### 16.10 T5-F2 — Standing Change
 
 When standing changes, prior standing-anchored inputs are superseded and affected evaluations require re-evaluation. An identity-link change affecting the evaluated identity likewise requires re-evaluation.
 
-### 13.11 T5-F3 — No Bypass
+### 16.11 T5-F3 — No Bypass
 
 A permission-holder denial or unavailable determination is not bypassed or cured by favorable standing.
 
-### 13.12 T5-F4 — Computed Statistics Excluded
+### 16.12 T5-F4 — Computed Statistics Excluded
 
 Computed standing statistics classified under KD-022 3a remain UNDEFINED as records and may not be persisted or used by Sneak as permission inputs under C0. Only authoritative standing facts within the established prerequisites may participate.
 
-### 13.13 Explicit Exclusions
+### 16.13 Explicit Exclusions
 
 KD-029 does not designate any standing source, permission or grant holder, or system; create role-to-permission mappings; authorize any currently unauthorized action; classify KD-022 3a; establish a standing-to-permission threshold, event taxonomy, or inference rule; choose between holder-internal consideration and a future KOSD mapping; define implementation, storage, schemas, contracts, APIs, or runtime mechanics; or modify any prior adopted boundary.
 
-### 13.14 Current Authorization Posture
+### 16.14 Current Authorization Posture
 
 Adoption of KD-029 enables no action by implication. Where the prerequisites for standing-aware permission have not been established, Sneak remains closed under PA7.
 
 
-## 13. Adopted Transcript Completion and Disposition Boundary
+## 15. Adopted Transcript Completion and Disposition Boundary
 
 KD-030 establishes the following architectural boundary for the transition from 2c in-progress transcript capture to 1e dispositioned transcript records.
 
-### 13.1 T6-P1 — No Silent Promotion
+### 16.1 T6-P1 — No Silent Promotion
 
 A 2c capture buffer becomes a 1e dispositioned record only upon an authorized completion declaration. Aging, accumulation, session end, or Sneak unilateral action do not constitute a declaration.
 
-### 13.2 T6-P2 — Declaration Authority Is Established, Never Assumed
+### 16.2 T6-P2 — Declaration Authority Is Established, Never Assumed
 
 Completion-declaration authority and its conditions must be established by KOSD architecture or decision. Sneak does not declare completion on its own authority. Inactivity, session idle, and conversational closure are not declarations.
 
-### 13.3 T6-P3 — Disposition Is a Status Transition, Not a Destination
+### 16.3 T6-P3 — Disposition Is a Status Transition, Not a Destination
 
 Disposition is the authorized status transition from 2c to 1e. Destination, format, channel, and other mechanics remain future architecture, contract, or implementation concerns.
 
-### 13.4 T6-P4 — Effective Disposition Requires a Designated Holder
+### 16.4 T6-P4 — Effective Disposition Requires a Designated Holder
 
 Effective disposition requires a KOSD-designated holder for the dispositioned transcript record. Without a designated holder, a declaration is ineffective and does not create a 1e record.
 
-### 13.5 T6-P5 — Faithful Transition
+### 16.5 T6-P5 — Faithful Transition
 
 Disposition changes status, not content. Sneak does not summarize, redact, reorder, or reinterpret during the transition. Any transformation requires separate KOSD establishment and applicable KD-028 attribution; the default transition is faithful.
 
-### 13.6 T6-P6 — 1e and 3i Remain Distinct
+### 16.6 T6-P6 — 1e and 3i Remain Distinct
 
 A 1e transcript record concerns the interaction itself. 3i Sneak action records remain a distinct UNDEFINED category and are not classified by KD-030.
 
-### 13.7 T6-R1 — Completion-Declaration Authority
+### 16.7 T6-R1 — Completion-Declaration Authority
 
 Who or what may declare completion, and under what conditions, remains to be established by a future KOSD decision or architecture.
 
-### 13.8 T6-R2 — Designated Transcript Holder
+### 16.8 T6-R2 — Designated Transcript Holder
 
 The designated holder for dispositioned transcript records remains to be established under KD-022 P3. This holder designation is distinct from permission grant-holder designation under KD-025.
 
-### 13.9 T6-R3 — Transcript Content Rules
+### 16.9 T6-R3 — Transcript Content Rules
 
 Transcript content rules remain undefined under KD-021 and must exist before disposition can occur.
 
-### 13.10 T6-F1 — No Authorized Declaration
+### 16.10 T6-F1 — No Authorized Declaration
 
 If no authorized declaration exists, content remains 2c and remains subject to KD-022 P4. It may not be retained indefinitely as an unauthorized persistent record. No discard, archival, transfer, or other final disposition is implied until an applicable disposition authority and rule are established.
 
-### 13.11 T6-F2 — No Designated Holder
+### 16.11 T6-F2 — No Designated Holder
 
 A declaration without a designated holder is ineffective. The undeliverable buffer must not become a de facto 1e record through retention.
 
-### 13.12 T6-F3 — Sneak Does Not Self-Declare
+### 16.12 T6-F3 — Sneak Does Not Self-Declare
 
 Sneak never self-declares completion. Idle, inactivity, and conversational closure are not declarations.
 
-### 13.13 T6-F4 — Undeliverable Case Remains Unresolved
+### 16.13 T6-F4 — Undeliverable Case Remains Unresolved
 
 The undeliverable-transcript case has no authorized resolution under KD-030. No archiving, indefinite retention, or discard authority is established; the gap remains an explicit future decision item.
 
-### 13.14 T6 Exclusions
+### 16.14 T6 Exclusions
 
 KD-030 does not define transcript content, formats, schemas, channels, destination mechanics, retention durations, actual holder designation, grant-holder designation, completion declarer, KD-022 3c intake specifics, 3i classification, implementation, or any currently unauthorized action.
 
 KD-030 does not modify any prior adopted boundary and does not authorize implementation.
 
 
-## 14. Adopted Intake Holding, Routing, and Undeliverable-Content Boundary
+## 16. Adopted Intake Holding, Routing, and Undeliverable-Content Boundary
 
 KD-031 establishes the following architectural boundary for external CSR2 intake through the private `#csr2-data-intake` channel.
 
-### 14.1 T7-P1 — Interaction-Scoped Intake Buffers
+### 16.1 T7-P1 — Interaction-Scoped Intake Buffers
 
 Intake items awaiting disposition are intake buffers classified as **EPHEMERAL** and therefore interaction-scoped under KD-022 P2. They are not records and are not authoritative.
 
-### 14.2 T7-P2 — Unvetted by Default
+### 16.2 T7-P2 — Unvetted by Default
 
 Intake content is unvetted by default. Sneak must not present it as authoritative under B4. Presentation of intake content remains subject to applicable KD-028 attribution; unvetted does not mean unattributed.
 
-### 14.3 T7-P3 — Holding Bounded Within the Interaction
+### 16.3 T7-P3 — Holding Bounded Within the Interaction
 
 Intake holding is bounded within the interaction. Cross-interaction persistence requires a designated authoritative holder under KD-022 P3; none is designated by KD-031. Sneak may not invent a hold bound.
 
-### 14.4 T7-P4 — Narrow Structural Crossing
+### 16.4 T7-P4 — Narrow Structural Crossing
 
 Intake disposition adopts only T6's structural crossing principles: no silent promotion; established declaration authority; disposition as status transition rather than destination; designated receiving holder; and no transition until T7-R1–T7-R3 are established.
 
 KD-030 T6-P5's transcript-specific content-fidelity requirements are not extended to intake. Intake vetting, transformation, and content rules remain undefined.
 
-### 14.5 T7-P5 — Undeliverable Content
+### 16.5 T7-P5 — Undeliverable Content
 
 For content authorized for disposition but lacking a designated holder or destination, Sneak has no discard, archival, transfer, or other final-disposition authority.
 
 While the relevant interaction/state exists, Sneak may surface the undecidable disposition to the Kustomz owner under B8/B9 and KD-001/KD-007. This does not authorize retaining the item across interaction end merely to await a later decision. “Await” implies no persistence, callback, or retained state.
 
-### 14.6 T7-P6 — Routing Failure Does Not Reclassify or Authorize
+### 16.6 T7-P6 — Routing Failure Does Not Reclassify or Authorize
 
 A failed routing attempt leaves the item in buffer classification. Sneak does not retry beyond established rules, reroute to an unestablished destination, or treat failure as disposition.
 
-### 14.7 T7-P7 — No Cross-Interaction Persistence Without a Holder
+### 16.7 T7-P7 — No Cross-Interaction Persistence Without a Holder
 
 KD-022 does not permit an intake holding to outlive the interaction absent an authoritative holder/classification.
 
 If no authorized holder/state exists at interaction end, KD-031 establishes no authorized next state and invents none. Any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification.
 
-### 14.8 T7-R1 — Intake Declaration Authority
+### 16.8 T7-R1 — Intake Declaration Authority
 
 Intake declaration authority remains to be established.
 
-### 14.9 T7-R2 — Designated Intake Holder
+### 16.9 T7-R2 — Designated Intake Holder
 
 The designated intake holder remains to be established.
 
-### 14.10 T7-R3 — Intake Routing and Content Rules
+### 16.10 T7-R3 — Intake Routing and Content Rules
 
 Intake routing/content rules, including any hold bound, remain to be established.
 
-### 14.11 T7 Fail-Closed Posture and Exclusions
+### 16.11 T7 Fail-Closed Posture and Exclusions
 
 No new state category, implementation, schema, API, storage mechanism, contract, destination, actual holder, discard authority, or currently unauthorized action is established by KD-031.
 
@@ -722,9 +724,9 @@ Adopted capability #7 remains intact. Cross-interaction retention/disposition is
 
 T6 is otherwise unchanged, and all prior adopted decisions remain unchanged.
 
-## 15. Known Architectural Tensions
+## 17. Known Architectural Tensions
 
-### 13.1 Derived Statistics
+### 16.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -732,33 +734,38 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 13.2 Cross-Interface Continuity
+### 16.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-### 13.3 Permission Grant-Holder Designation
+### 16.3 Permission Grant-Holder Designation
 
 PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
 
-### 13.4 Cross-System Authorization
+### 16.4 Cross-System Authorization
 
 KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
 
-### 13.5 Revocation Freshness
+### 16.5 Revocation Freshness
 
 KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
 
-### 13.6 Derived-Information Attribution
+### 16.6 Derived-Information Attribution
 
 KD-028 establishes the positive attribution and traceability standard. Remaining tensions are the application and mechanics left explicitly undefined by KD-028: provenance retention without shadow records; attribution display; description sufficiency; conflict presentation choice; reuse pressure on the KD-022 3a boundary; and any source-data freshness rules not otherwise established by applicable architecture or contracts.
 
-### 13.7 Standing as Permission Input
+### 16.7 Standing as Permission Input
 
 KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
 
-## 16. Implementation-Owned Mechanics
+
+### 17.8 Intake Disposition Without an Established Path
+
+KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
+
+## 18. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -770,7 +777,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 17. Architectural Boundary
+## 19. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -778,7 +785,7 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 18. Change Control
+## 20. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
