@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -538,6 +538,70 @@ Attribution establishes whether a derived value can be traced to its source and 
 They are independent requirements. An attributable but unauthorized derivation must not be presented, and an authorized but unattributable derivation must not be presented as derived information. Neither requirement substitutes for the other.
 
 
+## 13. Adopted Standing-as-Permission-Input Boundary
+
+KD-029 establishes the following architectural boundary for the relationship between authoritative standing facts and future permission determinations.
+
+### 13.1 T5-P1 — Four Levels
+
+- **L1 — Standing as authoritative fact:** Standing facts classified under KD-022 1c are authoritative ecosystem facts. Sneak resolves them against the applicable authoritative source and does not track or originate them.
+- **L2 — Standing as permission input:** Standing may be considered by the applicable permission holder within an established grant determination basis. The consideration is the holder's act, not Sneak's.
+- **L3 — Standing-derived information:** Values Sneak computes from authoritative standing facts under KD-022 2f remain ephemeral derived working information, subject to B5, PA9, and KD-028 attribution. They are not authoritative merely because Sneak computed them.
+- **L4 — Standing as permission:** Treating standing itself as authorizing an action is prohibited. L1, L2, and L3 never imply L4.
+
+### 13.2 T5-P2 — Standing May Be an Input; Sneak Does Not Perform the Inference
+
+There is no architectural bar on a designated permission holder considering authoritative standing when deciding a grant, but the standing-to-permission inference is never Sneak's. Sneak may resolve or provide standing facts when legitimately required by an established holder determination procedure, but never frames standing as permission or acts on standing alone as authorization.
+
+### 13.3 T5-P3 — The Permission Holder Remains Responsible
+
+Standing is an input, not the grant decision. The applicable permission holder remains responsible for the actual determination. A holder denial or unavailable determination governs and cannot be overridden by favorable standing.
+
+### 13.4 T5-P4 — Informational Eligibility Is Not Authorization
+
+Informational statements about eligibility do not constitute a permission grant and do not satisfy any element of the PA2 action authorization gate.
+
+### 13.5 T5-R1 — Designated Standing Source
+
+The authoritative source or holder for the standing facts in question must be designated before Sneak relies on those facts as an authorization input. The standing fact remains authoritative under KD-022 1c even when its authorization usability has not been established.
+
+### 13.6 T5-R2 — Designated Permission Holder
+
+The permission holder for the action must be designated under KD-025 D1.
+
+### 13.7 T5-R3 — Established Standing-to-Permission Basis
+
+An established basis must exist for standing to participate in the permission determination, whether through a future KOSD-established mapping or a holder-established determination procedure. T5 selects neither path.
+
+### 13.8 T5-R4 — Identity Binding
+
+Standing evaluation is bound to the linked identity. Another identity's standing, aggregate standing, or comparative standing cannot substitute for the linked identity's standing.
+
+### 13.9 T5-F1 — Fail-Closed Standing Conditions
+
+Standing that is unavailable, ambiguous, stale, or conflicting makes a dependent permission evaluation undeterminable and therefore subject to PA7. Stale standing follows the applicable T3 validity regime; conflicting standing is not synthesized.
+
+### 13.10 T5-F2 — Standing Change
+
+When standing changes, prior standing-anchored inputs are superseded and affected evaluations require re-evaluation. An identity-link change affecting the evaluated identity likewise requires re-evaluation.
+
+### 13.11 T5-F3 — No Bypass
+
+A permission-holder denial or unavailable determination is not bypassed or cured by favorable standing.
+
+### 13.12 T5-F4 — Computed Statistics Excluded
+
+Computed standing statistics classified under KD-022 3a remain UNDEFINED as records and may not be persisted or used by Sneak as permission inputs under C0. Only authoritative standing facts within the established prerequisites may participate.
+
+### 13.13 Explicit Exclusions
+
+KD-029 does not designate any standing source, permission or grant holder, or system; create role-to-permission mappings; authorize any currently unauthorized action; classify KD-022 3a; establish a standing-to-permission threshold, event taxonomy, or inference rule; choose between holder-internal consideration and a future KOSD mapping; define implementation, storage, schemas, contracts, APIs, or runtime mechanics; or modify any prior adopted boundary.
+
+### 13.14 Current Authorization Posture
+
+Adoption of KD-029 enables no action by implication. Where the prerequisites for standing-aware permission have not been established, Sneak remains closed under PA7.
+
+
 ## 13. Known Architectural Tensions
 
 ### 13.1 Derived Statistics
@@ -572,9 +636,9 @@ KD-028 establishes the positive attribution and traceability standard. Remaining
 
 ### 13.7 Standing as Permission Input
 
-Member standing facts are authoritative under KD-022 1c, but whether or how standing may factor into future permission grants remains **UNDEFINED** and is part of the future role-to-permission mapping question.
+KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
 
-## 12. Implementation-Owned Mechanics
+## 14. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
