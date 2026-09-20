@@ -140,7 +140,7 @@ The Kustomz Identity Engine is the authoritative holder of KD-022 1a Kustomz eco
 
 ### 7.2 Identity-Link Anchor
 
-The Kustomz side of KD-022 1b Discord-to-Kustomz identity-link records anchors to Kustomz identities held by the Kustomz Identity Engine. This establishes the identity-system referent only; it does not designate the Kustomz Identity Engine as the 1b identity-link holder.
+The Kustomz side of KD-022 1b Discord-to-Kustomz identity-link records anchors to Kustomz identities held by the Kustomz Identity Engine. KD-038 designates the Kustomz Identity Engine as the 1b identity-link holder, separately from its 1a identity-system role.
 
 ### 7.3 Scope and Exclusions
 
