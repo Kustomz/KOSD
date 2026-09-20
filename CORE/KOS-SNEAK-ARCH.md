@@ -999,6 +999,90 @@ KD-029 establishes the boundary for standing as a possible permission input with
 
 KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
 
+
+## 20. Adopted Identity-Link Lifecycle Boundary
+
+KD-035 establishes the following architectural boundary for identity-link lifecycle semantics.
+
+### 20.1 LC-D — Lifecycle State
+
+Lifecycle state is the authoritative holder's record of a link's standing through time. KD-035 establishes lifecycle semantics; lifecycle procedures remain future architecture or contract work.
+
+### 20.2 LC-E — Lifecycle Edges
+
+The necessary lifecycle edges are creation, change, suspension, removal, and restoration.
+
+Restoration is distinct from removal because suspension and removal are distinct status conditions under RL-D. No expiry edge is established; validity bounds remain undefined and expiry cannot be assumed.
+
+### 20.3 LC-S — Lifecycle Status Vocabulary
+
+Identity-link status is expressed as active, suspended, no-link, or unknown.
+
+Removed and never-existed states both present as no-link at the status level. Sneak does not distinguish those histories unless a future authoritative procedure establishes a basis for doing so.
+
+### 20.4 LC-R — Status, Edge, Resolution, and Usage Distinction
+
+The following remain distinct:
+
+- Link status — authoritative holder state under KD-022 1b.
+- Lifecycle edge — an authoritative holder-established event affecting link status.
+- Resolution — Sneak obtaining the holder's authoritative determination under KD-033.
+- Usage state — Sneak's ephemeral 2e identity-link usage reference.
+
+Resolution is not a lifecycle edge, and usage state is not the authoritative link.
+
+### 20.5 LC-F — Lifecycle Invalidation
+
+Each established lifecycle edge affecting authoritative link status invalidates determinations anchored to the pre-edge status under the applicable KD-027 freshness boundary.
+
+The edge becomes effective when the authoritative holder establishes it, not when Sneak observes it. Unobserved loss of validity does not preserve a superseded determination merely because Sneak has not yet received awareness of the edge.
+
+### 20.6 LC-M — Mid-Interaction Lifecycle Change
+
+A Sneak interaction does not require mandatory re-resolution solely because time has passed or because a lifecycle edge might have occurred.
+
+Where an established edge is known through an applicable established mechanism, the prior 2e usage reference is not usable for a new identity-bound evaluation. Sneak does not infer an edge, speculate about an unestablished change, or retroactively alter completed work.
+
+### 20.7 LC-U — Unknown and Failure Conditions
+
+Unknown, stale, conflicting, or unavailable lifecycle conditions remain within the existing KD-033 RL-D/RL-F and KD-034 QB-F fail-closed taxonomy.
+
+Sneak does not repair, synthesize, adjudicate, or create a new failure mode for such conditions.
+
+### 20.8 LC-A — Authoritative Lifecycle Source
+
+Authoritative lifecycle state is held by the designated identity-link holder. The actual holder remains unnamed by KD-035.
+
+Sneak never determines, authors, repairs, infers, or adjudicates authoritative lifecycle state.
+
+### 20.9 LC-P — State Classification and Persistence Boundary
+
+Identity-link lifecycle state is authoritative holder-held state under KD-022 P1/1b. No new state category is created.
+
+Sneak's handling remains subject to KD-022 C0/P3. KD-035 does not authorize Sneak to persist lifecycle-edge state merely because lifecycle semantics are now established.
+
+### 20.10 LC Dependencies and Undefined Procedures
+
+Dependent lifecycle operation still requires, as applicable:
+
+- Actual identity-link holder designation.
+- Lifecycle procedures.
+- Validity bounds.
+- An established mechanism by which relevant lifecycle-edge awareness can be obtained, where required.
+- Any other applicable KD-026 cross-system role or contract prerequisite.
+
+The actual holder, lifecycle procedures, edge-awareness mechanism, validity bounds, implementation mechanics, platform presentation, retry/timing behavior, permission mappings, portable work-state, and dependent identity-bound actions remain undefined or unauthorized.
+
+### 20.11 LC Boundary and Authority-Leak Check
+
+KD-035 does not permit Sneak to infer authoritative lifecycle state from interaction behavior, time passage, absence of a signal, or its own observations. Invalidation does not depend on Sneak being the authority that establishes the edge.
+
+Restoration does not authorize Sneak to infer that a prior link was restored. Removed and never-existed remain indistinguishable at the status level unless an authoritative future procedure establishes a historical distinction.
+
+KD-035 does not designate the actual holder, establish lifecycle implementation, authorize identity-link creation/removal, establish permission mappings, create portable work-state, or authorize identity-bound actions.
+
+KD-035 does not modify any prior adopted boundary.
+
 ## 20. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
