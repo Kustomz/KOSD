@@ -1041,7 +1041,6 @@ Sneak's handling remains subject to KD-022 C0/P3. KD-035 does not authorize Snea
 
 Dependent lifecycle operation still requires, as applicable:
 
-- Actual identity-link holder designation.
 - Lifecycle procedures.
 - Validity bounds.
 - An established mechanism by which relevant lifecycle-edge awareness can be obtained, where required.
