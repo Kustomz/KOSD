@@ -46,7 +46,7 @@ Applicable KOSD state classifications remain controlling. In particular:
 - **2f — Derived working values:** EPHEMERAL.
 - **3f — Project Vision integration state:** UNDEFINED.
 - **3g — Synthesized CSR2 intelligence state:** UNDEFINED.
-- **1i — Portable work-state:** AUTHORITATIVE, with holder and mechanics remaining unresolved.
+- **1i — Portable work-state:** AUTHORITATIVE, with the holder established by KD-042 and operational mechanics remaining unresolved.
 
 No new state category is established by this architecture.
 
@@ -80,7 +80,7 @@ Portable work-state is the authoritative, Kustomz-identity-bound record of a use
 
 Portable work-state does not contain or replace authoritative CSR2 source data, Kustomz identity records, Kustomz↔Discord identity-link records, derived intelligence, dispositioned history, or interaction-scoped ephemeral state.
 
-Portable work-state remains **AUTHORITATIVE under KD-022 1i**. KD-040 does not create or reclassify a state category.
+Portable work-state remains **AUTHORITATIVE under KD-022 1i**. KD-040 does not create or reclassify a state category; KD-042 establishes its holder.
 
 ### 7.2 Holder Boundary
 
@@ -133,7 +133,7 @@ If the holder is unreachable or current work-state cannot be determined, work-st
 
 Portable work-state may reference authoritative CSR2 source records but never redefines or becomes the authority for those source records.
 
-The shared Toolbox engine's internal role and responsibilities remain undefined. Interaction with portable work-state does not constitute holding it absent explicit KOSD designation.
+The shared Toolbox engine's internal role and responsibilities beyond the holder designation remain undefined. Interaction with portable work-state does not establish any additional authority beyond the KD-042 holder boundary.
 
 ## 8. Continuity Boundary
 
@@ -177,7 +177,7 @@ This architecture is constrained by:
 
 The following remain genuine blockers for subsequent establishment or implementation where applicable:
 
-1. Portable work-state holder, operational mechanics, and procedures.
+1. Portable work-state operational mechanics and procedures; the holder is established by KD-042.
 2. Permission grant-holder designations.
 3. Authoritative holders for Toolbox-modified CSR2 state.
 4. KOS-RELEASE promotion for any future module/release treatment.
