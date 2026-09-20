@@ -1,7 +1,7 @@
 # KOS Kustomz Toolbox Architecture
 
 **Status:** ADOPTED ARCHITECTURAL RECOGNITION
-**Authority:** KD-039; portable work-state boundary additionally governed by KD-040
+**Authority:** KD-039; portable work-state boundary additionally governed by KD-040 and KD-042
 **Scope:** Kustomz Toolbox architectural recognition for the shared CSR2 editing/tooling environment
 
 ## 1. Identity and Purpose
@@ -84,11 +84,19 @@ Portable work-state remains **AUTHORITATIVE under KD-022 1i**. KD-040 does not c
 
 ### 7.2 Holder Boundary
 
-A future portable work-state holder must be explicitly designated by KOSD, must not be Sneak, must be interface-independent, and must be scoped to Kustomz identity.
+KD-042 designates the **Kustomz Toolbox**, in its interface-independent capacity as the shared engine established by KD-039, as the authoritative holder of KD-022 1i portable work-state.
 
-No holder is designated by KD-040. The Toolbox shared engine, Kustomz Identity Engine, Sneak, and any other system remain undesignated as portable work-state holder.
+The designation is explicitly not made to the Web, Android, or Discord/Sneak interfaces. No interface-specific store becomes the holder, and Sneak never holds portable work-state.
 
-The Kustomz Identity Engine retains only its established KD-037 1a and KD-038 1b authority. KD-040 grants it no portable work-state authority, read/write role, or lifecycle role.
+The holder is scoped to Kustomz identity and holds the single authoritative portable work-state record per Kustomz identity and applicable work-state scope. Cross-interface continuity remains holder-mediated.
+
+The holder has authority over the recognized work-state lifecycle edges — creation, update, consumption, and termination — while lifecycle procedures and mechanics remain undefined. The holder also has authority over holder-established invalidation within the existing §7.5 boundary.
+
+Holding does not constitute write-path authorization. Permission to create, update, or terminate held records remains separately unresolved and subject to future permission-grant-holder and applicable cross-system decisions.
+
+The Kustomz Identity Engine retains only its established KD-037 1a and KD-038 1b authority. KD-042 grants it no portable work-state authority, read/write role, or lifecycle role.
+
+Conflict-resolution policy, validity bounds, retention/disposition, schemas, storage, APIs, implementation, and the Sneak-originated update path remain undefined.
 
 ### 7.3 Identity and Continuity
 
@@ -131,15 +139,13 @@ The shared Toolbox engine's internal role and responsibilities remain undefined.
 
 The existing **WEB → ANDROID → DISCORD/SNEAK** continuity principle remains the Toolbox interface model.
 
-KD-040 now provides the adopted architectural boundary for portable work-state/context supporting that continuity. The holder, mechanics, permissions, and implementation remain unresolved.
+KD-040 provides the adopted architectural boundary for portable work-state/context supporting that continuity, and KD-042 now establishes its authoritative holder. Mechanics, permissions, and implementation remain unresolved.
 
 The existing continuity principle is recognized as part of the Toolbox interface model.
 
-The authoritative portable work-state/context mechanism and its holder remain **UNDEFINED**.
+The authoritative portable work-state holder is established by KD-042 as the Kustomz Toolbox in its interface-independent capacity. The operational mechanism remains **UNDEFINED**.
 
-This architecture does not establish, designate, or implement that mechanism or holder.
-
-The continuity principle therefore remains an architectural target whose full implementation is blocked pending the required future KOSD decision establishing the portable work-state mechanism and holder.
+This architecture does not establish or implement the mechanism. The holder designation is architectural and does not authorize implementation.
 
 ## 9. Explicitly Undefined / Not Established
 
@@ -151,7 +157,7 @@ The following remain undefined or unestablished by KD-039:
 - Authoritative holders for Toolbox-modified state.
 - Permission grant-holder designations.
 - Permission mappings and authorizations.
-- Portable work-state holder and operational mechanics.
+- Portable work-state operational mechanics and procedures; the holder is established by KD-042.
 - Cross-system contracts and conformance requirements.
 - Implementation location and implementation model.
 - NSB/SCB/page-level functional architecture.
@@ -177,7 +183,7 @@ The following remain genuine blockers for subsequent establishment or implementa
 4. KOS-RELEASE promotion for any future module/release treatment.
 5. Resolvability contract for operational identity-bound access through Sneak.
 
-None of these blockers is resolved by this architecture.
+The portable work-state holder blocker is satisfied by KD-042. The remaining blockers concern mechanics, permissions, other authoritative holders, release treatment, and operational resolvability as separately identified.
 
 ## 11. Implementation Boundary
 
@@ -191,4 +197,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Kustomz Toolbox architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-001 through KD-040.
+This document does not supersede or independently redefine KD-001 through KD-042.
