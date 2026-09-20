@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -724,9 +724,105 @@ Adopted capability #7 remains intact. Cross-interaction retention/disposition is
 
 T6 is otherwise unchanged, and all prior adopted decisions remain unchanged.
 
-## 17. Known Architectural Tensions
+## 17. Adopted Kustomz-to-Discord Identity-Linking Boundary
 
-### 16.1 Derived Statistics
+KD-032 establishes the following architectural boundary for Kustomz-to-Discord identity linking.
+
+### 17.1 IL-D — Distinct Identities and Mapping
+
+Kustomz identity and Discord identity remain distinct identities.
+
+“Linked” means a holder-asserted mapping between one Discord identity and one Kustomz identity. Linking does not merge the identities.
+
+For a Sneak interaction, one Kustomz identity must be determinable for identity-bound evaluation. If it cannot be determinately resolved, the interaction fails closed for identity-bound use under B9/PA7.
+
+### 17.2 IL-H — Link-State Holder
+
+The existence and status of an identity link require an authoritative Kustomz-ecosystem holder designated by a future explicit KOSD decision following KD-025 D1.
+
+Sneak never qualifies as the holder.
+
+The identity-link holder is architecturally distinct from any permission-grant holder. The same underlying system may fill both roles only if each role is separately established for its applicable domain.
+
+### 17.3 IL-L — Link-State Lifecycle
+
+Sneak consumes link state and never authors it.
+
+Lifecycle procedures for creation, change, suspension, removal, and related lifecycle edges remain UNDEFINED under KD-022 3h until separately established.
+
+A link change is an invalidating event for cached authorization determinations under KD-027 T3-P3.
+
+### 17.4 IL-S — State Classification
+
+No new state category is created.
+
+Identity-link records remain AUTHORITATIVE under KD-022 1b. Identity-link usage reference remains EPHEMERAL under KD-022 2e. Identity-link lifecycle edges remain UNDEFINED under KD-022 3h.
+
+No persistence or lifecycle mechanism for 3h is established by KD-032.
+
+### 17.5 IL-C — Identity Is Not Permission
+
+An established link answers “who,” not “may.”
+
+It supplies the identity term required by PA2 and PA6; the remaining authorization requirements remain independently applicable.
+
+An absent or undeterminable link makes the identity-bound evaluation undeterminable and therefore fails closed under PA7. The link itself is not a permission grant.
+
+### 17.6 IL-F — Freshness Interaction
+
+Under KD-027, a link change invalidates cached authorization determinations whose identity binding depends on the changed link.
+
+Sneak must not treat an authorization determination anchored to a superseded identity link as current where the applicable freshness boundary establishes invalidation.
+
+### 17.7 IL-A — Attribution Interaction
+
+KD-028 remains independent from identity authorization.
+
+Where information is derived from an identity link and presented as derived information, applicable KD-028 attribution requirements apply.
+
+Direct presentation of authoritative identity-link state remains subject to KD-023 B12 and the applicable authoritative source. KD-028 does not become a universal attribution regime merely because the information concerns identity linking.
+
+### 17.8 IL-X — Cross-Interface Identity Continuity
+
+Identity linking provides the architectural identity-continuity substrate for WEB → ANDROID → DISCORD/SNEAK, but establishes no portable work-state mechanism.
+
+The authoritative portable work-state/context mechanism remains UNDEFINED under KD-021/KD-022 1i/3d.
+
+### 17.9 IL-R — Prerequisites
+
+The following remain prerequisites for dependent identity-bound operation:
+
+- Actual identity-link holder designation.
+- Lifecycle procedures.
+- Reliable link-state resolution.
+- Any conditional cross-system role establishment required by KD-026.
+
+Adoption of KD-032 does not satisfy these prerequisites by implication.
+
+### 17.10 IL-E — Explicit Exclusions
+
+KD-032 does not:
+
+- designate the actual identity-link holder;
+- define link-resolution mechanics;
+- define Discord-side identity assertion or verification strength;
+- define a linking ceremony;
+- define record metadata or schemas;
+- establish broader cardinality rules beyond the one-Kustomz-identity-per-Sneak-interaction boundary;
+- define Discord-side lifecycle state;
+- define portable work-state mechanics;
+- designate any permission or authorization holder;
+- create role-to-permission mappings;
+- authorize currently unauthorized actions; or
+- select implementation model A/B/C.
+
+Identity-link lifecycle-edge state remains subject to KD-022 C0: undefined lifecycle-edge state must not be persisted by Sneak pending explicit classification/establishment.
+
+KD-032 does not modify any prior adopted boundary. It establishes no new state category, no new authority system, no competing source of truth, and no implementation authorization.
+
+## 18. Known Architectural Tensions
+
+### 18.1 Derived Statistics
 
 Derived statistics must remain traceable to authoritative sources.
 
@@ -734,38 +830,38 @@ The standard, mechanism, and evidence requirements for that traceability remain 
 
 KD-022 classifies derived working values as ephemeral only when they remain traceable to authoritative sources; computed member/user statistics as records remain **UNDEFINED**.
 
-### 16.2 Cross-Interface Continuity
+### 18.2 Cross-Interface Continuity
 
 The adopted WEB → ANDROID → DISCORD/SNEAK continuity model requires an eventual authoritative portable work-state/context mechanism.
 
 The portable work-state record mechanics and authoritative holder remain **UNDEFINED**.
 
-### 16.3 Permission Grant-Holder Designation
+### 18.3 Permission Grant-Holder Designation
 
 PA3 requires permission grants to reside with the applicable authoritative holder, but the authoritative grant holder for each capability remains **UNDEFINED**.
 
-### 16.4 Cross-System Authorization
+### 18.4 Cross-System Authorization
 
 KD-026 establishes the applicable-system framework for cross-system actions, but the footprint and role-owner for each specific action remain **UNDEFINED** until future architecture, contracts, or decisions establish them.
 
-### 16.5 Revocation Freshness
+### 18.5 Revocation Freshness
 
 KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
 
-### 16.6 Derived-Information Attribution
+### 18.6 Derived-Information Attribution
 
 KD-028 establishes the positive attribution and traceability standard. Remaining tensions are the application and mechanics left explicitly undefined by KD-028: provenance retention without shadow records; attribution display; description sufficiency; conflict presentation choice; reuse pressure on the KD-022 3a boundary; and any source-data freshness rules not otherwise established by applicable architecture or contracts.
 
-### 16.7 Standing as Permission Input
+### 18.7 Standing as Permission Input
 
 KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
 
 
-### 17.8 Intake Disposition Without an Established Path
+### 18.8 Intake Disposition Without an Established Path
 
 KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
 
-## 18. Implementation-Owned Mechanics
+## 19. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -777,7 +873,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 19. Architectural Boundary
+## 20. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -785,7 +881,7 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 20. Change Control
+## 21. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
