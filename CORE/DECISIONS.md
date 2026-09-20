@@ -813,3 +813,48 @@ It does not define implementation internals, authority holders, permissions, con
 
 Resulting state: Kustomz Toolbox is recognized within KOSD as a governed architectural concept with explicit boundaries and explicit unresolved dependencies.
 
+
+
+## KD-040 — Portable Work-State Architecture Recognition
+
+**Decision ID:** KD-040
+
+**Date:** 2026-09-20
+
+**Item(s):** Portable Work-State Architecture for the Kustomz Toolbox, as proposed by Izzy and reviewed by Rico in Revision 2.
+
+**Action:** ADOPT
+
+**Rationale:** The owner adopts the bounded architectural definition of portable work-state required to give the KD-039 Web → Android → Discord/Sneak continuity target a governed architectural basis without selecting an implementation, holder, permission model, or module classification. The adopted boundary preserves portable work-state as the existing KD-022 1i AUTHORITATIVE classification, defines what work-state is and is not, establishes holder qualification criteria without designating a holder, defines Kustomz-identity addressing and holder-mediated continuity, and establishes bounded lifecycle, invalidation, staleness, conflict, failure, and cross-system relationships. The adoption deliberately leaves the unresolved holder, write authorization, conflict policy, mechanics, contracts, implementation model, and other explicitly undefined matters for future decisions.
+
+**Basis / Evidence:**
+- KD-039 Kustomz Toolbox Architectural Recognition.
+- KD-022 1i portable work-state classification and applicable state/authority boundaries.
+- KD-021 through KD-038 Sneak, identity, authority, permission, cross-system, freshness, and lifecycle boundaries where referenced by the proposal.
+- KD-037 Kustomz Identity Engine recognition as the authoritative 1a identity system of record.
+- KD-038 Kustomz Identity Engine designation as authoritative 1b identity-link holder and bounded Sneak query interest.
+- Izzy's Portable Work-State Architecture Revision 2, reviewed and accepted by Rico for owner decision.
+
+**Conditions / Blockers:**
+- (a) Portable work-state remains AUTHORITATIVE under KD-022 1i; this decision does not create or reclassify a state category.
+- (b) Portable work-state is the authoritative, Kustomz-identity-bound record of a user's in-progress Toolbox work and the ecosystem context required to resume that work across Web, Android, and Discord/Sneak interfaces.
+- (c) Work-state does not contain or replace authoritative CSR2 source data, identity records, identity-link records, derived intelligence, dispositioned history, or interaction-scoped ephemeral state.
+- (d) A future holder must satisfy the adopted holder criteria: explicit KOSD designation, not Sneak, interface-independence, and Kustomz-identity scoping.
+- (e) No holder is designated by KD-040. The Toolbox shared engine, Kustomz Identity Engine, Sneak, and any other system remain undesignated as work-state holder.
+- (f) Work-state is addressed by Kustomz identity. Discord-originated access first resolves the addressing Discord identity through the existing KD-032 through KD-038 identity-link architecture; the Discord identity does not directly address work-state.
+- (g) Kustomz Identity Engine remains limited to its established 1a and 1b authority. KD-040 grants it no work-state authority, read/write role, or lifecycle role.
+- (h) Work-state lifecycle semantics are recognized as creation, update, consumption, and termination. Lifecycle procedures, timers, retention, clearing, archiving, and other mechanics remain undefined.
+- (i) Cross-interface continuity is holder-mediated. Interfaces do not transfer authoritative work-state directly to one another, and no interface-specific store may become a competing authoritative record.
+- (j) Work-state invalidation/staleness boundaries include supersession, holder-established invalidation, any future validity-bound expiration, holder change, and applicable future KOSD decisions. An identity-link change by itself does not invalidate Kustomz-identity-addressed work-state; it may instead affect Discord-originated resolution or access.
+- (k) Concurrent updates are a conflict condition. Conflict-resolution policy remains undefined.
+- (l) If the holder is unreachable or current state cannot be determined, work-state is undeterminable and must not be presented as current. An absent or invalid record does not authorize repair or other unestablished action.
+- (m) The shared Toolbox engine's internal role and responsibilities remain undefined. Interaction with work-state does not constitute holding it absent explicit KOSD designation.
+- (n) Sneak never holds portable work-state. Sneak may consume work-state context ephemerally within an interaction. Whether Sneak-originated work may update the holder remains a future cross-system action/permission question.
+- (o) Portable work-state may reference authoritative CSR2 source records but never redefines or becomes the authority for those source records.
+- (p) Holder designation, holder mechanics, schemas, APIs, wire formats, authentication implementation, conflict resolution, validity bounds, retention/disposition, write-path authorization, cross-system contracts/conformance, implementation location/model, NSB/SCB/page-level functional content, and any formal Toolbox classification beyond KD-039 remain undefined unless separately decided.
+- (q) KD-021 §22.2 portable work-state tension is narrowed but not closed because holder designation and mechanics remain unresolved.
+- (r) Permission grant-holder designations, KOS-RELEASE promotion for any future module/release treatment, Sneak resolvability contract, and authoritative holders for Toolbox-modified CSR2 state remain blockers.
+- (s) No implementation is authorized by KD-040. Execution of the architecture artifact is a separate step and requires the owner's explicit authorization.
+- (t) KD-001 through KD-039 remain in force and are not superseded or reinterpreted by KD-040.
+
+**Execution / Resulting State:** Authorized execution is limited to recording KD-040 in CORE/DECISIONS.md. Creation or modification of any Toolbox architecture artifact is a separate execution step requiring explicit owner authorization. Resulting state after this decision record is appended: the portable work-state architectural boundary is adopted as KOSD architecture, while holder designation, mechanics, permissions, implementation, and the other explicitly unresolved matters remain unestablished.
