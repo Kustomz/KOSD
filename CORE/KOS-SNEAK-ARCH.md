@@ -931,7 +931,7 @@ Naming a holder alone does not silently establish query interest. KD-038 explici
 
 ### 20.3 QB-R — Query Routed Through Authorization Boundary
 
-The query is routed through PA1 rather than bypassing it. The relevant scope is identity-link resolution, the query-interest element is satisfied only by the future designation decision's explicit establishment of that interest, and no applicable prohibition may be present.
+The query is routed through PA1 rather than bypassing it. The relevant scope is identity-link resolution, and the query-interest element is satisfied by KD-038's explicit establishment of that interest. No applicable prohibition may be present.
 
 The query result feeds RL-D and the PA6 identity term only. It is never itself a permission grant and does not satisfy PA2 authorization elements 1–3.
 
