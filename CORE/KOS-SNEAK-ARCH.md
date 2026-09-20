@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -820,7 +820,82 @@ Identity-link lifecycle-edge state remains subject to KD-022 C0: undefined lifec
 
 KD-032 does not modify any prior adopted boundary. It establishes no new state category, no new authority system, no competing source of truth, and no implementation authorization.
 
-## 18. Known Architectural Tensions
+## 18. Adopted Identity-Link Resolution / Resolvability Boundary
+
+KD-033 establishes the following architectural boundary for reliable Kustomz-to-Discord identity-link resolution.
+
+### 18.1 RL-P — Resolution
+
+Resolution means Sneak obtaining the designated holder's authoritative link-status determination for the addressing Discord identity, per interaction. “Reliable” means the determination is holder-sourced, unambiguous as to one Kustomz identity, and within established validity. Sneak never independently verifies the holder's determination.
+
+### 18.2 RL-D — Determinability
+
+Resolution is determinable only when exactly one Kustomz identity is established for the addressing Discord identity, the determination is unambiguous, and no invalidating condition applies.
+
+No designated holder, unreachable holder, no-link/suspended/removed/unknown status, multiple candidates, stale determination, or otherwise unascertainable addressing identity makes resolution undeterminable. Undeterminable resolution fails closed for identity-bound use under B9/PA7.
+
+### 18.3 RL-H — Holder Authority
+
+Without a designated holder, no reliable resolution exists.
+
+The designated holder's determination is the answer. Sneak does not corroborate, combine sources, or adjudicate against it. Holder designation and resolution are distinct establishments.
+
+### 18.4 RL-B — Boundary Interaction
+
+B3 grounds resolution in the designated holder. KD-022 2b caches never substitute for holder resolution.
+
+B9 surfaces ambiguity without converting it into fact. The resolved identity supplies the identity term used by PA6 and applicable identity-bound evaluation.
+
+Link changes invalidate applicable determinations under KD-027 T3-P3. Where validity bounds have not been established, a resolution determination is limited to the interaction's ephemeral 2e usage scope.
+
+### 18.5 RL-F — Failure Handling
+
+Unavailable resolution has no fallback, cross-domain inference, or stale reuse. Ambiguous resolution is not disambiguated by Sneak. Stale resolution requires re-resolution or R4/PA7.
+
+A conflict within the holder's determination is ambiguous. Non-holder information does not override the holder's authoritative determination.
+
+### 18.6 RL-T — Read / Authorization Separation
+
+Identity-link resolution is a read determination, never authorization.
+
+It satisfies none of PA2's authorization elements 1–3. Any action still requires the complete PA2 gate, including identity binding.
+
+### 18.7 RL-S — Transient Resolution State
+
+Resolution handling is transient only: in-flight request/response state, a parsed candidate, or a 2e identity-link usage reference.
+
+Sneak does not persist resolution results as a record, ledger, or cross-interaction shared state. Failed resolution leaves no retained resolution state.
+
+### 18.8 RL-X — Cross-System Boundary
+
+Cross-system crossings defer to KD-026. KD-033 assigns no authorization-owner, grant-holder, or state-owner/executor role.
+
+The access/query basis by which Sneak may obtain the designated holder's determination is itself a prerequisite and is not established by KD-033.
+
+### 18.9 RL Dependencies and Undefined Prerequisites
+
+The following remain prerequisites:
+
+- D-RL1 — Actual identity-link holder designation.
+- D-RL2 — Link-resolution mechanics.
+- D-RL3 — Query/access basis.
+- D-RL4 — Link lifecycle procedures.
+- D-RL5 — Validity bounds.
+- D-RL6 — Any conditional KD-026 cross-system role establishment.
+
+The actual identity-link holder, resolution/query mechanics, access/query basis, validity bounds, Discord-side assertion or verification mechanics, retry/timing behavior, failure-presentation wording, and all other excluded implementation or architectural mechanics remain UNDEFINED.
+
+No new state category, implementation, API, schema, database, Discord ceremony, permission mapping, identity-link creation/removal mechanism, portable work-state mechanism, or currently unauthorized action is established.
+
+### 18.10 RL Boundary and Circularity Check
+
+The resolved identity is never used to authorize or establish the authority required to resolve that identity. Sneak does not independently verify the holder through another authority and does not create a retained resolution ledger.
+
+KD-033 does not designate an actual holder, establish the query/access contract, satisfy unresolved KD-032 prerequisites except by defining the architectural meaning of reliable resolution, or authorize dependent identity-bound actions by implication.
+
+KD-033 does not modify any prior adopted boundary.
+
+## 19. Known Architectural Tensions
 
 ### 18.1 Derived Statistics
 
@@ -861,7 +936,7 @@ KD-029 establishes the boundary for standing as a possible permission input with
 
 KD-031 bounds intake holdings within the interaction and prohibits cross-interaction persistence without a designated authoritative holder, but establishes no authorized next state where no holder/state exists at interaction end. The impasse is explicitly unresolved by design; any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification. This entry records the residual; it does not authorize persistence, discard, retention, or any other disposition.
 
-## 19. Implementation-Owned Mechanics
+## 20. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -873,7 +948,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 20. Architectural Boundary
+## 21. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -881,7 +956,7 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 21. Change Control
+## 22. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
