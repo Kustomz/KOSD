@@ -731,3 +731,27 @@ Execution / Resulting State:
    (f) No state classification is changed or newly created by this decision. KD-022 1a remains AUTHORITATIVE and KD-022 1b remains AUTHORITATIVE; this decision identifies the authoritative holder of 1a and the architectural anchor for the Kustomz side of 1b.
    (g) The future 1b holder designation, resolvability contract, lifecycle procedures, validity bounds, edge-awareness mechanism, platform addressing identity, and conditional KD-026 roles remain unresolved.
 8. **Execution / Resulting State:** Authorized execution is limited to recording KD-037 in CORE/DECISIONS.md and, separately, incorporating the adopted recognition into the applicable KOSD architecture documentation. No 1b holder designation, Identity Engine implementation, identity-link mechanics, permission mapping, or currently unauthorized identity-bound action is authorized by KD-037.
+
+
+---
+
+## KD-038
+
+1. **Decision ID:** KD-038
+2. **Date:** 2026-09-20
+3. **Item(s):** Kustomz Identity Engine designation as the authoritative holder of KD-022 1b Kustomz↔Discord identity-link records, separately from its KD-037 1a identity-system-of-record role, together with the bounded query interest required by KD-034.
+4. **Action:** ADOPT
+5. **Rationale:** KD-032 through KD-035 established that the 1b identity-link holder must be explicitly designated before reliable resolution and legitimate query operation can exist. KD-037 established the Kustomz Identity Engine as the authoritative Kustomz identity system of record and the anchor for the Kustomz side of 1b. The owner has selected the Kustomz Identity Engine to hold the 1b link records as a separate explicit designation, avoiding creation of an additional unrecognized registry while preserving the distinction between the 1a and 1b roles.
+6. **Basis / Evidence:** Owner judgment based on KD-032 IL-D/IL-H/IL-A, KD-033 RL-P/RL-D/RL-H, KD-034 QB-P/QB-Q/QB-R/QB-I/QB-S, KD-035 LC-D/LC-E/LC-S/LC-F/LC-P, KD-037, and the owner's explicit selection of the Kustomz Identity Engine as the 1b holder. The designation is made separately from the 1a recognition and does not imply that either role automatically establishes the other.
+7. **Conditions / Blockers:**
+   (a) KOSD designates the **Kustomz Identity Engine** as the authoritative holder of KD-022 1b Kustomz↔Discord identity-link records, separately and explicitly from its KD-037 1a role.
+   (b) The Kustomz Identity Engine is authoritative for the existence and status of 1b identity links and for lifecycle edges affecting that authoritative link status, consistent with KD-035. Established lifecycle edges affecting authoritative link status invalidate determinations anchored to the pre-edge status under KD-027.
+   (c) Sneak is granted bounded, per-interaction query interest solely to obtain the authoritative 1b link-status determination for the **addressing Discord identity**, for identity-bound evaluation under the adopted Sneak architecture. This query interest is decision-derived under KD-034 and does not constitute permission, authorization, bulk access, enumeration, or access to unrelated Identity Engine state.
+   (d) The query uses the addressing Discord identity supplied by the interaction context as its lookup parameter. Sneak does not invent, select, assert, or independently verify that addressing identity.
+   (e) Query results and handling remain transient/ephemeral under KD-022 2a/2e and are not persisted as a Sneak-side link record, ledger, or cross-interaction identity state.
+   (f) Designation of the 1b holder does not establish the resolvability contract, lifecycle procedures, validity bounds, edge-awareness mechanism, or addressing-identity resolution mechanics; those remain future work.
+   (g) Designation does not authorize any permission or action. Authorization remains subject to PA0–PA9 and the applicable holder/system determinations under KD-024/KD-025, including the full PA2 gate where applicable.
+   (h) The 1a and 1b roles are distinct. The 1a recognition does not imply 1b authority, and the 1b designation does not redefine the Kustomz Identity Engine or its 1a role.
+   (i) No Identity Engine schemas, identifiers, account model, lifecycle implementation, APIs, storage, implementation model, permission model, verification mechanics, resolution mechanics, validity bounds, awareness mechanism, or other internal details are established by this decision.
+   (j) No portable work-state mechanism, cross-system authorization role, identity-link creation/removal procedure, or currently unauthorized identity-bound action is established by implication.
+8. **Execution / Resulting State:** Authorized execution is to append KD-038 to `CORE/DECISIONS.md` and record the corresponding adopted 1b holder/query boundary in `CORE/KOS-SNEAK-ARCH.md` as a separate execution step. Resulting state: the Kustomz Identity Engine is the explicitly designated authoritative 1b holder, and Sneak has only the bounded query interest established above. Resolvability mechanics, procedures, validity bounds, awareness, implementation, permissions, and dependent actions remain unestablished until separately decided.
