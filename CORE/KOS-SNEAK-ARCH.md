@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -115,7 +115,7 @@ The following remain **UNDEFINED**:
 
 - **3a.** Computed member/user statistics as records.
 - **3b.** Transcript completion boundary — governed by KD-030; the completion declarer, designated holder, and transcript content rules remain undefined until their prerequisites are established.
-- **3c.** Intake items before disposition.
+- **3c.** Intake items before disposition — governed by KD-031; intake pre-disposition holdings are EPHEMERAL and interaction-scoped, while cross-interaction persistence requires an established authoritative holder/classification.
 - **3d.** Portable work-state records.
 - **3e.** Ticket-draft state.
 - **3f.** Project Vision integration state.
@@ -664,7 +664,65 @@ KD-030 does not define transcript content, formats, schemas, channels, destinati
 KD-030 does not modify any prior adopted boundary and does not authorize implementation.
 
 
-## 13. Known Architectural Tensions
+## 14. Adopted Intake Holding, Routing, and Undeliverable-Content Boundary
+
+KD-031 establishes the following architectural boundary for external CSR2 intake through the private `#csr2-data-intake` channel.
+
+### 14.1 T7-P1 — Interaction-Scoped Intake Buffers
+
+Intake items awaiting disposition are intake buffers classified as **EPHEMERAL** and therefore interaction-scoped under KD-022 P2. They are not records and are not authoritative.
+
+### 14.2 T7-P2 — Unvetted by Default
+
+Intake content is unvetted by default. Sneak must not present it as authoritative under B4. Presentation of intake content remains subject to applicable KD-028 attribution; unvetted does not mean unattributed.
+
+### 14.3 T7-P3 — Holding Bounded Within the Interaction
+
+Intake holding is bounded within the interaction. Cross-interaction persistence requires a designated authoritative holder under KD-022 P3; none is designated by KD-031. Sneak may not invent a hold bound.
+
+### 14.4 T7-P4 — Narrow Structural Crossing
+
+Intake disposition adopts only T6's structural crossing principles: no silent promotion; established declaration authority; disposition as status transition rather than destination; designated receiving holder; and no transition until T7-R1–T7-R3 are established.
+
+KD-030 T6-P5's transcript-specific content-fidelity requirements are not extended to intake. Intake vetting, transformation, and content rules remain undefined.
+
+### 14.5 T7-P5 — Undeliverable Content
+
+For content authorized for disposition but lacking a designated holder or destination, Sneak has no discard, archival, transfer, or other final-disposition authority.
+
+While the relevant interaction/state exists, Sneak may surface the undecidable disposition to the Kustomz owner under B8/B9 and KD-001/KD-007. This does not authorize retaining the item across interaction end merely to await a later decision. “Await” implies no persistence, callback, or retained state.
+
+### 14.6 T7-P6 — Routing Failure Does Not Reclassify or Authorize
+
+A failed routing attempt leaves the item in buffer classification. Sneak does not retry beyond established rules, reroute to an unestablished destination, or treat failure as disposition.
+
+### 14.7 T7-P7 — No Cross-Interaction Persistence Without a Holder
+
+KD-022 does not permit an intake holding to outlive the interaction absent an authoritative holder/classification.
+
+If no authorized holder/state exists at interaction end, KD-031 establishes no authorized next state and invents none. Any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification.
+
+### 14.8 T7-R1 — Intake Declaration Authority
+
+Intake declaration authority remains to be established.
+
+### 14.9 T7-R2 — Designated Intake Holder
+
+The designated intake holder remains to be established.
+
+### 14.10 T7-R3 — Intake Routing and Content Rules
+
+Intake routing/content rules, including any hold bound, remain to be established.
+
+### 14.11 T7 Fail-Closed Posture and Exclusions
+
+No new state category, implementation, schema, API, storage mechanism, contract, destination, actual holder, discard authority, or currently unauthorized action is established by KD-031.
+
+Adopted capability #7 remains intact. Cross-interaction retention/disposition is not authorized where its required holder/classification has not been established.
+
+T6 is otherwise unchanged, and all prior adopted decisions remain unchanged.
+
+## 15. Known Architectural Tensions
 
 ### 13.1 Derived Statistics
 
@@ -700,7 +758,7 @@ KD-028 establishes the positive attribution and traceability standard. Remaining
 
 KD-029 establishes the boundary for standing as a possible permission input without creating a role-to-permission mapping or authorizing any action. Standing facts remain authoritative under KD-022 1c; their authorization usability requires the KD-029 prerequisites.
 
-## 14. Implementation-Owned Mechanics
+## 16. Implementation-Owned Mechanics
 
 The following remain implementation-owned mechanics unless a later owner decision establishes otherwise:
 
@@ -712,7 +770,7 @@ The following remain implementation-owned mechanics unless a later owner decisio
 - Caching mechanics, subject to the adopted state-classification boundary and future criteria.
 - Other non-behavioral engineering details that do not alter authoritative Sneak behavior.
 
-## 15. Architectural Boundary
+## 17. Architectural Boundary
 
 KOSD owns the authoritative definition and boundaries adopted for Sneak.
 
@@ -720,8 +778,8 @@ Implementation may realize that architecture outside KOSD, subject to future app
 
 Creating or updating this architecture record does not authorize implementation.
 
-## 16. Change Control
+## 18. Change Control
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, or KD-030.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, or KD-031.
