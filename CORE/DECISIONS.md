@@ -858,3 +858,45 @@ Resulting state: Kustomz Toolbox is recognized within KOSD as a governed archite
 - (t) KD-001 through KD-039 remain in force and are not superseded or reinterpreted by KD-040.
 
 **Execution / Resulting State:** Authorized execution is limited to recording KD-040 in CORE/DECISIONS.md. Creation or modification of any Toolbox architecture artifact is a separate execution step requiring explicit owner authorization. Resulting state after this decision record is appended: the portable work-state architectural boundary is adopted as KOSD architecture, while holder designation, mechanics, permissions, implementation, and the other explicitly unresolved matters remain unestablished.
+
+
+## KD-041 — Identity-Link Resolvability Contract
+
+**Decision ID:** KD-041
+
+**Date:** 2026-09-20
+
+**Item(s):** Identity-Link Resolvability Contract, as proposed by Izzy and reviewed by Rico, with Rico's targeted Revision 1 applied to §12.
+
+**Action:** ADOPT
+
+**Rationale:** The owner adopts the architectural contract connecting Sneak's already-established bounded identity-link query interest under KD-038 to the Kustomz Identity Engine's established authoritative 1b identity-link determination. The contract establishes the semantic meaning of the request, the authoritative response, authoritativeness conditions, temporal use and lifecycle invalidation semantics, and failure handling without selecting transport, APIs, schemas, retry/timing behavior, validity bounds, lifecycle procedures, KD-026 roles, permission mappings, or implementation. The adoption satisfies the explicitly named resolvability prerequisite in KD-033/RL-X and KD-034/QB-Q while preserving all separately unresolved operational dependencies.
+
+**Basis / Evidence:**
+- KD-032 — Kustomz-to-Discord identity-link architecture.
+- KD-033 — identity-link resolution/resolvability boundary, including RL-P, RL-D, RL-H, RL-F, RL-S, RL-T, RL-X and D-RL prerequisites.
+- KD-034 — identity-link access/query basis, including QB-P, QB-Q, QB-R, QB-I, QB-F, QB-S, QB-X and D-QB prerequisites.
+- KD-035 — identity-link lifecycle boundary, including LC-S, LC-R, LC-F, LC-M, and LC-U.
+- KD-037 — Kustomz Identity Engine as authoritative 1a identity system of record.
+- KD-038 — Kustomz Identity Engine as authoritative 1b identity-link holder and explicit bounded Sneak query interest.
+- KD-040 — Toolbox blocker identifying the resolvability contract for operational identity-bound access through Sneak.
+- Izzy's Identity-Link Resolvability Contract proposal, reviewed by Rico and revised in response to Rico's §12 wording finding.
+
+**Conditions / Blockers:**
+- (a) Contract parties are Sneak as querier under KD-038's bounded, per-interaction query interest and the Kustomz Identity Engine as authoritative 1b identity-link holder.
+- (b) A request is per interaction, uses the addressing Discord identity as its lookup parameter, is limited to the single holder-status determination question, and is routed through PA1.
+- (c) If no addressing Discord identity is available, no query is formed and resolution remains undeterminable under the applicable RL-D/QB-I boundary.
+- (d) The authoritative response uses the LC-S vocabulary: active, suspended, no-link, or unknown. When active, the determination resolves to one Kustomz identity. Sneak accepts the holder's determination and does not corroborate, override, or adjudicate it.
+- (e) Authoritativeness requires the determination to be holder-sourced, unambiguous as to one Kustomz identity, and within established validity. Because validity bounds remain undefined, authoritative standing is limited to the originating interaction's established ephemeral 2e usage scope.
+- (f) Determinations are per-interaction and are not reused across interactions as authoritative. Established lifecycle edges invalidate pre-edge determinations under the existing LC-F/T3-P3 boundary; no validity extension is established.
+- (g) Holder unavailability, ambiguous determination, malformed/unusable result, unknown status, or absent addressing identity follows the established RL-D/RL-F/QB-F/QB-I failure taxonomy and fails closed for identity-bound use. No fallback, probing, cross-domain inference, stale reuse, repair, or substitute source is authorized.
+- (h) The contract is a read determination only. It is not authorization, a permission grant, a transport/API, lifecycle procedures, validity bounds, KD-026 cross-system role establishment, or a new authority designation.
+- (i) The contract does not establish transport, endpoints, APIs, schemas, wire formats, serialization, retry/timing/timeout behavior, failure-presentation wording, platform identity mechanics, Discord verification/ceremony, lifecycle procedures, validity durations/scopes, or implementation.
+- (j) The contract satisfies D-RL3 and D-QB2. The named QB-Q prerequisite set is complete at the architectural level; legitimate query operation remains subject to the separately identified unresolved dependencies and mechanics, including D-RL2, D-RL4/D-QB3, D-RL5/D-QB4, D-RL6/D-QB5, and D-QB6.
+- (k) This decision does not establish permission grants, KD-026 roles, validity bounds, lifecycle procedures, platform-supplied identity mechanics, or any identity-bound action.
+- (l) RL-X's statement that the access/query basis was not established by KD-033 remains historically true. This decision is a separate establishment and does not retroactively modify KD-033.
+- (m) QB-Q's prerequisite list is completed; the list itself is not rewritten.
+- (n) KD-032 through KD-040 remain in force and are not superseded, modified, or reinterpreted by KD-041.
+- (o) No implementation is authorized by KD-041. Execution of the Sneak architecture artifact is a separate step requiring explicit owner authorization.
+
+**Execution / Resulting State:** Authorized execution is limited initially to recording KD-041 in CORE/DECISIONS.md. Updating CORE/KOS-SNEAK-ARCH.md to incorporate the adopted contract is a separate execution step requiring explicit owner authorization. Resulting state after the decision record is appended: the Identity-Link Resolvability Contract is adopted as KOSD architecture, satisfying D-RL3 and D-QB2 while the separately identified operational dependencies and mechanics remain unresolved.
