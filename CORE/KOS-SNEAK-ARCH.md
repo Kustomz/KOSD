@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -129,6 +129,24 @@ State classified **UNDEFINED** under P5 must not be persisted by any Sneak imple
 For this rule, **persisted** means retained beyond the interaction, reused across interactions, or read by any party as fact.
 
 Transient in-transit handling toward a defined disposition under P4 is not persistence.
+
+## 7. Kustomz Identity System of Record
+
+KD-037 recognizes the **Kustomz Identity Engine** as the authoritative Kustomz identity system of record for the Kustomz identity records classified under KD-022 1a.
+
+### 7.1 Authoritative Identity State
+
+The Kustomz Identity Engine is the authoritative holder of KD-022 1a Kustomz ecosystem identity records. Sneak consumes authoritative Kustomz identity state and does not author, redefine, or become the holder of that state.
+
+### 7.2 Identity-Link Anchor
+
+The Kustomz side of KD-022 1b Discord-to-Kustomz identity-link records anchors to Kustomz identities held by the Kustomz Identity Engine. This establishes the identity-system referent only; it does not designate the Kustomz Identity Engine as the 1b identity-link holder.
+
+### 7.3 Scope and Exclusions
+
+Recognition of the Kustomz Identity Engine as the 1a system of record does not define the Identity Engine's schemas, identifiers, account model, identity lifecycle, APIs, storage, implementation, permissions, resolution mechanics, validity bounds, lifecycle procedures, edge-awareness mechanisms, or other internal or operational details. Those matters remain undefined unless separately established by an applicable Kustomz owner decision.
+
+The actual holder of KD-022 1b identity-link records remains unestablished. Any designation of that holder, including any explicit Sneak query interest required by KD-034, requires a separate Kustomz owner decision.
 
 ## 7. Adopted Behavioral Boundary
 
@@ -1107,4 +1125,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, or KD-035.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, or KD-037.
