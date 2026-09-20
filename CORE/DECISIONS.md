@@ -972,3 +972,42 @@ Resulting state: Kustomz Toolbox is recognized within KOSD as a governed archite
 - (i) No implementation is authorized by KD-043. Architecture-document execution is a separate execution step under the adopted protocol.
 
 **Execution / Resulting State:** Authorized execution includes recording KD-043 in CORE/DECISIONS.md and, separately, updating CORE/KOS-SNEAK-ARCH.md to reflect Kustomz Workspace's recognized Ticket Engine system-of-record boundary. The recognition blocker for identifying the authoritative Ticket Engine system boundary is satisfied. The separate permission-grant-holder designation, Ticket Engine definition, permission mechanics, cross-system authorization, and implementation remain unresolved.
+
+
+## KD-044 — Ticket Engine Permission-Grant Holder Designation
+
+**Decision ID:** KD-044
+
+**Date:** 2026-09-20
+
+**Item(s):** Explicit KD-025 D1 permission-grant-holder designation for the Ticket Engine action domain, naming **Kustomz Workspace** as the designated permission-grant holder.
+
+**Action:** ADOPT
+
+**Rationale:** KD-043 established Kustomz Workspace as the authoritative Kustomz system of record for KD-022 1d Ticket Engine records and their associated permission-grant state. The owner now separately establishes the KD-025 D1 holder designation for the Ticket Engine action domain. H1 and H2 are satisfied by KD-043's recognition and record-holding boundary. H3 is satisfied under the text-faithful architectural reading of KD-025: PA3 establishes that Sneak resolves permission questions against the applicable holder at evaluation time, while PA5/B8 establish the architectural obtaining/deference pattern; the concrete resolution mechanism remains future contract architecture. H4 is satisfied because no circular grant authority is established.
+
+**Basis / Evidence:**
+- KD-025 — holder qualification, explicit per-action-domain designation, grant-resolution, and fail-closed boundaries.
+- KD-043 — Kustomz Workspace recognition as authoritative system of record for Ticket Engine records and associated permission-grant state.
+- PA3 — permission questions are resolved against the applicable holder at evaluation time.
+- PA5 and B8 — Sneak defers to and interfaces with the applicable authoritative system rather than assuming its role.
+- Izzy's Ticket Engine permission-grant-holder designation proposal, reviewed by Rico and approved by Kustomz/Rick on 2026-09-20.
+- Rico's review: CLEAN, with the text-faithful H3 interpretation explicitly adopted for this designation.
+
+**Conditions / Blockers:**
+- (a) **H1 — Recognition:** Kustomz Workspace is recognized by KD-043 as authoritative for the Ticket Engine grant domain.
+- (b) **H2 — Record-Holding:** Kustomz Workspace is the authoritative system of record for the associated Ticket Engine permission-grant state; it is not merely a downstream consumer, cache, or reporter.
+- (c) **H3 — Resolvability:** At the architectural level, Sneak's permission-resolution pattern is established through PA3 and its deferral/interface boundary through PA5/B8. The concrete resolvability mechanism remains a future contract concern and is not defined by KD-044.
+- (d) **H4 — No Circularity:** No circular grant-authority dependency is established.
+- (e) **D1 — Explicit KD:** Kustomz Workspace is hereby designated as the authoritative permission-grant holder for the Ticket Engine action domain.
+- (f) **D2 — Per Action-Domain:** This designation applies only to the Ticket Engine action domain and does not designate Kustomz Workspace as the holder for all permissions or any other domain.
+- (g) **D3 — Designation Does Not Authorize:** The designation does not authorize any action and does not complete the PA2 gate. Capability, action authority, linked-identity binding, and the applicable permission determination must still be affirmatively established.
+- (h) **PA5 / U1-U2 consequence:** For the Ticket Engine domain, PA5 now has a designated holder target. If the designated holder's determination is unavailable, inaccessible, ambiguous, partial, or otherwise unresolvable, U2/B9/PA7 applies and the action fails closed.
+- (i) **PA7 unchanged:** Deny-by-default remains fully in force.
+- (j) Sneak does not hold permission grants, maintain a permission ledger, or make authorization determinations.
+- (k) The Ticket Engine definition, permission contents, permission schemas/mappings, APIs/transport, implementation, cross-system role assignments, validity/freshness mechanics, and Sneak execution authority remain undefined or unauthorized unless separately established.
+- (l) Remaining architectural work includes the concrete permission-resolution mechanism, permission contents/mappings, per-action authorization-owner/state-owner or executor designations where applicable, and KD-026 cross-system roles.
+- (m) KD-043 remains in force. This decision adds the separate KD-025 D1 designation and does not reinterpret or replace the system-of-record recognition.
+- (n) No implementation is authorized by KD-044. Updating the Sneak architecture artifact is a separate execution step authorized by this decision.
+
+**Execution / Resulting State:** Authorized execution includes recording KD-044 in CORE/DECISIONS.md and, separately, updating CORE/KOS-SNEAK-ARCH.md to record Kustomz Workspace as the designated KD-025 permission-grant holder for the Ticket Engine action domain and the resulting PA5/PA7 boundary. The designation blocker is satisfied for that domain. Concrete resolution mechanics, permission contents/mappings, action authority, cross-system roles, validity/freshness mechanics, implementation, and other explicitly unresolved dependencies remain unestablished.
