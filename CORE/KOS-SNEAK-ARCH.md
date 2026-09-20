@@ -919,7 +919,7 @@ KD-034 establishes the following architectural boundary for Sneak obtaining the 
 
 ### 20.1 QB-P — Decision-Derived Query Interest
 
-Sneak's identity-link query interest is decision-derived, not grant-derived. A KD-038 designating the identity-link holder must also explicitly establish Sneak's bounded query interest. The query interest is limited to per-interaction link-status determinations for the addressing Discord identity.
+Sneak's identity-link query interest is decision-derived, not grant-derived. KD-038 explicitly establishes Sneak's bounded query interest alongside the identity-link holder designation. The query interest is limited to per-interaction link-status determinations for the addressing Discord identity.
 
 This does not authorize bulk reads, enumeration, access to records beyond the required link-status determination, permission-state access, or any authorized action.
 
