@@ -927,7 +927,7 @@ This does not authorize bulk reads, enumeration, access to records beyond the re
 
 No legitimate query exists until all applicable prerequisites are established: an explicit KD designates the identity-link holder; a resolvability contract exists; the holder-designation KD explicitly establishes Sneak's bounded query interest; and no applicable KOSD prohibition prevents the query.
 
-Naming a holder alone does not silently establish query interest. Explicit establishment of query interest is a required content element of the future designation decision. Until the remaining prerequisites are satisfied, identity-link query operation remains unestablished and dependent resolution is undeterminable under RL-D/B9/PA7.
+Naming a holder alone does not silently establish query interest. KD-038 explicitly establishes Sneak's bounded query interest. Until the remaining prerequisites are satisfied, identity-link query operation remains unestablished and dependent resolution is undeterminable under RL-D/B9/PA7.
 
 ### 20.3 QB-R — Query Routed Through Authorization Boundary
 
