@@ -756,7 +756,7 @@ For a Sneak interaction, one Kustomz identity must be determinable for identity-
 
 ### 18.2 IL-H — Link-State Holder
 
-The existence and status of an identity link require an authoritative Kustomz-ecosystem holder designated by a future explicit KOSD decision following KD-025 D1.
+The existence and status of an identity link require the authoritative Kustomz-ecosystem holder designated by KD-038 following KD-025 D1.
 
 Sneak never qualifies as the holder.
 
