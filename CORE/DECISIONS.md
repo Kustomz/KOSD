@@ -559,3 +559,28 @@ Execution / Resulting State:
    - T6 does not define transcript content, formats, schemas, channels, destination mechanics, retention durations, actual holder designation, grant-holder designation, completion declarer, KD-022 3c intake specifics, 3i classification, implementation, or any currently unauthorized action.
    - T6 does not modify any prior adopted boundary and does not authorize implementation.
 8. **Execution / Resulting State:** Decision only. T6-P1–T6-P6, T6-R1–T6-R3, and T6-F1–T6-F4 are now adopted as the authoritative Sneak architectural boundary for transcript completion/disposition. The corresponding update to CORE/KOS-SNEAK-ARCH.md is a separate authorized execution step under the adopted protocol. No implementation, holder designation, completion authority, or currently unauthorized action is authorized by KD-030.
+
+---
+
+## KD-031
+
+1. **Decision ID:** KD-031
+2. **Date:** 2026-09-20
+3. **Item(s):** Proposed T7 architectural boundary — Intake Holding, Routing & Undeliverable-Content Boundary (KD-022 3c; T6-E1): T7-P1–T7-P7, prerequisites T7-R1–T7-R3, and the associated fail-closed handling.
+4. **Action:** ADOPT
+5. **Rationale:** KD-022 3c leaves intake pre-disposition holdings unclassified, while no adopted rule distinguishes unvetted external intake data from authoritative ecosystem state, governs routing failure, or addresses the undeliverable-content gap identified by T6-E1. The owner adopts a bounded architectural rule: intake pre-disposition holdings are EPHEMERAL and interaction-scoped; intake content is unvetted by default and is not authoritative merely because it is received; the holding is bounded within the interaction; only the structural crossing principles from T6-P1–P4 apply to intake, not T6-P5's transcript-specific fidelity rule; routing failure does not reclassify or authorize; and no cross-interaction persistence is permitted without an established authoritative holder/classification. The boundary deliberately leaves the no-authorized-next-state case unresolved rather than inventing persistence, discard, destination, holder, or authority.
+6. **Basis / Evidence:** KD-021 capability #7 and authority/prohibition boundary; KD-022 P2/P3/P4/C0 and 3c; KD-023 B4/B6/B8/B9; KD-024 PA4; KD-026 cross-system effect/role boundary; KD-028 T4 attribution and attribution-versus-authorization distinction; KD-030 T6-P1–P4 and T6-E1/E2; revised T7 proposal reviewed by Rico and explicitly approved by Kustomz/Rick on 2026-09-20.
+7. **Conditions / Blockers:**
+   - **T7-P1:** Intake items awaiting disposition are intake buffers classified as EPHEMERAL and therefore interaction-scoped under KD-022 P2. They are not records and are not authoritative.
+   - **T7-P2:** Intake content is unvetted by default. Sneak must not present it as authoritative under B4. Presentation of intake content remains subject to applicable T4 attribution; unvetted does not mean unattributed.
+   - **T7-P3:** Intake holding is bounded within the interaction. Cross-interaction persistence requires a designated authoritative holder under KD-022 P3; none is designated by KD-031. Sneak may not invent a hold bound.
+   - **T7-P4:** Intake disposition adopts only T6's structural crossing principles: no silent promotion; established declaration authority; disposition as status transition rather than destination; designated receiving holder; and no transition until T7-R1–R3 are established. T6-P5's transcript-specific content-fidelity requirements are not extended to intake. Intake vetting/transformation/content rules remain undefined.
+   - **T7-P5:** For content authorized for disposition but lacking a designated holder/destination, Sneak has no discard, archival, transfer, or other final-disposition authority. While the relevant interaction/state exists, Sneak may surface the undecidable disposition to the Kustomz owner under B8/B9 and KD-001/KD-007. This does not authorize retaining the item across interaction end merely to await a later decision; “await” implies no persistence, callback, or retained state.
+   - **T7-P6:** Routing failure does not reclassify or authorize. Sneak does not retry beyond established rules, reroute to an unestablished destination, or treat failure as disposition.
+   - **T7-P7:** KD-022 does not permit an intake holding to outlive the interaction absent an authoritative holder/classification. If no authorized holder/state exists at interaction end, KD-031 establishes no authorized next state and invents none. Any mechanism permitting unresolved intake to survive the interaction requires a future Kustomz decision establishing the necessary authoritative holder/classification.
+   - **T7-R1:** Intake declaration authority remains to be established.
+   - **T7-R2:** Designated intake holder remains to be established.
+   - **T7-R3:** Intake routing/content rules, including any hold bound, remain to be established.
+   - No new state category, implementation, schema, API, storage mechanism, contract, destination, actual holder, discard authority, or currently unauthorized action is established. Adopted capability #7 remains intact; cross-interaction retention/disposition is simply not authorized where its required holder/classification has not been established.
+   - T6 is otherwise unchanged, and all prior adopted decisions remain unchanged.
+8. **Execution / Resulting State:** KD-031 is adopted as the authoritative Sneak architectural boundary for intake holding, routing, and undeliverable-content handling. Execution of the corresponding update to CORE/KOS-SNEAK-ARCH.md is a separate authorized step under the adopted protocol. No implementation or currently unauthorized action is authorized by KD-031.
