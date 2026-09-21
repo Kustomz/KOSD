@@ -417,7 +417,7 @@ Execution and authorization may belong to different systems only when:
 Grant and authorization determinations remain with their respective owners. Any circular dependency invokes T2-P6.
 
 
-## 12. Explicitly Undefined / Not Established by KD-021 through KD-038
+## 12. Explicitly Undefined / Not Established by KD-021 through KD-045
 
 ### Boundaries adopted; establishments pending
 
@@ -430,8 +430,8 @@ The following architectural boundaries are adopted through KD-045. Their enablin
 - Standing-as-permission-input establishments: designated standing source, designated permission holder, established standing-to-permission basis (boundary: KD-029; no mapping, designation, or authorization created).
 - Transcript completion/disposition establishments: completion-declaration authority and conditions, designated transcript holder, transcript content rules (boundary: KD-030).
 - Intake establishments: intake declaration authority, designated intake holder, intake routing/content rules including any hold bound (boundary: KD-031).
-- Identity-link holder designation is established by KD-038. Query operation remains subject to the unresolved resolvability contract and dependent prerequisites; lifecycle procedures, validity bounds, and edge-awareness mechanism remain pending (boundaries: KD-032; KD-033; KD-034; KD-035; KD-038).
-- Portable work-state record mechanics and authoritative holder (classification: KD-022 1i AUTHORITATIVE with holder designated by KOSD architecture, never Sneak; mechanics and actual holder pending; 3d records remain UNDEFINED).
+- Identity-link holder designation is established by KD-038 and its resolvability contract by KD-041. Query operation remains subject to the separately unresolved lifecycle procedures, validity bounds, edge-awareness mechanism, and other dependent prerequisites (boundaries: KD-032; KD-033; KD-034; KD-035; KD-038; KD-041).
+- Portable work-state record mechanics remain undefined. The authoritative holder is the Kustomz Toolbox in its interface-independent shared-engine capacity under KD-042; Sneak never holds portable work-state. KD-022 1i remains AUTHORITATIVE and 3d records remain UNDEFINED.
 - The authoritative holder for purchase-count facts (KD-022 1c).
 
 ### Not established at any level
