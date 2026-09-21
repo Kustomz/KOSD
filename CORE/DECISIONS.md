@@ -1011,3 +1011,38 @@ Resulting state: Kustomz Toolbox is recognized within KOSD as a governed archite
 - (n) No implementation is authorized by KD-044. Updating the Sneak architecture artifact is a separate execution step authorized by this decision.
 
 **Execution / Resulting State:** Authorized execution includes recording KD-044 in CORE/DECISIONS.md and, separately, updating CORE/KOS-SNEAK-ARCH.md to record Kustomz Workspace as the designated KD-025 permission-grant holder for the Ticket Engine action domain and the resulting PA5/PA7 boundary. The designation blocker is satisfied for that domain. Concrete resolution mechanics, permission contents/mappings, action authority, cross-system roles, validity/freshness mechanics, implementation, and other explicitly unresolved dependencies remain unestablished.
+
+
+## KD-045 — Ticket Engine Permission-Resolution Contract
+
+**Decision ID:** KD-045
+
+**Date:** 2026-09-21
+
+**Item(s):** Ticket Engine Permission-Resolution Contract (PR-1–PR-6), establishing the concrete architectural query/response relationship by which Sneak obtains Kustomz Workspace's authoritative permission-grant determination for the Ticket Engine action domain.
+
+**Action:** ADOPT
+
+**Rationale:** KD-044 designated Kustomz Workspace as the KD-025 D1 permission-grant holder for the Ticket Engine action domain while leaving the concrete H3 resolvability mechanism to future contract architecture. The owner adopts the stricter reading of H3 and establishes a domain-specific resolution contract comparable in function to KD-041: resolution is defined, usability criteria are established, Sneak's bounded query interest is explicitly established, the holder determination is treated as input to PA2 rather than authorization itself, handling remains transient, and the concrete mechanism remains future. This closes H3 for the Ticket Engine action domain without defining the Ticket Engine or selecting implementation.
+
+**Basis / Evidence:**
+- KD-043 — Kustomz Workspace recognition as authoritative system of record for Ticket Engine records and associated permission-grant state.
+- KD-044 — explicit KD-025 D1 designation of Kustomz Workspace as permission-grant holder for the Ticket Engine action domain.
+- KD-025 H3 — requirement that KOSD architecture establish how Sneak obtains the holder's determinations.
+- KD-034 — precedent that naming a holder does not silently establish query interest and that query interest must be explicitly bounded.
+- KD-041 — domain-specific identity-link resolvability contract precedent.
+- Izzy's Ticket Engine Permission-Resolution Contract proposal, reviewed by Rico and approved by Kustomz/Rick on 2026-09-21.
+
+**Conditions / Blockers:**
+- **PR-1 — Resolution defined:** For the Ticket Engine action domain, resolution means Sneak obtaining Kustomz Workspace's authoritative permission-grant determination at evaluation time, per interaction.
+- **PR-2 — Usability criteria:** A determination is usable only when it is holder-sourced from Kustomz Workspace as the KD-044-designated holder, unambiguous as to the permission question asked, and obtained at evaluation time for the action under evaluation. A determination that is unavailable, inaccessible, ambiguous, or partial is unresolvable; U2/B9/PA7 applies and the action fails closed.
+- **PR-3 — Bounded query interest:** Sneak's query interest for Ticket Engine permission questions is explicitly established following the KD-034 precedent. It derives from PA5's deferral requirement directed at the KD-044-designated holder, is bounded to the Ticket Engine action domain, is evaluation-driven, and is per interaction. The query carries the action under evaluation and the linked identity as lookup parameters. Sneak queries; it does not assert, author, cache, or persist grants.
+- **PR-4 — Determination as input, not authorization:** Workspace's determination is authoritative input to PA2's permission-holder element. It does not by itself satisfy PA2, grant action authority, or constitute Sneak making an authorization determination. PA2 remains conjunctive.
+- **PR-5 — Transient handling:** Query and determination handling within the interaction is transient and ephemeral under KD-022 2b, subject to B3 and C0. Sneak establishes no permission ledger, grant records, or cache of record.
+- **PR-6 — Mechanism future:** The concrete API, transport, schema, storage, platform mechanics, and implementation realizing this query/response relationship remain undefined and require future contract/implementation architecture. This contract establishes that Sneak resolves against Workspace and under what relationship, not how.
+- **H-series evaluation:** H1 and H2 remain satisfied by KD-044; H3 is satisfied by PR-1–PR-6; H4 remains satisfied because no circular grant authority is established.
+- **PA5/PA7:** PA5 now has a defined resolution relationship for the Ticket Engine domain. PA7 remains deny-by-default. PA2 remains conjunctive; a usable determination satisfies only its permission-holder element. Fail-closed behavior on unresolvable determinations is unchanged.
+- **Preserved boundaries:** Ticket Engine contents, schemas, mechanics, lifecycle, and implementation remain undefined; “Discord ticket workflow/system” remains working shorthand, not architecture. The Ticket Engine is not expanded into a cross-platform system. Toolbox portable work-state architecture (KD-040/KD-042) is untouched. Permission contents and mappings, per-action authority/state ownership/execution, KD-026 cross-system roles, validity/freshness mechanics, revocation-awareness channels, APIs/transport/schemas/storage/platform mechanics, and implementation remain undefined unless separately established.
+- No implementation or currently unauthorized action is authorized by KD-045.
+
+**Execution / Resulting State:** KD-045 is adopted as the authoritative Ticket Engine permission-resolution contract for the Sneak/Workspace relationship. Authorized execution includes appending KD-045 to CORE/DECISIONS.md and incorporating PR-1–PR-6 into CORE/KOS-SNEAK-ARCH.md. The KD-025 H3 blocker is satisfied for the Ticket Engine action domain. The concrete implementation mechanism and the separately identified permission contents/mappings, per-action authority/state-owner or executor designations, and KD-026 cross-system roles remain unestablished.
