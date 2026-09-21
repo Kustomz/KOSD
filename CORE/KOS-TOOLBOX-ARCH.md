@@ -155,7 +155,7 @@ The following remain undefined or unestablished by this architecture:
 - Authoritative holders for Toolbox-modified state.
 - Permission grant-holder designations.
 - Permission mappings and authorizations.
-- Portable work-state operational mechanics and procedures; the holder is established by KD-042.
+- Portable work-state operational mechanics and procedures remain undefined, but KOSD jurisdiction over such mechanics is bounded by KD-047.
 - Cross-system contracts and conformance requirements.
 - Implementation location and implementation model.
 - NSB/SCB/page-level functional architecture.
@@ -174,12 +174,12 @@ This architecture is constrained by:
 
 The following remain genuine blockers for subsequent establishment or implementation where applicable:
 
-1. Portable work-state operational mechanics and procedures; the holder is established by KD-042.
+1. Portable work-state operational mechanics and procedures; KOSD jurisdiction over them is established by KD-047, but the mechanics themselves remain undefined.
 2. Permission grant-holder designations.
 3. Authoritative holders for Toolbox-modified CSR2 state.
 4. KOS-RELEASE promotion for any future module/release treatment.
 
-The portable work-state holder blocker is satisfied by KD-042. The remaining blockers concern mechanics, permissions, other authoritative holders, and release treatment as separately identified.
+The portable work-state holder blocker is satisfied by KD-042, and the KOSD governance-scope blocker for portable work-state operational mechanics is satisfied by KD-047. The mechanics themselves remain undefined, as do permissions, other authoritative holders, and release treatment as separately identified.
 
 ## 11. Implementation Boundary
 
@@ -193,4 +193,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Kustomz Toolbox architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-001 through KD-042.
+This document does not supersede or independently redefine KD-001 through KD-047.
