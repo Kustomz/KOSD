@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043; KD-044; KD-045  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043; KD-044; KD-045; KD-046  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -1194,6 +1194,20 @@ KD-035 does not designate the actual holder, establish lifecycle implementation,
 
 KD-035 does not modify any prior adopted boundary.
 
+### 22.12 EA — Identity-Link Lifecycle Edge-Awareness Contract
+
+KD-046 establishes the following architectural contract connecting Sneak's existing identity-link resolution relationship to the already-adopted lifecycle invalidation semantics.
+
+- **EA-1 — Parties and purpose:** Authority: the Kustomz Identity Engine, holder of KD-022 1b identity-link records and authoritative lifecycle source under KD-038/LC-A. Consumer: Sneak, acting on its established interest in link-status currency for identity-bound evaluation. Purpose: make LC-F/T3-P3 invalidation operative for Sneak by establishing the exclusive architectural basis of edge knowledge. No new authority, holder, or state category is created.
+- **EA-2 — Awareness defined:** Awareness means Sneak obtaining the holder's authoritative assertion that a lifecycle edge has been established affecting the link under evaluation. Awareness concerns edge occurrence and resulting LC-S status, never edge mechanics, lifecycle procedures, or holder internals.
+- **EA-3 — Exclusive source; no inference:** Edge knowledge comes exclusively from holder assertion obtained through Sneak's established per-interaction resolution relationship under KD-041. This exclusivity is a Sneak-side epistemic constraint: it governs what Sneak may treat as edge knowledge. It does not obligate the Identity Engine to any new proactive assertion, procedure, or conveyance beyond its established authoritative-source role. Sneak never infers edges from interaction behavior, time passage, absence of signal, or its own observations. Absence of edge awareness is not knowledge that no edge occurred.
+- **EA-4 — Known edge established:** An edge is known to Sneak when obtained under EA-3. This contract is the applicable established mechanism referenced by LC-M at the architectural level. A known edge renders the pre-edge-anchored 2e usage reference unusable for new identity-bound evaluations; completed work is not retroactively altered.
+- **EA-5 — Currency scope:** Within the originating interaction's established 2e usage scope, the holder's acquisition-time determination governs under RC-T. Beyond that scope, currency is re-established through the holder, never assumed or inferred. No mandatory re-resolution is imposed beyond LC-M/RC-T.
+- **EA-6 — Awareness failure handling:** If edge awareness is unavailable, ambiguous, or cannot be obtained where currency is required, Sneak does not rely on the determination's currency. Such outcomes fold into the existing RL-D/QB-F/B9/PA7 fail-closed taxonomy. Failed or partial awareness leaves no retained state.
+- **EA-7 — Transient awareness state; mechanism future:** Awareness state is transient and ephemeral under KD-022 2b/2e, subject to B3 and C0. Sneak holds no cross-interaction edge ledger. Transport, endpoints, push/pull, polling, timing, retry, and presentation remain undefined and future contract/implementation architecture. This contract establishes the exclusive basis and conditions of edge knowledge, not how it is conveyed.
+
+**Composition and exclusions:** KD-041 is used, not modified; LC-F/LC-M/RC-T are composed, not redefined; KD-038's holder designation is relied upon, not extended. The contract imposes no new procedural obligation on the Identity Engine. PA2, PA5, and PA7 remain unchanged. Lifecycle procedures, validity bounds/values, KD-026 cross-system roles, D-QB6 platform-supplied addressing identity, link-resolution mechanics beyond KD-041, and API/transport/schema/storage/platform mechanics remain undefined. No new authority, holder, state category, authorization, or implementation is established.
+
 ## 23. Known Architectural Tensions
 
 ### 23.1 Derived Statistics
@@ -1222,7 +1236,7 @@ KD-026 establishes the applicable-system framework for cross-system actions, but
 
 ### 23.5 Revocation Freshness
 
-KD-027 establishes the architectural freshness boundary, but validity-bound values, revocation-awareness channels, holder-bound ratification, and action/domain stringency remain **UNDEFINED**.
+KD-027 establishes the architectural freshness boundary, and KD-046 establishes the identity-link lifecycle edge-awareness relationship that makes holder-established link-edge invalidation operative for Sneak. Validity-bound values, holder-bound ratification, concrete edge-awareness conveyance, and action/domain stringency remain **UNDEFINED**.
 
 ### 23.6 Derived-Information Attribution
 
@@ -1262,4 +1276,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, KD-037, KD-038, KD-041, KD-042, KD-043, KD-044, or KD-045.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, KD-037, KD-038, KD-041, KD-042, KD-043, KD-044, or KD-045. KD-046.
