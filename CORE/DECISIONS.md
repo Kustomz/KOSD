@@ -1079,3 +1079,37 @@ Resulting state: Kustomz Toolbox is recognized within KOSD as a governed archite
 - No implementation or currently unauthorized action is authorized by KD-046.
 
 **Execution / Resulting State:** KD-046 is adopted as the authoritative identity-link lifecycle edge-awareness contract for the Sneak/Identity Engine relationship. Authorized execution includes appending KD-046 to CORE/DECISIONS.md and incorporating EA-1–EA-7 into CORE/KOS-SNEAK-ARCH.md. The edge-awareness semantic gap identified by LC-M is closed at the architectural relationship level. Holder-side lifecycle procedures, validity values, KD-026 roles, D-QB6, and concrete awareness conveyance/implementation remain unestablished.
+
+
+## KD-047 — Toolbox Portable-Work-State Governance Scope
+
+**Decision ID:** KD-047
+
+**Date:** 2026-09-21
+
+**Item(s):** Toolbox Portable-Work-State Governance Scope (GS-1–GS-6), establishing the KOSD governance boundary for Toolbox portable-work-state operational mechanics.
+
+**Action:** ADOPT
+
+**Rationale:** KD-039 recognized the Kustomz Toolbox architectural concept, KD-040 established portable work-state as an authoritative Kustomz-identity-bound architectural state, and KD-042 designated the Kustomz Toolbox, in its interface-independent shared-engine capacity, as the authoritative holder. The owner now establishes the scope within which KOSD may govern operational mechanics concerning that work-state. This decision establishes jurisdiction only; it does not establish operational mechanics, authorize implementation, or pre-decide any in-scope lifecycle, invalidation, conflict-handling, or retention/disposition rules.
+
+**Basis / Evidence:**
+- KD-039 — Toolbox architectural recognition and shared-engine/interface boundary.
+- KD-040 — portable work-state architectural recognition and identity-scoped state boundary.
+- KD-042 — Kustomz Toolbox designation as authoritative holder of portable work-state.
+- The owner's 2026-09-21 scope decision: KOSD governs Toolbox portable-work-state operational mechanics only where those mechanics affect architectural authority, continuity, identity binding, lifecycle, invalidation, or cross-interface behavior; concrete implementation mechanics remain outside KOSD.
+- Izzy's Toolbox Portable-Work-State Governance Scope proposal (GS-1–GS-6), reviewed by Rico and approved by Kustomz/Rick on 2026-09-21.
+
+**Conditions / Blockers:**
+- **GS-1 — Scope rule:** KOSD governs Toolbox portable-work-state operational mechanics only where those mechanics affect architectural authority, continuity, identity binding, lifecycle, invalidation, or cross-interface behavior. Concrete implementation mechanics remain outside KOSD.
+- **GS-2 — Concern anchors:** Architectural authority is anchored to KD-022 state classifications and KD-042's holder designation; continuity to KD-021; identity binding to KD-040; lifecycle and invalidation are listed as in-scope concerns without establishing semantics; cross-interface behavior is bounded to the KD-039 interfaces (Web, Android, Discord/Sneak).
+- **GS-3 — Jurisdiction, not authorization:** The boundary settles what KOSD may govern. It authorizes no mechanics work, establishes no mechanic, and leaves the Toolbox implementation unauthorized.
+- **GS-4 — In-scope is not established:** Lifecycle procedures, invalidation rules, conflict handling, and retention/disposition are within KOSD's jurisdiction but remain undefined. Future proposals may address them through the normal KOS Decision & Promotion Protocol; this decision pre-decides none of them.
+- **GS-5 — Per-mechanic application:** Whether a specific operational mechanic affects a listed concern, and therefore falls within KOSD's jurisdiction, is determined through future explicit KOSD decisions under the adopted KOS Decision & Promotion Protocol. This boundary establishes the criterion; it pre-classifies no mechanic and creates no standing adjudicator.
+- **GS-6 — Engine scope; implementation outside:** The boundary concerns the Toolbox shared engine's portable-work-state mechanics in its KD-042 holder capacity; interfaces are excluded as holders per KD-042. Concrete implementation mechanics, including storage, transport, serialization, schemas, APIs, and data structures, remain outside KOSD. Where an implementation choice implicates a listed concern, only the architectural implication is KOSD-governed, not the implementation choice itself.
+- KD-039, KD-040, and KD-042 remain in force and are not modified by this decision.
+- No new authority, holder, state category, authorization, or implementation is established.
+- Identity-link and Ticket Engine tracks remain untouched.
+- No implementation or currently unauthorized action is authorized by KD-047.
+
+**Execution / Resulting State:** KD-047 is adopted as the authoritative KOSD governance-scope boundary for Toolbox portable-work-state operational mechanics. The jurisdictional blocker for deciding whether KOSD governs those mechanics is closed. Lifecycle procedures, invalidation rules, conflict handling, retention/disposition, per-mechanic scope application, and all concrete implementation mechanics remain unestablished and require future decisions/proposals where applicable.
