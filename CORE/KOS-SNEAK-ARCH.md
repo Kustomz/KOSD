@@ -1,7 +1,7 @@
 # KOS Sneak Architecture
 
 **Status:** ADOPTED FRAMEWORK  
-**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043; KD-044  
+**Authority:** KD-021; KD-022; KD-023; KD-024; KD-025; KD-026; KD-027; KD-028; KD-029; KD-030; KD-031; KD-032; KD-033; KD-034; KD-035; KD-037; KD-038; KD-041; KD-043; KD-044; KD-045  
 **Scope:** Kustomz ecosystem conversational interface architecture
 
 ## 1. Identity and Purpose
@@ -155,6 +155,8 @@ KD-043 recognizes **Kustomz Workspace** as the authoritative Kustomz system of r
 KD-044 separately designates **Kustomz Workspace** as the KD-025 D1 permission-grant holder for the Ticket Engine action domain. The designation is per-domain and does not extend to other permissions.
 
 The designation establishes a holder target for PA5/PA3 resolution but does not authorize any action or complete the PA2 gate. Capability, action authority, linked-identity binding, and the applicable permission determination remain independently required.
+
+KD-045 establishes the domain-specific permission-resolution relationship by which Sneak obtains Workspace's authoritative determination at evaluation time. PR-1–PR-6 define resolution, usability, bounded query interest, determination-as-input, transient handling, and the future mechanism boundary. The concrete API, transport, schema, storage, platform mechanics, and implementation remain undefined.
 
 Recognition and designation do not define the Ticket Engine's contents, schemas, mechanics, lifecycle procedures, APIs, storage, implementation, permission mappings, authorization rules, validity/freshness behavior, or cross-system roles. Those matters remain undefined unless separately established by an applicable Kustomz owner decision.
 
@@ -345,9 +347,22 @@ For Ticket Engine actions, PA5 now has an established holder target and PA2's pe
 
 **U3 — Circular or Irreconcilably Competing Designations:** These yield no determinable holder and therefore follow U2.
 
-The concrete mechanism by which Sneak obtains the holder's determination remains undefined and requires future contract architecture. No implementation or Sneak-side permission ledger is established.
+KD-045 establishes the concrete architectural relationship by which Sneak obtains the designated holder's determination for the Ticket Engine action domain. PR-1–PR-6 define resolution, usability criteria, bounded query interest, determination-as-input, transient handling, and the future mechanism boundary. The concrete API, transport, schema, storage, platform mechanics, and implementation remain undefined. No Sneak-side permission ledger is established.
 
-KD-025 establishes the holder-designation framework and does not itself authorize actions. Actual holder designations are established by later per-domain KOSD decisions, including KD-044 for the Ticket Engine action domain.
+KD-025 establishes the holder-designation framework and does not itself authorize actions. Actual holder designations are established by later per-domain KOSD decisions, including KD-044 for the Ticket Engine action domain, with KD-045 establishing its resolution contract.
+
+### 10.6 PR — Ticket Engine Permission-Resolution Contract
+
+KD-045 establishes the following architectural contract for resolving Ticket Engine permission questions against the KD-044-designated Kustomz Workspace holder.
+
+- **PR-1 — Resolution defined:** For the Ticket Engine action domain, resolution means Sneak obtaining Kustomz Workspace's authoritative permission-grant determination at evaluation time, per interaction.
+- **PR-2 — Usability criteria:** A determination is usable only when it is holder-sourced from Kustomz Workspace, unambiguous as to the permission question asked, and obtained at evaluation time for the action under evaluation. Unavailable, inaccessible, ambiguous, or partial determinations are unresolvable; U2/B9/PA7 applies and the action fails closed.
+- **PR-3 — Bounded query interest:** Sneak's query interest is explicitly established for Ticket Engine permission questions. It derives from PA5's deferral requirement, is bounded to the Ticket Engine action domain, is evaluation-driven, and is per interaction. The query carries the action under evaluation and linked identity as lookup parameters. Sneak queries; it does not assert, author, cache, or persist grants.
+- **PR-4 — Determination as input, not authorization:** Workspace's determination is authoritative input to PA2's permission-holder element. It does not by itself satisfy PA2, grant action authority, or constitute Sneak making an authorization determination. PA2 remains conjunctive.
+- **PR-5 — Transient handling:** Query and determination handling within the interaction is transient and ephemeral under KD-022 2b, subject to B3 and C0. Sneak establishes no permission ledger, grant records, or cache of record.
+- **PR-6 — Mechanism future:** The concrete API, transport, schema, storage, platform mechanics, and implementation realizing this query/response relationship remain undefined and require future contract/implementation architecture. The contract establishes that Sneak resolves against Workspace and under what relationship, not how.
+
+The contract does not define Ticket Engine contents, schemas, mechanics, lifecycle, permission contents or mappings, per-action authority/state ownership/execution, KD-026 cross-system roles, validity/freshness mechanics, or cross-platform scope. It does not alter PA7 deny-by-default, PA2's conjunctive gate, or Sneak's prohibition on making authorization determinations.
 
 ## 11. Adopted Cross-System Authorization Boundary
 
@@ -406,7 +421,7 @@ Grant and authorization determinations remain with their respective owners. Any 
 
 ### Boundaries adopted; establishments pending
 
-The following architectural boundaries are adopted through KD-038. Their enabling establishments — holders, declarers, rules, values, mechanics — remain undefined and proceed through later KDs, contracts, or owner decisions. Adoption of a boundary establishes none of its pending establishments.
+The following architectural boundaries are adopted through KD-045. Their enabling establishments — holders, declarers, rules, values, mechanics — remain undefined and proceed through later KDs, contracts, or owner decisions. Adoption of a boundary establishes none of its pending establishments.
 
 - Permission grant-holder designation per capability/domain remains undefined except where a later explicit decision has designated a holder; KD-044 establishes Kustomz Workspace for the Ticket Engine action domain only.
 - Actual authorization owners, grant holders, or state owners/executors for any specific action; system footprints for specific cross-system actions (boundary: KD-026).
@@ -430,6 +445,7 @@ The following architectural boundaries are adopted through KD-038. Their enablin
 - Role-to-permission mappings.
 - Discord permissions.
 - Ticket Engine permission contents and mappings.
+- The concrete implementation mechanism for the KD-045 Ticket Engine permission-resolution contract (PR-6).
 - Kustomz-to-Discord identity-linking implementation mechanics, lifecycle procedures, and edge-awareness mechanism.
 - Conformance procedures.
 - Sneak definition version.
@@ -1198,7 +1214,7 @@ The portable work-state record mechanics and lifecycle procedures remain **UNDEF
 
 PA3 requires permission grants to reside with the applicable authoritative holder. KD-043 recognizes Kustomz Workspace as the authoritative system of record for Ticket Engine records and their associated permission-grant state. KD-044 separately designates Kustomz Workspace as the KD-025 D1 permission-grant holder for the Ticket Engine action domain.
 
-The designation establishes the holder target for this domain but does not authorize actions, complete PA2, define permission contents/mappings, or establish the concrete resolution mechanism. Those remaining matters are **UNDEFINED** or unauthorized as applicable.
+The designation establishes the holder target for this domain but does not authorize actions, complete PA2, or define permission contents/mappings. KD-045 separately establishes the concrete architectural resolution relationship while leaving its implementation mechanism undefined.
 
 ### 23.4 Cross-System Authorization
 
@@ -1246,4 +1262,4 @@ Creating or updating this architecture record does not authorize implementation.
 
 Changes to the adopted Sneak architecture shall be made through later explicit Kustomz owner decisions recorded under the adopted KOS Decision & Promotion Protocol.
 
-This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, KD-037, KD-038, KD-041, KD-042, KD-043, or KD-044.
+This document does not supersede or independently redefine KD-021, KD-022, KD-023, KD-024, KD-025, KD-026, KD-027, KD-028, KD-029, KD-030, KD-031, KD-032, KD-033, KD-034, KD-035, KD-037, KD-038, KD-041, KD-042, KD-043, KD-044, or KD-045.
