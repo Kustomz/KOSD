@@ -13,10 +13,10 @@
 | BA-004 | Master Shield (Widened) | `BA-004_MASTER_SHIELD_WIDENED.png` |
 | BA-005 | Master MOD SHOP | `BA-005_MASTER_MOD_SHOP.png` |
 | BA-006 | Master EST. 2017 Badge | `BA-006_MASTER_EST_2017_BADGE.png` |
-| BA-007 | TOOLBOX | **Binary asset pending** |
-| BA-008 | THE ULTIMATE CSR2 TOOLBOX + EST. 2026 | **Binary asset pending** |
-| BA-009 | Kustomz Mod Shop Logo | **Binary asset pending** |
-| BA-010 | Kustomz Toolbox Logo | **Binary asset pending** |
+| BA-007 | TOOLBOX | `BA-007_TOOLBOX.png` |
+| BA-008 | THE ULTIMATE CSR2 TOOLBOX + EST. 2026 | `BA-008_ULTIMATE_CSR2_TOOLBOX.png` |
+| BA-009 | Kustomz Mod Shop Logo | `BA-009_KUSTOMZ_MOD_SHOP_LOGO.png` |
+| BA-010 | Kustomz Toolbox Logo | `BA-010_KUSTOMZ_TOOLBOX_LOGO.png` |
 
 ## Asset Hierarchy
 
@@ -52,4 +52,4 @@ Treat each supplied master artwork as the source image. Do not redraw, restyle, 
 
 ## Important Boundary
 
-The Markdown records document asset identity, composition, and preservation rules. PNG files are the corresponding repository binary assets when present. BA-007 through BA-010 are currently defined in the registry; their binary PNG assets remain pending.
+The Markdown records document asset identity, composition, and preservation rules. PNG files are the corresponding repository binary assets when present. BA-007 through BA-010 are defined in the registry and their binary PNG assets have been ingested.
