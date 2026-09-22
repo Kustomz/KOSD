@@ -38,6 +38,21 @@ BA-001 through BA-008 are independent master brand assets.
 
 The source components remain independent masters and must not be replaced by the composite logos.
 
+## Supporting Brand Components
+
+The `COMPONENTS/` directory contains eight reusable supporting brand components:
+
+- `COMPONENT_ACCENT.png`
+- `COMPONENT_BOLT.png`
+- `COMPONENT_CENTER_PLATE.png`
+- `COMPONENT_EDGE.png`
+- `COMPONENT_MESH.png`
+- `COMPONENT_PLATE.png`
+- `COMPONENT_RIVET.png`
+- `COMPONENT_STARS.png`
+
+These supporting components are not numbered BA master assets and do not create additional BA IDs. Their individual documentation is in `COMPONENTS/COMPONENTS.md`.
+
 ## Current Asset Set
 
 The current Brand Asset registry contains BA-001 through BA-010. The former BA-003 Master Crown (CSR2) asset has been removed from the active set and is superseded by BA-003 Master Wrenches (CSR2).
@@ -52,4 +67,4 @@ Treat each supplied master artwork as the source image. Do not redraw, restyle, 
 
 ## Important Boundary
 
-The Markdown records document asset identity, composition, and preservation rules. PNG files are the corresponding repository binary assets when present. BA-007 through BA-010 are defined in the registry and their binary PNG assets have been ingested.
+The Markdown records document asset identity, composition, and preservation rules. PNG files are the corresponding repository binary assets when present. BA-007 through BA-010 are defined in the registry and their binary PNG assets have been ingested. Supporting components are documented separately under `COMPONENTS/`.
