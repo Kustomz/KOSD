@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "title": "evgt Universal 13 IDs - Cluster Fingerprints",
+    "date": "2026-09-26",
+    "method": "Cross-save correlation of int2/int3 values for IDs present in all 10 saves",
+    "finding": "int2 and int3 are Unix timestamps. Three behavioral groups identified."
+  },
+  "group_a": {
+    "ids": [601, 1054, 2055, 3139, 4903],
+    "pattern": "int2 == int3 (single timestamp), all five share same timestamp per save",
+    "timestamps_by_save": {
+      "nsb_12_hnfl": "2022-03-29", "nsb_13_gdrive": "2022-03-29",
+      "nsb_14_ihov": "2024-07-18", "nsb_15_uzjh": "2022-03-29",
+      "nsb_1_p093": "2022-03-29", "nsb_3_5mkc": "2022-03-29",
+      "nsb_4_cnmt": "2022-03-30", "nsb_5_tkbl": "2022-03-31",
+      "nsb_6_ytep": "2022-03-29", "nsb_7_ls5g": "2024-07-27"
+    },
+    "hypothesis": "Batch of tutorial/onboarding system events completed at account creation"
+  },
+  "group_b": {
+    "ids": [4273, 5383, 10133, 20133, 30133],
+    "pattern": "int2 = start timestamp, int3 = 0 (incomplete) in 8/10 saves",
+    "completed_in": {
+      "nsb_14_ihov": "started 2024-07-18, completed 2024-07-27 (9-day span)",
+      "nsb_7_ls5g": "int3 populated (completed)"
+    },
+    "hypothesis": "Multi-day event chain. 0 = not yet completed."
+  },
+  "group_c": {
+    "ids": [9001, 123463, 300077149],
+    "patterns": {
+      "9001": "int2 != int3, spans days to months (long-running?)",
+      "123463": "int2 != int3, varies widely per save",
+      "300077149": "int3 = int2 + 1 (1-second duration, instantaneous action)"
+    },
+    "hypothesis": "Varied event types with different duration semantics"
+  },
+  "refined_semantics": {
+    "triplet": "(event_id, start_timestamp, end_timestamp)",
+    "int3_zero": "event started but not completed",
+    "int2_eq_int3": "instantaneous or single-moment event",
+    "confidence": "STRONGLY SUPPORTED - timestamps are real Unix times, patterns consistent across 10 saves"
+  }
+}

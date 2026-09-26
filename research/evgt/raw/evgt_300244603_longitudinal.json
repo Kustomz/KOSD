@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "title": "Longitudinal tracking: Event ID 300244603",
+    "date": "2026-09-26",
+    "confidence": "STRONGLY SUPPORTED",
+    "classification": "Class A (confirmed second member)"
+  },
+  "occurrences": {
+    "group1_tight": {
+      "saves": ["nsb_12_hnfl", "nsb_13_gdrive", "nsb_15_uzjh", "nsb_1_p093", "nsb_6_ytep"],
+      "window": "2023-09-16 14:11 → 14:54 (43 min each, identical)",
+      "intersection": 12
+    },
+    "group2_wide": {
+      "saves": ["nsb_4_cnmt", "nsb_5_tkbl"],
+      "window": "2023-09-05 start, multi-day durations",
+      "note": "Wider windows capture more simultaneous IDs (noise)"
+    },
+    "outlier": {
+      "nsb_7_ls5g": "2024-08-15 (a year later), 122 min"
+    }
+  },
+  "companion_fingerprint_group1": {
+    "shared_12": [4273, 5383, 10133, 20133, 30133, 300108503, 300121734, 415800030, 418500030, 418700030, 418800030, 419700030],
+    "has_42X00030": true,
+    "count_42X00030": 5,
+    "has_9001": false,
+    "has_batch_siblings": true,
+    "batch_siblings": [300108503, 300121734]
+  },
+  "classification_reasoning": "42X00030 present (5), 9001 absent, batch siblings present = Class A signature. Second confirmed member.",
+  "methodological_note": "Tight time windows yield cleaner fingerprints. Wide windows accumulate unrelated simultaneous events."
+}

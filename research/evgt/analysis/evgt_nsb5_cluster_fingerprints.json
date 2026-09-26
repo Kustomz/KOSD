@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "title": "evgt nsb_5 Unique ID Cluster Fingerprints",
+    "date": "2026-09-26",
+    "method": "Grouped 392 nsb_5-unique IDs by timestamp behavior and ID structure",
+    "confidence": "STRONGLY SUPPORTED for structural patterns; event identities still opaque"
+  },
+  "temporal_pattern": {
+    "span": "2022-08-23 to 2025-08-26 (~3 years)",
+    "cadence": "1-3 events per day, nearly every day",
+    "completion_rate": "Nearly all completed (int3 != 0)",
+    "incomplete": ["2025-06-07 (abandoned?)", "2025-07-05 (abandoned?)", "2025-08-26 (5 IDs, most recent, in-progress)"],
+    "hypothesis": "Daily event participation history, not a campaign"
+  },
+  "id_structural_families": {
+    "300xxxxxx": {
+      "count": 260,
+      "description": "Main event ID space, present in all saves (7-815 per save)",
+      "hypothesis": "Standard timed/flash/daily events"
+    },
+    "800XXX999": {
+      "count": 81,
+      "description": "81 unique to nsb_5, 122 total across corpus. 5 shared by 6 saves.",
+      "shared_examples": [800067999, 800070999, 800074999, 800095999, 800103999],
+      "hypothesis": "Recurring event set; shared ones may be permanent fixtures"
+    },
+    "416X00030": {
+      "count": "subset of 'other'",
+      "examples": [415900030, 416000030, 416200030, 416300030, 416400030],
+      "description": "Sequential numbering (4160, 4162, 4163...) with 00030 suffix",
+      "hypothesis": "Numbered event series with type suffix 030"
+    },
+    "618XXXXXX_619XXXXXX": {
+      "count": "~51",
+      "examples": [618602402, 618602403, 618902401, 619202402],
+      "description": "618/619 prefix with varied suffixes",
+      "hypothesis": "Another event family, structure TBD"
+    }
+  },
+  "key_insight": "IDs are NOT opaque hashes. They have internal structure encoding event family/type/sequence. The 030 and 999 suffixes and 300/800/416/618 prefixes are type markers."
+}

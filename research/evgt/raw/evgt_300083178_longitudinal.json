@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "title": "Longitudinal tracking: Event ID 300083178 (Class B)",
+    "date": "2026-09-26",
+    "confidence": "STRONGLY SUPPORTED"
+  },
+  "occurrences": {
+    "count": 7,
+    "window": "2022-03-31 to 2022-04-03",
+    "durations": {
+      "instantaneous_0min": ["nsb_12_hnfl", "nsb_13_gdrive", "nsb_15_uzjh", "nsb_1_p093", "nsb_6_ytep"],
+      "2_min": ["nsb_4_cnmt"],
+      "3748_min": ["nsb_5_tkbl"]
+    }
+  },
+  "companion_fingerprint": {
+    "shared_all_7": [4273, 5383, 9001, 10133, 20133, 30133],
+    "has_9001": true,
+    "has_42X00030": false,
+    "has_batch_sibling": false
+  },
+  "taxonomy": {
+    "class": "B",
+    "distinguisher_vs_class_A": "9001 present, no 42X00030 series, typically instantaneous",
+    "behavioral_class": "UNKNOWN - taxonomy pending"
+  }
+}

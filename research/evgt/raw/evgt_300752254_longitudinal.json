@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "title": "Longitudinal tracking: Event ID 300752254",
+    "date": "2026-09-26",
+    "confidence": "STRONGLY SUPPORTED",
+    "method": "Tracked single recurring ID across 3 saves, 2 time periods"
+  },
+  "occurrences": {
+    "nsb_12_hnfl": {
+      "window": "2025-05-07 18:17 → 2025-05-07 19:37 (80 min)",
+      "status": "completed",
+      "simultaneous_ids": 28
+    },
+    "nsb_6_ytep": {
+      "window": "2025-05-07 18:17 → 2025-05-07 19:37 (80 min)",
+      "status": "completed",
+      "simultaneous_ids": 27,
+      "note": "Identical window to nsb_12. 27/28 IDs shared."
+    },
+    "nsb_5_tkbl": {
+      "window": "2025-08-26 17:27 → ACTIVE",
+      "status": "active",
+      "simultaneous_ids": 46
+    }
+  },
+  "companion_fingerprint": {
+    "shared_all_three": [4273, 5383, 10133, 20133, 30133, 300752054, 422400030, 423600030, 423700030, 423800030],
+    "groups": {
+      "universal_system": [4273, 5383, 10133, 20133, 30133],
+      "companion_300": [300752054],
+      "series_42X00030": [422400030, 423600030, 423700030, 423800030]
+    }
+  },
+  "key_findings": [
+    "Same event, same time window = same companion IDs across accounts (27/28 overlap)",
+    "300752054 is numerically close (200 apart) = same event batch",
+    "42X00030 series consistently accompanies this event",
+    "Group B universal IDs are always present = system-level companions",
+    "The ID identifies the event definition; timestamps identify the occurrence"
+  ]
+}

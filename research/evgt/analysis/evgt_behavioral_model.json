@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "title": "evgt Behavioral Model - Event Engine Reverse Engineering",
+    "date": "2026-09-26",
+    "confidence": "STRONGLY SUPPORTED",
+    "method": "Cross-save temporal correlation of 3,898 records across 10 saves"
+  },
+  "record_model": {
+    "format": "(event_id, start_timestamp, end_timestamp)",
+    "int3_zero": "active/incomplete",
+    "int2_eq_int3": "instantaneous",
+    "int3_gt_int2": "completed with observed duration"
+  },
+  "id_structure": {
+    "300xxxxxx": {
+      "chronological": "99.4% concordance between numeric order and start time",
+      "meaning": "IDs assigned sequentially as events are created",
+      "reuse": "Same ID appears across accounts at different times = recurring events"
+    },
+    "800XXX999": {
+      "pattern": "Recurring fixture events, 5 shared across 6 saves"
+    },
+    "416X00030": {
+      "pattern": "Sequential series with 030 type suffix"
+    },
+    "618_619xxxxxx": {
+      "pattern": "Structured family, TBD"
+    }
+  },
+  "recurring_event_evidence": {
+    "300795296": {
+      "nsb_5_tkbl": "active since 2025-08-26",
+      "nsb_15_uzjh_Rick": "active since 2025-09-02",
+      "nsb_1_p093": "active since 2025-09-02",
+      "interpretation": "Same event, one-week window, three accounts"
+    },
+    "300752254": {
+      "nsb_12_hnfl": "completed 2025-05-07",
+      "nsb_6_ytep": "completed 2025-05-07",
+      "nsb_5_tkbl": "active since 2025-08-26",
+      "interpretation": "Same event ID reused 3 months later = recurring event"
+    }
+  },
+  "key_insights": [
+    "Event IDs are NOT opaque hashes - they encode family, type, and chronological sequence",
+    "300* IDs are assigned sequentially (99.4% time-ordered)",
+    "Same ID reused across accounts and time periods = recurring event instances",
+    "The save corpus is a behavioral laboratory for the event engine",
+    "Active→completed transitions are observable in the data"
+  ],
+  "next_experiments": [
+    "Correlate ID families against ecdm state changes",
+    "Map 800*999 fixtures to specific recurring event types",
+    "Decode 030 suffix semantics via completion patterns",
+    "Track a single recurring ID across all its occurrences for lifecycle model"
+  ]
+}
