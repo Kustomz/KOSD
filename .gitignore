@@ -1,0 +1,23 @@
+# Local/generated Python artifacts
+__pycache__/
+*.pyc
+
+# Local logs
+*.log
+
+# Temporary/editor artifacts
+*.tmp
+*.bak
+*~
+
+# OS metadata
+.DS_Store
+
+# Local secrets/config
+.env
+*.key
+*.pem
+
+# Common local dependency environments
+node_modules/
+.venv/
