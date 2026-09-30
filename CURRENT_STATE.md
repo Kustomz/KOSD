@@ -8,7 +8,7 @@
 
 ## Project status
 **KOSD decision/governance work: PAUSED** since 2026-09-21 by owner direction. No new decision records, proposals, or promotions since KD-047.
-**Repo bridge/infrastructure:** proceeds only by explicit per-action owner authorization — no standing authorization. Completed 2026-09-30: checkout alignment (`main` → `origin/main`), `.gitignore` lifecycle (inventory → draft → write → commit `9e7ae7f1` → push; `origin/main` now at `9e7ae7f1`), read-only architecture pass, this record.
+**Repo bridge/infrastructure:** proceeds only by explicit per-action owner authorization — no standing authorization. Completed 2026-09-30: checkout alignment (`main` → `origin/main`); `.gitignore` lifecycle (inventory → draft → write → commit `9e7ae7f1` → push); read-only architecture pass; `CURRENT_STATE.md` draft → adoption → commit `9dc897c9f91d67fb8c66cb88068e2b1b19b0c759` → push. `origin/main` now at `9dc897c9f91d67fb8c66cb88068e2b1b19b0c759`.
 
 ## Last stopping point (pause record, 2026-09-21)
 - KD-046 and KD-047 adopted, closed, and independently verified.
@@ -22,8 +22,8 @@
 **Governance question (open, not decided here):** commit `9e7ae7f1` (`.gitignore`) was relay-authorized and carries no KD record. Whether infrastructure changes require decision records is unresolved.
 
 ## Next intended target
-1. Rick's decision on this draft: adopt as the canonical state record, revise, or reject.
-2. If adopted, the next architectural question is the one this draft serves: the minimum coordination-layer state (this record is step one).
+1. This record is adopted. The active verification step is the cold-read test of the coordination-layer premise (first test completed 2026-09-30).
+2. The next architectural question is the one this record serves: the minimum coordination-layer state (this record is step one).
 3. Absent explicit direction, KOSD work remains paused.
 
 ## Open edges (state-relevant only)
@@ -32,6 +32,9 @@
 - KD-021 unresolved tensions: derived statistics traceability; continuity's portable work-state mechanism.
 - TEMP/: in-repo scratch (19 files), cleanup deferred — does not affect tracked state.
 - Environment: `git-lfs` binary absent on this VM (repo itself is fine); ordinary `git status`/`checkout` touching LFS files fail here.
+
+## Update discipline
+Refresh this record whenever a material project-state change is adopted or an explicitly authorized workflow changes the current authorization, pause/resume state, next target, or relevant open edge. The person executing the authorized change updates the record as part of that same workflow; the owner remains the authority for what the record says. State updates do not create decisions and must not alter CORE/DECISIONS.md.
 
 ## Pointers (not copies)
 - Decisions: `CORE/DECISIONS.md` (KD-001–KD-047, append-only, immutable).
