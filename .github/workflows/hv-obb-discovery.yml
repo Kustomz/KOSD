@@ -90,6 +90,150 @@ jobs:
             --out hv-output/discovery
           test -f hv-output/discovery/hero_vehicle_discovery.json
 
+      - name: Extract original 2D car icon assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p hv-output/car-icons/raw-bundles hv-output/car-icons/extracted
+          python3 - <<'PY'
+          import hashlib, json, re, shutil, tempfile, zipfile
+          from pathlib import Path
+          import UnityPy
+
+          targets = [
+            "Bentley_ContinentalGTV8SF8_2014",
+            "Chevrolet_CorvetteStingRayC2F8_1966",
+            "Dodge_ChallengerSRTDemonF8_2018",
+            "Dodge_ChargerRTF1_1970",
+            "Dodge_ChargerRTF8_1970",
+            "FnF_FlipCar_2013",
+            "Honda_S2000F2_2001",
+            "Jaguar_FTypeRCoupeF8_2016",
+            "Lamborghini_MurcielagoLP640F8_2006",
+            "LocalMotor_RallyFighterF8_2013",
+            "Mazda_RX7F1_1993",
+            "Mazda_RX7F3_1993",
+            "MercedesAMG_GTSF8_2015",
+            "Mitsubishi_EclipseF1_1995",
+            "Mitsubishi_LancerEvolutionVIIF2_2002",
+            "Nissan_350ZF3_2003",
+            "Nissan_SkylineGTRF4_2002",
+            "Nissan_SkylineGTRR34F2_1999",
+            "Plymouth_RoadRunnerGTXF8_1971",
+            "Subaru_BRZF8_2013",
+            "Subaru_WRXSTIF8_2018",
+            "Toyota_SupraMKIVF1_1994",
+            "Volkswagen_JettaF1_1995",
+          ]
+          def norm(s):
+            return re.sub(r"[^a-z0-9]", "", str(s).lower())
+          target_norm = {norm(t): t for t in targets}
+          out = Path("hv-output/car-icons")
+          rawdir = out / "raw-bundles"
+          imgdir = out / "extracted"
+          report = {
+            "source_version": "6.7.0",
+            "source_obbs": [],
+            "targets": targets,
+            "direct_images": [],
+            "bundle_candidates": [],
+            "extracted_textures": [],
+            "errors": [],
+            "notes": [
+              "Only original 2D image/Texture2D assets are exported; no 3D renders are generated.",
+              "White/alpha-mask textures are retained and explicitly reported, not misrepresented as full-color icons."
+            ]
+          }
+
+          def save_direct_png(data, target, member, obbname):
+            safe_member = re.sub(r"[^A-Za-z0-9_.-]+", "_", member.replace("/", "__"))
+            dest = imgdir / f"{target}__{safe_member}"
+            dest.write_bytes(data)
+            report["direct_images"].append({
+              "target": target, "obb": obbname, "member": member,
+              "output": str(dest), "bytes": len(data),
+              "sha256": hashlib.sha256(data).hexdigest()
+            })
+
+          for obbraw in ( __import__("os").environ["MAIN_OBB"], __import__("os").environ["PATCH_OBB"] ):
+            obb = Path(obbraw)
+            report["source_obbs"].append({"path": str(obb), "bytes": obb.stat().st_size})
+            try:
+              with zipfile.ZipFile(obb) as z:
+                for info in z.infolist():
+                  member = info.filename
+                  nm = norm(member)
+                  matched = [(key, target) for key, target in target_norm.items() if key in nm]
+                  if not matched:
+                    continue
+                  target = matched[0][1]
+                  # Preserve direct PNG icon assets exactly as stored in the OBB.
+                  if member.lower().endswith(".png"):
+                    try:
+                      data = z.read(info)
+                      save_direct_png(data, target, member, obb.name)
+                    except Exception as e:
+                      report["errors"].append({"obb": obb.name, "member": member, "error": repr(e)})
+                    continue
+                  # Bundles are parsed in memory; only likely icon/ASTC assets are considered.
+                  if not any(x in nm for x in ("icon", "astc", "caricon", "caricons")):
+                    continue
+                  report["bundle_candidates"].append({"target": target, "obb": obb.name, "member": member, "size": info.file_size})
+                  try:
+                    data = z.read(info)
+                    bundle_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", f"{target}__{obb.stem}__{Path(member).name}")
+                    bundle_path = rawdir / bundle_name
+                    bundle_path.write_bytes(data)
+                    env = UnityPy.load(str(bundle_path))
+                    for idx, obj in enumerate(env.objects):
+                      try:
+                        if obj.type.name != "Texture2D":
+                          continue
+                        tex = obj.read()
+                        texname = str(getattr(tex, "m_Name", "") or "")
+                        image = getattr(tex, "image", None)
+                        if image is None:
+                          continue
+                        outname = re.sub(r"[^A-Za-z0-9_.-]+", "_", texname or f"Texture2D_{idx}")
+                        dest = imgdir / f"{target}__{outname}.png"
+                        image.save(dest)
+                        report["extracted_textures"].append({
+                          "target": target, "obb": obb.name, "member": member,
+                          "texture_name": texname, "width": image.width, "height": image.height,
+                          "mode": image.mode, "output": str(dest),
+                          "sha256": hashlib.sha256(dest.read_bytes()).hexdigest()
+                        })
+                      except Exception as e:
+                        report["errors"].append({"obb": obb.name, "member": member, "object_index": idx, "error": repr(e)})
+                  except Exception as e:
+                    report["errors"].append({"obb": obb.name, "member": member, "error": repr(e)})
+            except Exception as e:
+              report["errors"].append({"obb": obb.name, "error": repr(e)})
+
+          found = set(x["target"] for x in report["direct_images"] + report["extracted_textures"])
+          report["summary"] = {
+            "targets_requested": len(targets),
+            "targets_with_image_output": len(found),
+            "targets_missing": [t for t in targets if t not in found],
+            "direct_images": len(report["direct_images"]),
+            "bundle_candidates": len(report["bundle_candidates"]),
+            "extracted_textures": len(report["extracted_textures"]),
+            "errors": len(report["errors"])
+          }
+          (out / "car_icon_extraction_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+          print(json.dumps(report["summary"], indent=2))
+          print("Full report: hv-output/car-icons/car_icon_extraction_report.json")
+          PY
+
+      - name: Upload extracted 2D car icons and report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-6.7.0-original-2d-car-icons
+          path: hv-output/car-icons/
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Upload HV-001 reference trace
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
