@@ -31,7 +31,7 @@ def target_hits(text):
 report = {
     "source_version": "6.7.0",
     "targets": TARGETS,
-    "method": "Scan all OBB members with known Unity bundle/serialized extensions or UnityFS/UnityRaw signatures; inspect all object names and Texture2D assets. No 3D rendering.",
+    "method": "Scan all OBB members with known Unity bundle/serialized extensions or UnityFS/UnityRaw signatures; inspect all object names and Texture2D assets. Export unique Texture2D images at least 96x96 regardless of aspect ratio, including square and portrait textures. No 3D rendering.",
     "obb_member_counts": {},
     "serialized_members_scanned": [],
     "target_object_name_hits": [],
@@ -83,7 +83,7 @@ for obb_path in OBBS:
                         w, h = image.size
                         # Keep target-related textures regardless of size; otherwise retain plausible
                         # 2D card/sprite/thumbnail shapes for a review contact sheet.
-                        plausible = w >= 96 and h >= 48 and w <= 2048 and h <= 2048 and (w / max(h, 1)) >= 1.15
+                        plausible = w >= 96 and h >= 96 and w <= 4096 and h <= 4096
                         if not hits and not plausible:
                             continue
                         rgba = image.convert("RGBA")
