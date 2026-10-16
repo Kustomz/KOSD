@@ -73,6 +73,45 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
+
+      - name: Build compact package with exact target-named Texture2D exports
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, shutil
+          from pathlib import Path
+          root = Path("hv-output/five-missing-thumbnails")
+          report_path = root / "five_missing_thumbnail_report.json"
+          if not report_path.exists():
+              raise SystemExit("Extraction report not found")
+          report = json.loads(report_path.read_text(encoding="utf-8"))
+          out = Path("hv-output/target-textures")
+          out.mkdir(parents=True, exist_ok=True)
+          targets = report["targets"]
+          selected = []
+          for item in report["textures"]:
+              name = item.get("texture_name", "")
+              hits = item.get("target_hits", [])
+              if hits and (name.endswith("_icon") or name.startswith("ArtisticSnapshot_") or any(t in name for t in targets)):
+                  src = Path(item["output"])
+                  if src.exists():
+                      dest = out / (src.stem + ".png")
+                      shutil.copy2(src, dest)
+                      selected.append({**item, "output": str(dest)})
+          (out / "target_texture_index.json").write_text(json.dumps({"targets": targets, "selected": selected}, indent=2), encoding="utf-8")
+          print(json.dumps({"selected_target_textures": len(selected), "names": [x.get("texture_name") for x in selected]}, indent=2))
+          PY
+
+      - name: Upload exact target-named texture exports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-6.7.0-target-texture-exports
+          path: hv-output/target-textures/
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Upload five-thumbnail extraction report and contact sheets
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
