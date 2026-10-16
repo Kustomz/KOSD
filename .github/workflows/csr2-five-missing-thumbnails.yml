@@ -61,6 +61,18 @@ jobs:
       - name: Exhaustively scan OBB bundles and extract candidate textures
         run: python3 RESEARCH/CSR2/HV_EXTRACTION_6.7.0/extract_five_missing_thumbnails.py
 
+
+      - name: Upload compact visual review package
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: csr2-6.7.0-texture-review-compact
+          path: |
+            hv-output/five-missing-thumbnails/five_missing_thumbnail_report.json
+            hv-output/five-missing-thumbnails/contact-sheet-*.jpg
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Upload five-thumbnail extraction report and contact sheets
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
